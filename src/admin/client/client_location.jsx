@@ -17,21 +17,27 @@ class ClientLocation extends React.Component {
     this.state = {
       isOpen: false,
       twilioNumber: "",
+      jotformId: "",
       locationId: "",
       isAddLocationOpen: false,
+      isJotformOpen: false,
       isAnalyticDataShow: false,
       client: {
         name: "",
+        jotformId: "",
         twilioNumber: "",
         clientId: null,
       },
       errors: {
         name: false,
         twilioNumber: false,
+        jotformId: false,
       },
     };
     this.submitTwilioNumber = this.submitTwilioNumber.bind(this);
     this.editTwilioNumber = this.editTwilioNumber.bind(this);
+    this.submitTwilioNumber = this.submitTwilioNumber.bind(this);
+    this.editJotform = this.editJotform.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +47,7 @@ class ClientLocation extends React.Component {
     client.clientId = clientId;
     this.setState({ client });
     this.props.fetchLocationList(clientId);
+    this.props.fetchJotformList();
   }
 
   async submitTwilioNumber() {
@@ -51,10 +58,26 @@ class ClientLocation extends React.Component {
     this.setState({ isOpen: false });
   }
 
+  async submitLocationJotform() {
+    this.props.addLocationJotform({
+      locationId: this.state.locationId,
+      jotformId: this.state.jotformId,
+    });
+    this.setState({ isJotformOpen: false });
+  }
+
   editTwilioNumber(twilioNumber, locationId) {
     this.setState({
       isOpen: true,
       twilioNumber: twilioNumber,
+      locationId: locationId,
+    });
+  }
+
+  editJotform(jotformId, locationId) {
+    this.setState({
+      isJotformOpen: true,
+      jotformId: jotformId,
       locationId: locationId,
     });
   }
@@ -91,6 +114,24 @@ class ClientLocation extends React.Component {
       });
     } catch (err) {
       console.log("\n error handleChange:", err.message || err);
+      let message = err && err.message ? err.message : "Something went wrong";
+      errorToast(message);
+    }
+  };
+  handleJotformChange = async (event) => {
+    try {
+      const { value } = event.target;
+      const { errors } = this.state;
+      errors.jotformId = false;
+      if (!value) {
+        errors.jotformId = true;
+      }
+      this.setState({
+        errors,
+        jotformId: value
+      });
+    } catch (err) {
+      console.log("\n error handleJotformChange:", err.message || err);
       let message = err && err.message ? err.message : "Something went wrong";
       errorToast(message);
     }
@@ -183,10 +224,11 @@ class ClientLocation extends React.Component {
   };
 
   render() {
-    const { client, errors } = this.state;
+    const { client, errors, jotformId } = this.state;
     const {
       fetchingLocationList,
       locationList,
+      jotformList,
       isLocationRegistering,
       analyticLoader,
       locationAnalyticData,
@@ -246,6 +288,9 @@ class ClientLocation extends React.Component {
                         <th className="comments" key="reason_number">
                           Twilio Number
                         </th>
+                        <th className="comments" key="jotform_id">
+                          Jotform ID
+                        </th>
                         <th className="actions" key="action">
                           {" "}
                           &nbsp;{" "}
@@ -301,6 +346,11 @@ class ClientLocation extends React.Component {
                             <td className="name" key="twiliono_{index}">
                               <div className="name-inner">
                                 {value.twilioNumber}
+                              </div>
+                            </td>
+                            <td className="name" key="jotformid_{index}">
+                              <div className="name-inner">
+                                {value.jotformId?.jotformId}
                               </div>
                             </td>
 
@@ -377,6 +427,29 @@ class ClientLocation extends React.Component {
                                               </span>
                                             </a>
                                           </li>
+                                          <li key="_sub3_{index}">
+                                            <a
+                                              className="btn"
+                                              onClick={() =>
+                                                this.editJotform(
+                                                  value.jotformId?._id,
+                                                  value._id
+                                                )
+                                              }
+                                            >
+                                              <span className="icon">
+                                                {" "}
+                                                <img
+                                                  src={documentImg}
+                                                  alt=""
+                                                  className="file-img-analytic"
+                                                />{" "}
+                                              </span>
+                                              <span className="txbx">
+                                                Edit Jotform
+                                              </span>
+                                            </a>
+                                          </li>
                                         </ul>
                                       </div>
                                     </div>
@@ -425,6 +498,49 @@ class ClientLocation extends React.Component {
             </div>
           </div>
         </section>
+        <Modal
+          onHide={() => this.setState({ isJotformOpen: false })}
+          show={this.state.isJotformOpen}
+          dialogClassName={"modal-dialog-centered"}
+          contentClassName={"delete-modal-content"}
+        >
+          <div className="modal-header">
+            <button
+              type="button"
+              className="close"
+              onClick={() => this.setState({ isJotformOpen: false })}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            <h1 className="add-twilio-number">Update Jotform</h1>
+            <select 
+              name="jotformId"
+                value={jotformId}
+                className={
+                  errors.jotformId ? "form-control error-box" : "form-control"
+                }
+                placeholder="Jotform"
+                onChange={(e) => this.handleJotformChange(e)}
+                >
+                  <option value="" hidden>Select Jotform Id</option>
+                  {
+                    jotformList.map(el => (<option key={el._id} value={el._id}>{el.jotformId} - {el.name}</option>))
+                  }
+                    </select>
+          </div>
+
+          <div className="modal-footer">
+            <button
+              onClick={() => this.submitLocationJotform()}
+              type="button"
+              className="btn bluebtn"
+            >
+              Submit Now
+            </button>
+          </div>
+        </Modal>
         <Modal
           onHide={() => this.setState({ isOpen: false })}
           show={this.state.isOpen}
@@ -498,6 +614,27 @@ class ClientLocation extends React.Component {
                       placeholder="Location Name"
                       onChange={(e) => this.handleChange(e)}
                     />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="form-group col-md-12">
+                    <label htmlFor="practice-name" className="location-label">
+                      jotform
+                    </label>
+                    <select 
+                          name="jotformId"
+                          value={client.jotformId}
+                          className={
+                            errors.jotformId ? "form-control error-box" : "form-control"
+                          }
+                          placeholder="Jotform"
+                          onChange={(e) => this.handleChange(e)}
+                          >
+                            <option value="" hidden>Select Jotform Id</option>
+                            {
+                              jotformList.map(el => (<option key={el._id} value={el._id}>{el.jotformId} - {el.name}</option>))
+                            }
+                    </select>
                   </div>
                 </div>
                 <div className="row">
@@ -608,6 +745,10 @@ function mapState(state) {
     analyticLoader,
     locationAnalyticData,
   } = state.fetchLocationList;
+  const {
+    jotformList,
+    fetchingJotformList,
+  } = state.adminJotformlist;
   return {
     locationList,
     fetchingLocationList,
@@ -617,12 +758,16 @@ function mapState(state) {
     updateSmsLoader,
     analyticLoader,
     locationAnalyticData,
+    jotformList,
+    fetchingJotformList,
   };
 }
 
 const actionCreators = {
   fetchLocationList: adminActions.fetchLocationList,
+  fetchJotformList: adminActions.fetchJotformList,
   addTwilioNumber: adminActions.addTwilioNumber,
+  addLocationJotform: adminActions.addLocationJotform,
   addLocation: adminActions.addLocation,
   resetLocation: adminActions.resetLocation,
   smsFeatureAllowDisallow: adminActions.smsFeatureAllowDisallow,

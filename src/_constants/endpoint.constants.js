@@ -24,6 +24,7 @@ export const CommonApiEndpoint = {
     updateNotes:"updateNotes",
     createProfileAction:"addClient",
     addlocationAction:"addlocation",
+    addJotformAction:"addJotform",
     fetchlocationsAction:"fetchlocations",
     updatePatient:"updatePatientInfo",
     backToWaiting:"backToWaiting",
