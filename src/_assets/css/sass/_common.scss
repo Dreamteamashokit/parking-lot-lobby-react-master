@@ -1,0 +1,1020 @@
+// font-family: 'Avenir Next';
+// font-family: 'Avenir Next Demi';
+// font-family: 'Avenir Next Ultra';
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-font-variant-ligatures: no-common-ligatures;
+  text-rendering: optimizeLegibility;
+  text-rendering: optimizeSpeed;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Avenir Next';
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+ul, li {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+a, span {
+  display: inline-block;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a:hover {
+  text-decoration: none;
+  outline: none;
+  -moz-transition: all 300ms linear;
+  -o-transition: all 300ms linear;
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+
+button:hover {
+  text-decoration: none;
+  outline: none;
+  -moz-transition: all 300ms linear;
+  -o-transition: all 300ms linear;
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul {
+  margin: 0;
+  padding: 0;
+}
+
+.cstm-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
+
+.modal {
+    background: rgba(4, 23, 43, 0.5);
+    backdrop-filter: blur(7px);
+}
+
+@media only screen and (min-width:576px) {
+    .cstm-container {
+        max-width: 540px;
+    }
+}
+@media only screen and (min-width:768px) {
+  .cstm-container {
+      max-width: 720px;
+  }
+}
+@media only screen and (min-width:992px) {
+  .cstm-container {
+      max-width: 960px;
+  }
+}
+@media only screen and (min-width:1200px) {
+  .cstm-container {
+      max-width: 1140px;
+  }
+}
+@media only screen and (min-width:1400px) {
+    .cstm-container {
+        max-width: 1320px;
+    }
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: $dark-blue;
+}
+
+/* Toggle CSS starts */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  border: 1px solid #C8C8C8;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 6px;
+  bottom: 4px;
+  border: 1px solid #C7C7C7;
+  background-color: #DFDFDF;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #43B872;
+  border-color: transparent;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px);
+  border-color: transparent;
+  background: #fff;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 50px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Custom Checkox starts */
+
+.check-form-group input {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+
+.check-form-group label {
+  position: relative;
+  cursor: pointer;
+  margin: 0;
+  font-weight: 500;
+  color: #858585;
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+}
+
+.check-form-group label:before {
+  content:'';
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 2px solid #C5C5C5;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.check-form-group input:checked + label {
+  color: #5E5E5E;
+}
+
+.check-form-group input:checked + label:before {
+  border-color: $green;
+}
+
+.check-form-group input:checked + label:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: 9px;
+  width: 6px;
+  height: 14px;
+  border: solid $green;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Custom Checkox ends */
+
+.contbx-wrap {
+    height: calc(100vh - 117px);
+    background: $colorbg;
+    overflow: hidden;
+    padding: 80px 0 0;
+    .back-holder {
+        background: $boxbg;
+        border-radius: $radius15;
+        border: 1px solid #C8D8E6;
+        padding: 20px 0;
+        // height: calc(100vh - 227px);
+        position: relative;
+        .countno {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 30px;
+            width: 30px;
+            background: $red;
+            border-radius: 50%;
+            padding: 2px;
+            font-size: 12px;
+            color: $white;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid $white;
+        }
+        .box-head {
+            position: relative;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            margin: 0 0 20px;
+            padding: 0 15px;
+            h1 {
+                font-size: 26px;
+                color: $txblue;
+                font-weight: 600;
+                flex: 1 1 0;
+                span {
+                  font-size: 14px;
+                  font-weight: 500;
+                  margin-left: 3px;
+                  height: 22px;
+                  width: 22px;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #254161;
+                  position: relative;
+                  top: -1px;
+                }
+            }
+            h1.message-count.chatno {
+              margin-left: 20px;
+              height: 22px;
+              width: 25px;
+              background: #FD5353;
+              border-radius: 50%;
+              padding: 2px;
+              font-size: 14px;
+              color: #fff;
+              font-weight: 600;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              border: 2px solid #fff;
+              flex: 0 0 0;
+            }
+            h6 {
+                position: static;
+                right: 15px;
+                font-size: 17px;
+                flex: 0 0 auto;
+                &.darkblue {
+                    color: $txblue;
+                }
+                &.lightblue {
+                    color: $light-blue;
+                }
+                &.green {
+                    color: $green;
+                }
+            }
+        }
+        .bxflow-container {
+            height: calc(100vh - 318px);
+            overflow: auto;
+            padding: 0 15px;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            .box-holder {
+                background: $white;
+                border-radius: $radius10;
+                box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15);
+                margin: 0 0 10px;
+                .spot-row {
+                    @include dflex;
+                    align-items: center;
+                    position: relative;
+                    padding: 10px 15px;
+                    background: #F8F8F8;
+                    border-radius: 10px 10px 0 0;
+                    h6 {
+                        font-size: 15px;
+                        color: $txgrey;
+                    }
+                    span {
+                      position: absolute;
+                      right: 10px;
+                        .btn {
+                          max-width: 22px;
+                          padding: 0;
+                          line-height: 1;
+                          @include nofocus;
+                        }
+                    }
+                }
+                .middlebx {
+                    border-top: 1px solid #DEDEDE;
+                    border-bottom: 1px solid #DEDEDE;
+                    @include dflex;
+                    align-items: center;
+                    padding: 8px 15px;
+                    .lftbx {
+                        flex: 0 0 calc(100% - 100px);
+                        max-width: calc(100% - 100px);
+                        h1 {
+                          font-size: 24px;
+                          margin: 0 0 3px;
+                          cursor: pointer;
+                          color: $txblue;
+                        }
+                        p {
+                          font-size: 18px;
+                          font-weight: 500;
+                          color: $txgrey;
+                          &.red {
+                              color: $red;
+                          }
+                          &.green {
+                              color: $green;
+                          }
+                        }
+                    }
+                    .iconbx {
+                            flex: 0 0 100px;
+                            max-width: 100px;
+                            text-align: center;
+                            .grybxwrap {
+                                  display: inline-block;
+                                  background: #F9FAFB;
+                                  border-radius: 30px;
+                                  padding: 15px;
+                              }
+                              .chatbtn {
+                                    background: #fff;
+                                    border: none;
+                                    box-shadow: 0px 5px 24px -4px rgba(0, 0, 0, 0.3);
+                                    border-radius: 50%;
+                                    padding: 13px;
+                                    position: relative;
+                                    .chatno {
+                                        position: absolute;
+                                        right: 8px;
+                                        top: 5px;
+                                        height: 22px;
+                                        width: 22px;
+                                        background: $red;
+                                        border-radius: 50%;
+                                        padding: 2px;
+                                        font-size: 10px;
+                                        color: $white;
+                                        font-weight: 600;
+                                        display: inline-flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        border: 2px solid $white;
+                                    }
+                                }
+                        }
+                }
+                .action-footbx {
+                    background: #F8F8F8;
+                    padding: 5px 15px;
+                    border-radius: 0 0 10px 10px;
+                    .basic-infobx {
+                        @include dflex;
+                        align-items: center;
+                        min-height: 38px;
+                    }
+                    .action-btns {
+                        flex: 0 0 100px;
+                        max-width: 100px;
+                        @include dflex;
+                        align-items: center;
+                        button {
+                            border: none;
+                            height: 38px;
+                            width: 38px;
+                            border-radius: 50%;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 5px;
+                            &.notifybtn {
+                              background: $dark-blue;
+                              margin-right: 10px;
+                              img {
+                                  max-width: 15px;
+                              }
+                            }
+                            &.checkbtn {
+                              background: $green;
+                              img {
+                                  max-width: 18px;
+                              }
+                            }
+                        }
+                    }
+                    .notify-btn.no-show-section {
+                      flex: 0 0 100px;
+	                    max-width: 100px;
+	                    text-align: center;
+                    }
+                    .notify-btn {
+                        flex: 0 0 calc(100% - 200px);
+                        max-width: calc(100% - 200px);
+                        text-align: right;
+                        .btn {
+                          background: #F2F2F2;
+                          font-size: 12px;
+                          border: 1px solid #DBDBDB;
+                          border-radius: 6px;
+                          padding: 4px 10px;
+                          color: $txgrey;
+                          &.redbtn {
+                              background: $red;
+                              border-color: transparent;
+                              color: #fff;
+                          }
+                        }
+                    }
+                    .alert-infobx {
+                        background: #BEDCEF;
+                        border-radius: $radius10;
+                        padding: 10px;
+                        display: none;
+                        span {
+                          float: right;
+                          width: 100%;
+                          padding-bottom: 2px;
+                            .btn {
+                              max-width: 22px;
+                              padding: 0;
+                              line-height: 1;
+                              float:right;
+                              @include nofocus;
+                            }
+                        }
+                        .alert-inner {
+                            .timetags {
+                              margin: 0 -5px;
+                              li {
+                                  display: inline-block;
+                                  padding: 0 5px 5px;
+                                  .btn {
+                                      background: $light-blue;
+                                      color: $white;
+                                      border-radius: 6px;
+                                      font-size: 14px;
+                                      font-weight: 500;
+                                      padding: 4px 10px;
+                                  }
+                                }
+                            }
+                            .date-inputs {
+                                @include dflex;
+                                align-items: center;
+                                margin: 0 -5px;
+                                li {
+                                  padding: 0 5px;
+                                  &.input-holder {
+                                      flex: 0 0 calc(100% - 75px);
+                                      max-width: calc(100% - 75px);
+                                      .form-control {
+                                          font-size: 16px;
+                                          border-color: transparent;
+                                          border-radius: 6px;
+                                          @include nofocus;
+                                      }
+                                  }
+                                  &.check-submit {
+                                      flex: 0 0 75px;
+                                      max-width: 75px;
+                                      .btn {
+                                          text-align: center;
+                                          border-radius: 6px;
+                                          background: $green;
+                                          width: 100%;
+                                      }
+                                  }
+                                }
+                            }
+                        }
+                    }
+                    &.alert-open {
+                      .alert-infobx {
+                          display: block;
+                      }
+                      .basic-infobx {
+                          display: none;
+                      }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+/* satrt check in popop */
+
+
+.checkin-popup-box
+{
+  .chatbx-container
+  {
+    .cstm-overlay
+    {
+      position: static;
+    top: 0;
+    left: 0;
+    z-index: 1051;
+    width: 100%;
+    height: 100%;
+    overflow: initial;
+    outline: 0;
+    padding: 0px 0;
+    background: transparent;
+    backdrop-filter: none;
+    }
+  }
+
+  .modal-dialog
+  {
+      max-width: 1320px;
+      .modal-content
+      {
+        background-color: transparent;
+        border: none;
+        padding: 0px;
+      }
+  }
+
+  .cancel-chatbtn
+  {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+  }
+
+}
+.justify-center
+{
+  justify-content: center;
+}
+
+/*  start button hide show*/
+
+.serv-btn-box
+{
+  position: absolute;
+top: 15px;
+right: 15px;
+  .served-btn
+  {
+    background: transparent;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 6px 20px;
+    width: 187px;
+    border: 2px solid #254161;
+    color: #254161;
+
+    span
+    {
+
+      align-items: center;
+      margin-right: 5px;
+
+      img
+      {
+        max-width: 14px;
+      }
+
+    }
+
+  }
+}
+
+.add-client-btn-box
+{
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  .client-btn
+  {
+    background: transparent;
+    border-radius: 18px;
+    font-weight: 600;
+    padding: 5px 10px;
+    width: 38px;
+    border: 2px solid #254161;
+    color: #254161;
+
+    span
+    {
+
+      align-items: center;
+      margin-right: 5px;
+
+      img
+      {
+        max-width: 14px;
+      }
+
+    }
+
+  }
+}
+
+.relative-pos
+{
+  position: relative;
+}
+
+.closebtn-box
+{
+  position: absolute;
+  top: 22px;
+  right: 15px
+}
+
+
+.mins-btn {
+    padding: 10px;
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+    position: relative;
+    outline: none;
+    box-shadow: none;
+}
+.mins-btn:after {
+    content: "";
+    width: 20px;
+    height: 4px;
+    background: #064670;
+    position: absolute;
+}
+
+.contbx-wrap.opened .serv-btn-box {
+    display: none;
+}
+.contbx-wrap.collapsed .hide-collapse {
+    display: none;
+}
+
+.contbx-wrap .back-holder .box-head h1 span {
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 3px;
+    height: 22px;
+    width: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #254161;
+    position: relative;
+    top: -1px;
+}
+
+.checkin-popup-box
+{
+  .modal-header
+  {
+      border-bottom: none;
+  }
+  .modal-content
+  {
+    position: static;
+  }
+  .modal-dialog
+  {
+    position: static;
+  }
+
+}
+
+.checkin-popup-box
+{
+  .cstm-container
+  {
+    max-width: 100%;
+  }
+}
+
+.success-toaster-msg {
+  color:#43B872;
+  background: #fff;
+}
+.padding-top {
+  padding-top:15px;
+}
+.error.help-block {
+  color:#FD5353 !important;
+  text-align:center;
+  padding: 5px 5px;
+}
+.txt-center {
+  text-align:center;
+  padding: 15px 15px;
+}
+.left-margin {
+  position: unset !important;
+  margin-left: 5px;
+}
+.count-down {
+  background: #F2F2F2;
+  font-size: 12px;
+  border: 1px solid #DBDBDB;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: #9A9A9A;
+  margin-right: 5px;
+}
+.latest-message {
+  text-align: center;
+  width: 100%;
+}
+
+.profile-modal-content {
+  .modal-body {
+    .form-group {
+      .react-date-picker {
+        width: 100%;
+        .react-datepicker-wrapper, 
+        .react-date-picker__wrapper {
+          width: 100%;
+          border: none;
+          outline: none;
+          box-shadow: none;
+        }
+        .calender-popup-box {
+          display: flex;
+          justify-content: center;
+          .left-date-slider, .right-date-slider {
+            padding:0px 2px;
+          }
+          .left-date-slider, .year-selecter {
+            margin-right: 5px;
+          }
+          .right-date-slider {
+            margin-left:5px
+          }
+        }
+      }
+    }
+  }
+}
+.profile-modal-content {
+  padding: 0 10px;
+  .modal-header {
+      h1 {
+          font-size: 20px;
+          color: #064670;
+          font-weight: 600;
+          margin: 10px 0 0;
+      }
+      .close {
+          position: absolute;
+          top: -50px;
+          right: -120px;
+          border: 2px solid #fff;
+          border-radius: 50%;
+          padding: 5px;
+          height: 50px;
+          width: 50px;
+          color: #fff;
+          font-weight: 200;
+          font-size: 35px;
+      }
+  }
+  .modal-body {
+      padding-bottom: 0;
+      .row {
+          margin: 0 -4px;
+          .col-md-6 {
+              padding: 0 4px;
+          }
+      }
+      .form-group {
+          margin-bottom: 10px;
+          .form-control {
+              border-color: #93a1b1;
+              border-radius: 8px;
+              height: auto;
+              color: #92a1b3;
+              font-size: 12px;
+              font-weight: 500;
+              min-height: calc(1.5em + 1.25rem + 2px);
+          }
+          .form-control.error-box {
+            border: 3px #FD5353 solid;
+          }
+          .PhoneInput {
+              .PhoneInputInput {
+                  border: none;
+                  outline: none;
+                  box-shadow: none;
+              }
+          }
+          .atchment-holder {
+              label {
+                  display: block;
+                  text-align: left;
+                  font-size: 12px;
+                  line-height: 1;
+                  margin: 0 0 8px;
+              }
+              .atchment-body {
+                  ul {
+                      display: flex;
+                      flex-wrap: wrap;
+                      align-items: center;
+                      padding: 0;
+                      justify-content: flex-end;
+                      li {
+                          text-align: center;
+                          padding-left: 12px;
+                          .atchpill {
+                              background: #007786;
+                              border-radius: 5px;
+                              padding: 5px 2px;
+                              width: 52px;
+                              color: #fff;
+                              font-size: 20px;
+                              line-height: 1;
+                              display: inline-flex;
+                              align-items: center;
+                              justify-content: center;
+                              &.insur {
+                                  background: #103539;
+                                  img {
+                                      max-width: 16px;
+                                  }
+                              }
+                          }
+                          .icon {
+                              max-width: 16px;
+                              line-height: 1;
+                          }
+                      }
+                      .atchmentinfo {
+                          font-size: 9px;
+                          color: #324260;
+                      }
+                  }
+              }
+          }
+      }
+  }
+  .modal-footer {
+      padding: 0 1rem 1rem;
+      justify-content: flex-end;
+      .btn {
+          padding: 5px;
+          min-width: 70px;
+      }
+  }
+}
+
+.form-control.error-box, .checkmark.error-box {
+  border: 3px #FD5353 solid !important;
+}
+.text-center {
+  text-align: center;
+}
+.patient-file-upload {
+  border: 3px solid #FD5353;
+}
+.paper-click-img {
+  height: 25px;
+  margin-left: 10px;
+}
+
+.download-files-btn {
+  border: none;
+  height: 50px;
+width: 127px;
+border-radius: 5px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 5px;
+background: #064670;
+margin-right: 10px;
+color: #fff;
+margin-top: 10px;
+img {
+  width: 20px;
+  height: 10px;
+}
+.loader {
+  width: 30px !important;
+  height: 20px !important;
+}
+}
+
+li.logo-files-extension {
+  img {
+    height: 30px;
+  }
+  .atchmentinfo {
+    color: blue !important;
+    text-decoration-line: underline;
+  }
+}
+
+.logo-files-extension.img-preview {
+  cursor: pointer;
+}
+.file-img-analytic  {
+  max-height: 28px;
+}
+.show-analytic-data {
+  background: #D9E8F5;
+  border-radius: 10px 20px;
+  padding: 10px 20px;
+  border: 1px solid #C8D8E6;
+  min-height: 250px;
+  .row {
+    padding: 5px 10px;
+    .content {
+      text-align: center;
+    }
+    .analytic-loader {
+      font-size: 24px;
+      text-align: center;
+    }
+  };
+  .row.location-name , .row.content-section {
+    border-bottom: 1px solid #162546;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .contbx-wrap .back-holder .box-head h1 {
+      font-size: 20px;
+  }
+  .contbx-wrap .back-holder .box-head h6 {
+      font-size: 14px;
+  }
+  .contbx-wrap .back-holder .bxflow-container .box-holder {
+      font-size: 14px;
+      line-height: 1.25;
+  }
+  
+  }
+  
+  @media only screen and (max-width: 1199px) {
+  .contbx-wrap .back-holder .box-head h1 {
+      font-size: 18px;
+  }
+  .contbx-wrap .back-holder .box-head h6 {
+      font-size: 13px;
+  }
+  }

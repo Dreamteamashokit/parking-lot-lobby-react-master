@@ -1,0 +1,173 @@
+.locationbx-container {
+    .inner-container {
+          .chat-header {
+              height: auto;
+              padding: 30px 30px 20px;
+              .toprow {
+                  .profile-drop {
+                      .nav-item {
+                          .nav-link {
+                              padding: 0;
+                              text-align: right;
+                              background: #43B872;
+                              border-radius: 50%;
+                              min-height: 45px;
+                              min-width: 45px;
+                              color: #fff;
+                              font-weight: 600;
+                              text-transform: uppercase;
+                              font-size: 20px;
+                              display: inline-flex;
+                              flex-wrap: wrap;
+                              align-items: center;
+                              justify-content: center;
+                          }
+                      }
+                  }
+              }
+            }
+            .location-body {
+                  padding: 50px 30px 15px;
+                  height: calc(100% - 95px);
+                  .locontbx-holder {
+    min-height: calc(100% - 110px);
+}
+                .locrow-holder {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: flex-end;
+                    padding: 0 0 20px;
+                    .lftbx {
+                        flex: 0 0 calc(100% - 320px);
+                        max-width: calc(100% - 320px);
+                        .inner {
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-items: flex-start;
+                            .infocon {
+                              flex: 0 0 20px;
+                              max-width: 20px;
+                              height: 20px;
+                              margin: 4px 0 0;
+                              span {
+                                  border: 2px solid #162546;
+                                  background: transparent;
+                                  border-radius: 50%;
+                                  height: 100%;
+                                  width: 100%;
+                              }
+                              &.active {
+                                span {
+                                  background: #162546;
+                                }
+                              }
+                          }
+                          .infotxbx {
+    flex: 0 0 calc(100% - 20px);
+    max-width: calc(100% - 20px);
+    padding: 0 0 0 20px;
+    h1 {
+    font-size: 20px;
+    color: #162546;
+    font-weight: 600;
+}
+.contbx {
+
+    p {
+      color: #162546;
+      font-size: 16px;
+      font-weight: 500;
+    display: inline-block;
+}
+    .form-control {
+      border: none;
+  height: auto !important;
+  line-height: 1;
+  color: #162546;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+box-shadow: none;
+outline: none;
+    padding: 0 8px;
+}
+}
+}
+                        }
+                    }
+                    .rgtbx {
+                        flex: 0 0 320px;
+                        max-width: 320px;
+                        text-align: right;
+                          ul {
+                              li {
+                                display: inline-block;
+                                font-size: 16px;
+                                font-weight: 500;
+                                color: #162546;
+                              }
+                          }
+                    }
+                }
+                .inputrow-holder {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                        margin: 20px 0 0;
+                    .inputbx {
+    flex: 0 0 70%;
+    max-width: 70%;
+    .form-group {
+    margin: 0;
+    position: relative;
+    .form-control {
+    background: #F2F5F8;
+    border-color: #D9E3EC;
+    height: 55px;
+    border-radius: 60px;
+    box-shadow: none;
+    outline: none;
+    padding-right: 100px;
+    padding-left: 30px;
+}
+.addbtn {
+position: absolute;
+right: 10px;
+top: 5px;
+    bottom: 5px;
+.btn {
+background: #2092E9;
+border-radius: 65px;
+min-width: 80px;
+    height: 100%;
+    &:hover {
+        background: #254161;
+    }
+img {
+      max-width: 24px;
+}
+}
+}
+}
+}
+.btnbx {
+    flex: 0 0 30%;
+    max-width: 30%;
+    text-align: right;
+    .btn {
+    color: #fff;
+    background: #254161;
+    font-size: 16px;
+    min-width: 110px !important;
+    font-weight: 500;
+    border-radius: 15px;
+    min-height: 44px;
+    padding: 10px 10px;
+}
+}
+                }
+            }
+        }
+}

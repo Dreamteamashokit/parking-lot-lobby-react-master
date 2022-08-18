@@ -1,0 +1,20 @@
+@mixin transition($transition...) {
+  -moz-transition:    $transition;
+  -o-transition:      $transition;
+  -webkit-transition: $transition;
+  transition:         $transition;
+}
+@mixin transform($transform...) {
+  -moz-transform:    $transform;
+  -o-transform:      $transform;
+  -webkit-transform: $transform;
+  transform:         $transform;
+}
+@mixin dflex {
+  display: flex;
+  flex-wrap: wrap;
+}
+@mixin nofocus {
+  box-shadow: none;
+  outline: none;
+}

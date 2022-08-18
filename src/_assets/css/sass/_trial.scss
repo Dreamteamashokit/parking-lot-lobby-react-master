@@ -1,0 +1,177 @@
+.steps-wrapper {
+    background: #EEF7FF;
+    .inner-container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0px;
+      min-height: calc(100vh - 65px);
+      overflow: auto;
+        .contbx-holder {
+          flex: 0 0 100%;
+          max-width: 100%;
+          padding: 40px 100px 0;
+            .txbx-holder {
+              text-align: center;
+              max-width: 480px;
+              margin: 0 auto;
+                h1 {
+                  font-size: 38px;
+                  color: #254161;
+                  font-weight: 700;
+                  line-height: 1.1;
+                    span {
+                        color: #43B872;
+                    }
+                }
+                .form-holder {
+                  text-align: left;
+                  padding: 40px 0;
+                  color: #254161;
+                    h3 {
+                      font-size: 14px;
+                      font-weight: 600;
+                      margin: 0 0 15px;
+                        span {
+
+                        }
+                    }
+                    .form {
+                      background: #D9E8F5;
+                      border-radius: 15px;
+                      border: 1px solid #C8D8E6;
+                      padding: 30px 20px;
+                      position: relative;
+                        .form-group {
+                            position: relative;
+                            label {
+                                font-weight: 600;
+                            }
+                            .form-control {
+                                background: #FBFBFB;
+                                border-color: #cfdeea;
+                                border-radius: 50px;
+                                min-height: 52px;
+                                padding-left: 30px;
+                                box-shadow: none;
+                                outline: none;
+                                font-size: 17px;
+                            }
+                            .iconbx {
+                                position: absolute;
+                                bottom: 12px;
+                                right: 20px;
+                            }
+                        }
+                        .privacy-check {
+                          .check-container {
+                              position: relative;
+                              margin: 0;
+                              .tx {
+                                  margin-left: 35px;
+                                  line-height: 1.2;
+                                  font-size: 14px;
+                                  font-weight: 500;
+                                  color: #43b872;
+                              }
+                          }
+                          input {
+                            position: absolute;
+                            opacity: 0;
+                            cursor: pointer;
+                            height: 0;
+                            width: 0;
+                          }
+                          .checkmark {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            height: 25px;
+                            width: 25px;
+                            background-color: transparent;
+                            border: 2px solid #43b872;
+                            border-radius: 6px;
+                              &:after {
+                                content: "";
+                                position: absolute;
+                                display: none;
+                                left: 8px;
+                                top: 1px;
+                                width: 7px;
+                                height: 15px;
+                                border: solid #43b872;
+                                border-width: 0 2px 2px 0;
+                                -webkit-transform: rotate(45deg);
+                                -ms-transform: rotate(45deg);
+                                transform: rotate(45deg);
+                              }
+                            }
+
+                        }
+                        .agree_terms-contbx {
+                              background: #fff;
+                              border-radius: 10px;
+                              box-shadow: 0px 1px 2px rgba(0, 0, 0, .15);
+                              margin: 0 0 0;
+                              padding: 10px 15px;
+                              p {
+                                  font-size: 13px;
+                                  font-weight: 400;
+                                  color: #7b7b7b;
+                                  line-height: 1.3;
+                                  a {
+                                      color: #2092E9;
+                                  }
+                              }
+                              .agreebtn-holder {
+                                padding: 20px 0 0;
+                                  .btn {
+                                    background: #43b872;
+                                    border-radius: 16px;
+                                    font-weight: 600;
+                                    border: 1px solid #39b36a;
+                                    text-align: center;
+                                    padding: 18px;
+                                    margin: 0;
+                                    display: block;
+                                    width: 100%;
+                                    line-height: 1;
+                                    color: #fff;
+                                    font-size: 18px;
+                                    &:hover {
+                                        background: #2b9a58;
+                                    }
+                                  }
+                              }
+                          }
+                    }
+                }
+            }
+            .admin-client-holder {
+              max-width: 100% !important
+            }
+        }
+    }
+}
+
+/* On mouse-over, add a grey background color */
+.steps-wrapper .inner-container .contbx-holder .txbx-holder .form-holder .form .privacy-check .check-container:hover input ~ .checkmark {
+  background-color: transparent;
+}
+
+/* When the checkbox is checked, add a blue background */
+.steps-wrapper .inner-container .contbx-holder .txbx-holder .form-holder .form .privacy-check .check-container input:checked ~ .checkmark {
+  background-color: #f0f6fb;
+}
+
+.steps-wrapper .inner-container .contbx-holder .txbx-holder .form-holder .form .privacy-check .check-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+@media only screen and (max-width: 768px) {
+.steps-wrapper .inner-container .contbx-holder {
+  padding: 41px 10px 0;
+}
+.actionbtn-holder .btn {
+  margin: 5px;
+}
+}

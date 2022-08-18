@@ -1,0 +1,658 @@
+.settings-contbx-wrap {
+    min-height: calc(100vh - 117px);
+    background: #EEF7FF;
+    overflow: auto;
+    padding: 80px 0 0;
+    .collapseinfo-holder {
+      .card {
+          margin: 0 0 10px;
+          overflow: visible;
+          border: 1px solid #C8D8E6;
+          border-radius: $radius15;
+          .card-header {
+                padding: 0;
+                margin: 0;
+                background: $white;
+                border: none;
+                border-radius: $radius15;
+                .btn-block {
+                    padding: 20px 20px;
+                    border-radius: $radius15;
+                    @include nofocus;
+                    font-size: 22px;
+                    font-weight: 500;
+                    color: $txblue;
+                    text-decoration: none;
+                    position: relative;
+                    .expand-arrow {
+                        position: absolute;
+                        right: 35px;
+                        line-height: 1;
+                        top: 23px;
+                        width: 22px;
+                        img {
+                            @include transition(300ms ease);
+                        }
+                    }
+                    &.collapsed {
+                        .expand-arrow {
+                            img {
+                                @include transform(rotate(180deg));
+                            }
+                        }
+                    }
+                }
+            }
+            .card-body {
+                border-top: 1px solid #C8D8E6;
+                .companyinfo-holder {
+                  .form-control {
+                      border: 1px solid #D9E3EC;
+                      border-radius: $radius15;
+                      padding: 15px 20px;
+                      height: auto;
+                      font-size: 20px;
+                      font-weight: 500;
+                      background: #F8F9F9;
+                      @include nofocus;
+                      color: $txblue;
+                    }
+                    .dropdown {
+                      .btn {
+                          width: 100%;
+                          text-align: left;
+                          font-size: 20px;
+                          font-weight: 500;
+                          padding: 15px 20px;
+                          background: #f8f9f9;
+                          @include nofocus;
+                          border: 1px solid #D9E3EC;
+                          color: $txblue;
+                          border-radius: $radius15;
+                          position: relative;
+                          &:after {
+                              position: absolute;
+                              right: 20px;
+                              top: 26px;
+                              @include transition(100ms ease);
+                          }
+                        }
+                        .dropdown-menu {
+                            width: 100%;
+                            width: 100%;
+                            border-radius: $radius15;
+                            box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.3);
+                            border-color: #e8eaea;
+                            background: #ffffff;
+                            .dropdown-item {
+                                font-size: 17px;
+                                padding-top: 6px;
+                                padding-bottom: 6px;
+                                font-weight: 500;
+                            }
+                        }
+                        &.show {
+                            .btn {
+                                &:after {
+                                    @include transform(rotate(-180deg)) ;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: $txgrey;
+            }
+            ::-moz-placeholder { /* Firefox 19+ */
+              color: $txgrey;
+            }
+            :-ms-input-placeholder { /* IE 10+ */
+              color: $txgrey;
+            }
+            :-moz-placeholder { /* Firefox 18- */
+              color: $txgrey;
+            }
+            .alertbx-container {
+              .alertbx {
+                    @include dflex;
+                    align-items: center;
+                    background: #F8F9F9;
+                    border-radius: 15px;
+                    border: 1px solid #D9E3EC;
+                    position: relative;
+                    padding: 10px 10px 10px 20px;
+                    margin: 0 0 10px;
+                    min-height: 65px;
+                    .togglelabel {
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: #747474;
+                        margin: 0 25px;
+                        min-width: 160px;
+                      }
+                      .alertinfo {
+                        font-size: 18px;
+                        font-weight: 500;
+                        color: #747474;
+                      }
+                      .alert_editdrop {
+                        position: absolute;
+                        right: 13px;
+                          .dropdown {
+                            .nav-link {
+                                text-transform: uppercase;
+                                border: 2px solid $txblue;
+                                border-radius: $radius10;
+                                font-weight: 600;
+                                min-width: 85px;
+                                text-align: center;
+                                color: $txblue;
+                                cursor: pointer;
+                                &:hover {
+                                    background: $txblue;
+                                    color: $white;
+                                }
+                                .cancel-image {
+                                    display: none;
+                                }
+                              }
+                              &.show {
+                                  .nav-link {
+                                      opacity: 0;
+                                  }
+                              }
+                              &.active {
+                                  .nav-link {
+                                      padding: 0;
+                                      border: none;
+                                      background: none;
+                                      transition: none;
+                                      text-align: right;
+                                        .cancel-image {
+                                            display: inline-block;
+                                            max-width: 45px;
+                                        }
+                                        .tx {
+                                            display: none;
+                                        }
+                                  }
+                                  .dropdown-menu {
+                                      display: block;
+                                  }
+                              }
+                          }
+                          .dropdown-menu {
+                            min-width: 950px;
+                            transform: translateX(0) !important;
+                            border-radius: 40px 0 40px 40px;
+                            padding: 30px;
+                            border: none;
+                            box-shadow: 0px 2px 3px rgba(0, 0, 0, .15);
+                              &.client-dropdown {
+                                  min-width: 400px;
+                              }
+                              &.active {
+                                  display: block;
+                              }
+                              .smsdrop-holder {
+                                    .smsheader {
+                                        h3 {
+                                            color: $txblue;
+                                            font-size: 24px;
+                                            font-weight: 600;
+                                            border-bottom: 2px solid $txblue;
+                                            padding-bottom: 10px;
+                                            margin-bottom: 18px;
+                                        }
+                                    }
+                                    .smsbody {
+                                        .textarea-holder {
+                                            .form-group {
+                                                position: relative;
+                                            }
+                                            .adrop-container {
+                                                position: relative;
+                                                  .adrop-holder {
+                                                      width: 450px;
+                                                      box-shadow: 0px 2px 3px rgba(0,0,0, 0.15);
+                                                      border-radius: 40px 0 40px 40px;
+                                                      padding: 30px;
+                                                      position: absolute;
+                                                      right: 10px;
+                                                      top: -5px;
+                                                      background: #fff;
+                                                      z-index: 1;
+                                                      display: none;
+                                                      h3 {
+                                                          position: relative;
+                                                          .icons {
+                                                              margin-right: 10px;
+                                                              img {
+                                                                  width: 40px;
+                                                              }
+                                                          }
+                                                          .cancelbtn {
+                                                              position: absolute;
+                                                              right: -10px;
+                                                              top: -10px;
+                                                              .btn {
+                                                                  padding: 5px;
+                                                                  line-height: 1;
+                                                              }
+                                                          }
+                                                      }
+                                                      .contbx {
+                                                            .row-holder {
+                                                                cursor: pointer;
+                                                                display: flex;
+                                                                flex-wrap: wrap;
+                                                                  .lftbx {
+                                                                      flex: 0 0 50%;
+                                                                      max-width: 50%;
+                                                                      font-size: 18px;
+                                                                      color: #5E5E5E;
+                                                                  }
+                                                                  .rgtbx {
+                                                                      flex: 0 0 50%;
+                                                                      max-width: 50%;
+                                                                      text-align: right;
+                                                                      font-size: 18px;
+                                                                      color: #5E5E5E;
+                                                                  }
+                                                            }
+                                                      }
+                                                  }
+                                                  &.open {
+                                                      .adrop-holder {
+                                                          display: block;
+                                                      }
+                                                  }
+                                            }
+                                            .form-control {
+                                                height: auto;
+                                                background: #EFF3F6;
+                                                border-radius: $radius15;
+                                                border-color: transparent;
+                                                @include nofocus;
+                                              }
+                                              .editag {
+                                                  position: absolute;
+                                                  right: 10px;
+                                                  bottom: 10px;
+                                                  background: transparent;
+                                                  border: none;
+                                                  max-width: 30px;
+                                              }
+                                              ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                                                  font-size: 20px;
+                                              }
+                                              ::-moz-placeholder { /* Firefox 19+ */
+                                                  font-size: 20px;
+                                              }
+                                              :-ms-input-placeholder { /* IE 10+ */
+                                                  font-size: 20px;
+                                              }
+                                              :-moz-placeholder { /* Firefox 18- */
+                                                  font-size: 20px;
+                                              }
+                                        }
+                                        .txbx {
+                                            p {
+                                                color: #747474;
+                                                font-size: 18px;
+                                                font-weight: 500;
+                                            }
+                                        }
+                                        .savebtn {
+                                            text-align: right;
+                                            .btn {
+                                                background: $dark-blue;
+                                                color: $white;
+                                                border-radius: $radius10;
+                                                min-width: 75px;
+                                                text-transform: uppercase;
+                                                font-weight: 600;
+                                            }
+                                        }
+                                        ul {
+                                            li {
+                                                margin: 0 0 12px;
+                                            }
+                                        }
+                                    }
+                              }
+                          }
+                      }
+                      .alert_editdrop_one {
+                        position: absolute;
+                        right: 130px;
+                          .dropdown {
+                            .nav-link {
+                                text-transform: uppercase;
+                                border: 2px solid $txblue;
+                                border-radius: $radius10;
+                                font-weight: 600;
+                                min-width: 85px;
+                                text-align: center;
+                                color: $txblue;
+                                cursor: pointer;
+                                &:hover {
+                                    background: $txblue;
+                                    color: $white;
+                                }
+                                .cancel-image {
+                                    display: none;
+                                }
+                              }
+                              &.show {
+                                  .nav-link {
+                                      opacity: 0;
+                                  }
+                              }
+                              &.active {
+                                  .nav-link {
+                                      padding: 0;
+                                      border: none;
+                                      background: none;
+                                      transition: none;
+                                      text-align: right;
+                                        .cancel-image {
+                                            display: inline-block;
+                                            max-width: 45px;
+                                        }
+                                        .tx {
+                                            display: none;
+                                        }
+                                  }
+                                  .dropdown-menu {
+                                      display: block;
+                                  }
+                              }
+                          }
+                          .dropdown-menu {
+                            min-width: 950px;
+                            transform: translateX(0) !important;
+                            border-radius: 40px 0 40px 40px;
+                            padding: 30px;
+                            border: none;
+                            box-shadow: 0px 2px 3px rgba(0, 0, 0, .15);
+                              &.client-dropdown {
+                                  min-width: 400px;
+                              }
+                              &.active {
+                                  display: block;
+                              }
+                              .smsdrop-holder {
+                                    .smsheader {
+                                        h3 {
+                                            color: $txblue;
+                                            font-size: 24px;
+                                            font-weight: 600;
+                                            border-bottom: 2px solid $txblue;
+                                            padding-bottom: 10px;
+                                            margin-bottom: 18px;
+                                        }
+                                    }
+                                    .smsbody {
+                                        .textarea-holder {
+                                            .form-group {
+                                                position: relative;
+                                            }
+                                            .adrop-container {
+                                                position: relative;
+                                                  .adrop-holder {
+                                                      width: 450px;
+                                                      box-shadow: 0px 2px 3px rgba(0,0,0, 0.15);
+                                                      border-radius: 40px 0 40px 40px;
+                                                      padding: 30px;
+                                                      position: absolute;
+                                                      right: 10px;
+                                                      top: -5px;
+                                                      background: #fff;
+                                                      z-index: 1;
+                                                      display: none;
+                                                      h3 {
+                                                          position: relative;
+                                                          .icons {
+                                                              margin-right: 10px;
+                                                              img {
+                                                                  width: 40px;
+                                                              }
+                                                          }
+                                                          .cancelbtn {
+                                                              position: absolute;
+                                                              right: -10px;
+                                                              top: -10px;
+                                                              .btn {
+                                                                  padding: 5px;
+                                                                  line-height: 1;
+                                                              }
+                                                          }
+                                                      }
+                                                      .contbx {
+                                                            .row-holder {
+                                                                cursor: pointer;
+                                                                display: flex;
+                                                                flex-wrap: wrap;
+                                                                  .lftbx {
+                                                                      flex: 0 0 50%;
+                                                                      max-width: 50%;
+                                                                      font-size: 18px;
+                                                                      color: #5E5E5E;
+                                                                  }
+                                                                  .rgtbx {
+                                                                      flex: 0 0 50%;
+                                                                      max-width: 50%;
+                                                                      text-align: right;
+                                                                      font-size: 18px;
+                                                                      color: #5E5E5E;
+                                                                  }
+                                                            }
+                                                      }
+                                                  }
+                                                  &.open {
+                                                      .adrop-holder {
+                                                          display: block;
+                                                      }
+                                                  }
+                                            }
+                                            .form-control {
+                                                height: auto;
+                                                background: #EFF3F6;
+                                                border-radius: $radius15;
+                                                border-color: transparent;
+                                                @include nofocus;
+                                              }
+                                              .editag {
+                                                  position: absolute;
+                                                  right: 10px;
+                                                  bottom: 10px;
+                                                  background: transparent;
+                                                  border: none;
+                                                  max-width: 30px;
+                                              }
+                                              ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                                                  font-size: 20px;
+                                              }
+                                              ::-moz-placeholder { /* Firefox 19+ */
+                                                  font-size: 20px;
+                                              }
+                                              :-ms-input-placeholder { /* IE 10+ */
+                                                  font-size: 20px;
+                                              }
+                                              :-moz-placeholder { /* Firefox 18- */
+                                                  font-size: 20px;
+                                              }
+                                        }
+                                        .txbx {
+                                            p {
+                                                color: #747474;
+                                                font-size: 18px;
+                                                font-weight: 500;
+                                            }
+                                        }
+                                        .savebtn {
+                                            text-align: right;
+                                            .btn {
+                                                background: $dark-blue;
+                                                color: $white;
+                                                border-radius: $radius10;
+                                                min-width: 75px;
+                                                text-transform: uppercase;
+                                                font-weight: 600;
+                                            }
+                                        }
+                                        ul {
+                                            li {
+                                                margin: 0 0 12px;
+                                            }
+                                        }
+                                    }
+                              }
+                          }
+                      }
+                  }
+            }
+            .additonal-container {
+                .alertbx {
+                    @include dflex;
+                    align-items: center;
+                    background: #F8F9F9;
+                    border-radius: 15px;
+                    border: 1px solid #D9E3EC;
+                    position: relative;
+                    padding: 10px 10px 10px 20px;
+                    margin: 0 0 10px;
+                    min-height: 65px;
+                    .togglelabel {
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: #747474;
+                        margin: 0 25px;
+                        min-width: 160px;
+                    }
+                    .addition-checks {
+                        position: absolute;
+                        right: 20px;
+                        .check-holder {
+                            @include dflex;
+                            align-items: center;
+                            .check-form-group {
+                                padding-left: 30px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .submitbtn-holder button.submit-btn{
+        background: #2092E9;
+        color: #fff;
+        border-radius: 10px;
+        font-weight: 600;
+        float: right;
+        margin-top: 10px;
+        width:70px;
+    }
+    .submitbtn-holder button.submit-btn.b-m {
+        margin-bottom: 10px;
+    } 
+}
+
+/* New design Starts */
+
+.uploadbx-holder {
+    .innerbx {
+      display: flex;
+      flex-wrap: wrap;
+      .upload-area {
+      flex: 0 0 150px;
+      max-width: 150px;
+      span {
+        border: 2px dashed #162546;
+        border-radius: 15px;
+        padding: 30px;
+        height: 142px;
+        width: 142px;
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+      }
+  }
+  .addbtn-area {
+      flex: 0 0 calc(100% - 150px);
+      max-width: calc(100% - 150px);
+      padding: 20px;
+      label {
+        font-size: 13px;
+        color: #162546;
+        width: 110px;
+        line-height: 1;
+        margin: 0 0 24px;
+        font-weight: 500;
+      }
+      .upload-holder {
+        .uploadbtn {
+            .btn {
+              text-transform: uppercase;
+              border: 2px solid #254161;
+              border-radius: 10px;
+              font-weight: 600;
+              min-width: 120px;
+              text-align: center;
+              color: #254161;
+              cursor: pointer;
+              padding: 10px;
+              &:hover {
+                background: #254161;
+                color: #fff;
+              }
+            }
+        }
+        .txinfo {
+      font-size: 20px;
+      color: #162546;
+      font-weight: 400;
+          margin: 0 0 0 10px;
+  }
+      }
+  }
+  }
+  }
+  
+  .subrgtbtn-holder {
+      text-align: right;
+      .layoutbtn {
+            margin: 0 0 24px;
+          .gotobtn {
+            color: #2092E9;
+            font-size: 20px;
+            font-weight: 700;
+          }
+      }
+      .submitbtn-holder {
+        .btn {
+            text-transform: uppercase;
+            border: 2px solid #254161;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            color: #254161;
+            cursor: pointer;
+            padding: 10px 20px;
+            &:hover {
+              background: #254161;
+              color: #fff;
+            }
+          }
+      }
+  }
+  
+  .upload-file-input {
+    display: none;
+}
+  
+  /* New design Ends */

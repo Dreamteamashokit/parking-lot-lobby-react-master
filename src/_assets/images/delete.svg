@@ -1,0 +1,11 @@
+<svg id="delete" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <g id="Group_613" data-name="Group 613">
+    <path id="Path_1913" data-name="Path 1913" d="M25,50A25,25,0,1,1,50,25,25.028,25.028,0,0,1,25,50ZM25,2.083A22.917,22.917,0,1,0,47.917,25,22.944,22.944,0,0,0,25,2.083Z" fill="#d9e8f5"/>
+  </g>
+  <g id="Group_614" data-name="Group 614" transform="translate(15.856 15.858)">
+    <path id="Path_1914" data-name="Path 1914" d="M8.653,25.9a1.041,1.041,0,0,1-.737-1.777l16.2-16.2a1.042,1.042,0,0,1,1.473,1.473l-16.2,16.2a1.038,1.038,0,0,1-.735.3Z" transform="translate(-7.611 -7.612)" fill="#d9e8f5"/>
+  </g>
+  <g id="Group_615" data-name="Group 615" transform="translate(15.856 15.856)">
+    <path id="Path_1915" data-name="Path 1915" d="M24.857,25.9a1.046,1.046,0,0,1-.738-.3L7.915,9.388A1.042,1.042,0,0,1,9.388,7.915l16.2,16.2a1.042,1.042,0,0,1,0,1.473A1.031,1.031,0,0,1,24.857,25.9Z" transform="translate(-7.611 -7.611)" fill="#d9e8f5"/>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+import { combineReducers } from 'redux';
+
+import { authentication, forgot, resetPassword } from './authentication.reducer';
+import { registration } from './registration.reducer';
+import { users } from './users.reducer';
+import { adminAuthentication, addTwilioNumber, fetchLocationList, fetchDashboardCount, adminClientlist } from './admin.reducer';
+import { alert } from './alert.reducer';
+import {settings} from './settings.reducer';
+import {commons, quickResponse, chat} from './commons.reducer';
+const rootReducer = combineReducers({
+  authentication,
+  registration,
+  users,
+  adminAuthentication,
+  adminClientlist,
+  fetchDashboardCount,
+  fetchLocationList,
+  addTwilioNumber,
+  alert,
+  forgot,
+  resetPassword,
+  settings,
+  commons,
+  quickResponse,
+  chat
+});
+
+export default rootReducer;

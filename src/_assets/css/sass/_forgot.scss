@@ -1,0 +1,89 @@
+.forgot-grid-container {
+      @include dflex;
+      padding: 0px;
+      min-height: 100vh;
+      .contbx-holder {
+          flex: 0 0 100%;
+          max-width: 100%;
+          padding: 40px 100px 0;
+          .imgbx-holder {
+              text-align: center;
+              img {
+                  max-width: 450px;
+              }
+          }
+          .inner {
+              text-align: center;
+              max-width: 350px;
+              margin: 0 auto;
+                h3 {
+                    font-size: 28px;
+                    line-height: 34px;
+                    color: #747474;
+                    margin: 0 0;
+                    span {
+                        font-weight: 600;
+                        color: #000;
+                    }
+                }
+                p {
+                  margin: 30px 0;
+                  color: #a2a2a2;
+                  font-size: 17px;
+                }
+                .form-group {
+                    .form-control {
+                        background: #FBFBFB;
+                        border-color: #D9E3EC;
+                        border-radius: 50px;
+                        min-height: 60px;
+                        padding-left: 30px;
+                        @include nofocus;
+                        font-size: 17px;
+                    }
+                }
+                .submitbtn-holder {
+                    text-align: center;
+                    margin-top: 40px;
+                    .btn {
+                        background: $green;
+                        border-radius: 50%;
+                        padding: 8px;
+                        height: 65px;
+                        width: 65px;
+                        box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.25);
+                        @include transition(0.3s ease);
+                        &:hover {
+                            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
+                        }
+                        &.cancel {
+                            margin-right: 15px;
+                            background: $red;
+                            img {
+                                max-width: 32px;
+                            }
+                        }
+                    }
+                }
+                .sign-btmbx {
+                    background: #F9FEFB;
+                    border-radius: 16px;
+                    border: 1px solid #E3F2EA;
+                    text-align: center;
+                    padding: 30px;
+                    max-width: 360px;
+                    margin: 60px auto 0px;
+                    p {
+                        color: #747474;
+                        font-weight: 500;
+                        margin: 0;
+                        a {
+                            color: $green;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+      }
+
+  }

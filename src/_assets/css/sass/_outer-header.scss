@@ -1,0 +1,144 @@
+@import "mixin";
+@import "variable";
+.header {
+  background: $green;
+  padding: 5px 0;
+  height: 65px;
+  .navbar {
+      padding: 0;
+      .navbar-brand {
+          max-width: 150px;
+          padding: 0;
+      }
+      .rightbx {
+          @include dflex;
+          align-items: center;
+          .form-inline {
+              position: relative;
+              .form-control {
+                background: transparent;
+                color: #fff;
+                @include nofocus;
+                border-color: $white;
+                border-radius: $radius10;
+                padding-left: 40px;
+                font-size: 18px;
+                font-weight: 500;
+              }
+              .btn {
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  max-width: 44px;
+              }
+          }
+          .nav-item {
+              .nav-link {
+                  padding: 0 10px;
+                  .notify {
+                      max-width: 35px;
+                  }
+                  .settings {
+                      max-width: 26px;
+                  }
+                  &.user {
+                    background: $white;
+                    border-radius: 50px;
+                    height: 32px;
+                    width: 32px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $green;
+                    font-size: 16px;
+                    font-weight: 600;
+                  }
+              }
+              .dropdown-menu {
+                right: 0;
+                left: auto;
+            }
+          }
+          .settings {
+              margin-right: 8px;
+          }
+          .notify {
+              .nav-item {
+                  .nav-link {
+                      position: relative;
+                      .number {
+                          height: 20px;
+                          width: 20px;
+                          border-radius: 50%;
+                          font-size: 11px;
+                          background: $red;
+                          border: 2px solid $green;
+                          color: $white;
+                          display: inline-flex;
+                          align-items: center;
+                          justify-content: center;
+                          position: absolute;
+                          top: -1px;
+                          right: 4px;
+                      }
+                  }
+              }
+          }
+      }
+      .timer {
+        .nav-link {
+            border: 1px solid $white;
+            border-radius: $radius10;
+            color: $white;
+            @include dflex;
+            align-items: center;
+            .clock {
+                max-width: 22px;
+            }
+            span {
+                font-size: 17px;
+                margin: 0 0 0 8px;
+                line-height: 1;
+                font-weight: 500;
+            }
+        }
+      }
+  }
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #B1E4C7;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: #B1E4C7;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    color: #B1E4C7;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    color: #B1E4C7;
+  }
+}
+
+.sub-header {
+    background: $dark-blue;
+    color: $white;
+    padding: 6px 0;
+    height: 52px;
+    .company-name {
+        p {
+            font-size: 24px;
+            font-weight: 600;
+        }
+    }
+    .add-client {
+        text-align: right;
+        .btn {
+            background: $light-blue;
+            color: $white;
+            border-radius: $radius10;
+            font-weight: 600;
+            .icon {
+                margin-right: 6px;
+            }
+        }
+    }
+}

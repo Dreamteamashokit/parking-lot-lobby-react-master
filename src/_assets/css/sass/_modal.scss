@@ -1,0 +1,63 @@
+.delete-modal-content {
+    border-radius: $radius15;
+    .modal-header {
+        border: none;
+        padding-bottom: 0;
+        .close {
+            color: $txblue;
+            opacity: 1;
+            font-size: 26px;
+        }
+    }
+    .modal-body {
+      text-align: center;
+      .icon-holder {
+          img {
+            width: 62px;
+          }
+      }
+        h1 {
+          font-size: 22px;
+          color: $txblue;
+          letter-spacing: 0.5px;
+          line-height: 26px;
+          font-weight: 600;
+          margin: 20px 0 5px;
+        }
+        p {
+          font-size: 14px;
+          color: $red;
+          line-height: 20px;
+          font-style: italic;
+        }
+        h3 {
+          font-size: 16px;
+          font-weight: 600;
+          color: $txblue;
+          line-height: 22px;
+          margin: 10px 0 0;
+        }
+    }
+    .modal-footer {
+        padding-top: 0;
+        padding-bottom: 50px;
+        border: none;
+        justify-content: center;
+        .btn {
+            color: $white;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 6px;
+            min-width: 130px;
+            padding: 10px;
+            @include nofocus;
+            &.bluebtn {
+                background: $dark-blue;
+            }
+            &.redbtn {
+                background: $red;
+            }
+        }
+    }
+}

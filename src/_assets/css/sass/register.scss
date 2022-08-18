@@ -1,0 +1,95 @@
+.upload-group {
+    .drop-zone {
+      margin: auto;
+      border-radius: 30px;
+        .content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #0782d0;
+            .drag_file-holder {
+              background: none;
+              box-shadow: none;
+              border-radius: 0;
+              text-align: center;
+              width: 100%;
+              padding-left: 0;
+              padding-right: 0;
+              margin: 0;
+              background: white;
+              border-radius: 26px;
+              padding: 14px;
+              border: 1px solid #c3d8ea;
+                .drag-contbx {
+                  width: 100%;
+                  border: 2px dashed #97b0c3;
+                  background: url("../../images/upload.svg") center 55px/100px no-repeat;
+                  text-align: center;
+                  padding: 20px 0 25px;
+                  border-radius: 20px;
+                    h1 {
+                      color: #064670;
+                      text-transform: capitalize;
+                      font-size: 20px !important;
+                      font-weight: 600;
+                    }
+                    .addfile-btn {
+                      padding-top: 120px;
+                        label {
+                          background: #fff;
+                          width: 150px;
+                          text-decoration: none;
+                          font-weight: 700 !important;
+                          padding: 10px 15px;
+                          box-shadow: none;
+                          border-radius: 10px;
+                          font-size: 12px;
+                          cursor: pointer;
+                          display: inline-block;
+                          text-transform: uppercase;
+                          margin: 0;
+                          border: 2px solid #064670;
+                          color: #064670;
+                          transition: 300ms ease;
+                          -webkit-transition: 300ms ease;
+                          -moz-transition: 300ms ease;
+                          -ms-transition: 300ms ease;
+                          &:hover {
+                              background: #064670;
+                              color: #fff;
+                          }
+                        }
+                    }
+                    .btmdesp {
+                        font-size: 13px;
+                        line-height: 1;
+                        font-weight: 500;
+                        color: #818a92;
+                        padding: 15px 15px 0;
+                        a {
+                          color: #43b872;
+                        }
+                    }
+                }
+                .select-img-content {
+                  width: 100%;
+                  border: 2px dashed #97b0c3;
+                  text-align: center;
+                  padding: 20px 0 25px;
+                  border-radius: 20px;
+                }
+                .upload-file-input {
+                  display: none;
+              }
+            }
+        }
+    }
+}
+#calendly-submit-message {
+color: #FD5353;
+text-align: center;
+padding: 8px;
+}
+.calendly-inline-widget iframe{
+  border-radius: 10px;
+}
