@@ -38,7 +38,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const {totalLocations, totalProvider} = this.props.dashboardCount;
+        const {totalLocations, totalProvider, totalJotforms} = this.props.dashboardCount;
         return (<div>
             <section className="visitor-review-holder">
                 <div className="cstm-container">
@@ -85,6 +85,27 @@ class Dashboard extends React.Component {
                                         <div className="panel">
                                             Total Locations 
                                             <h2>{totalLocations}</h2>
+                                        </div>
+                                    </div>
+                                   </div>
+                            </div>
+                        </div>
+                    </div>
+                    </Link>
+                       </div>
+                   </div>
+                   <div className="row mt-5">
+                   <div className="col-sm-2"></div>
+                       <div className="col-sm-4">
+                        <Link to="/admin/jotform-list" style={{width:"100%"}}>
+                       <div className="tablebx-holder">
+                        <div className="table-inner">
+                               <div className="row">
+                                   <div className="col-sm-6">
+                                   <div className="panel">
+                                        <div className="panel">
+                                            Total Jotforms 
+                                            <h2>{totalJotforms}</h2>
                                         </div>
                                     </div>
                                    </div>

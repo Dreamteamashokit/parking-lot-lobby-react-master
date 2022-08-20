@@ -9,6 +9,7 @@ import { alertActions } from '../_actions';
 import { PrivateRoute, AdminRoute } from '../_components';
 import Dashboard from '../admin/dashboard';
 import ClientList from '../admin/client/client_list';
+import JotformList from '../admin/jotform/jotform-list';
 import ClientLocation from '../admin/client/client_location';
 import ClientRegisterPage from '../admin/client/client_register';
 const LoginPage = lazy(()=> import('../_commanPages/LoginPage'));
@@ -76,6 +77,7 @@ class App extends React.Component {
                         </Route>
                         <AdminRoute path="/admin/dashboard" component={Dashboard} />
                         <AdminRoute path="/admin/client-list" component={ClientList} />
+                        <AdminRoute path="/admin/jotform-list" component={JotformList} />
                         <AdminRoute path="/admin/client-location/:id" component={ClientLocation} />
                         <AdminRoute path="/admin/client-register" component={ClientRegisterPage} />
                         <Route path="*" component={My404Component} />

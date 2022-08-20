@@ -69,7 +69,56 @@ export function adminClientlist(state = {fetchingClientList:false,clientList:[],
     }
 }
 
-export function fetchDashboardCount(state = {fetchingDashboardCount:false, dashboardCount:{totalProvider:0,totalLocations:0}}, action){
+export function adminJotformlist(state = {fetchingJotformList:false,jotformList:[], registering:false, registerError:false, updateStatus:false}, action){
+  switch(action.type){
+      case adminConstants.JOTFORM_LIST_REQUEST:
+          return {...state, fetchingJotformList:true}
+      case adminConstants.JOTFORM_LIST_SUCCESS:
+          return {...state, fetchingJotformList:false, jotformList: action.data.providers}
+      case adminConstants.JOTFORM_LIST_FAILURE:
+          return {...state, fetchingJotformList:false, clientJotformError:true}
+      
+      case adminConstants.REGISTER_REQUEST:
+          return {...state, registering:true, registerError:false}
+      case adminConstants.REGISTER_SUCCESS:
+          return {...state, registering:false, registerError:false}
+      case adminConstants.REGISTER_FAILURE:
+          return {...state, registering:false, registerError:true}
+
+      case adminConstants.UPDATE_JOTFORM_STATUS_REQUEST:
+        return {...state, updateStatus:true}
+      case adminConstants.UPDATE_JOTFORM_STATUS_SUCCESS:
+        return {...state, 
+          updateStatus:false,
+          jotformList: state.jotformList.map(user => {
+            if (user._id === action.data._id) {
+              return { ...user, status: action.data.status };
+            }
+            return user;
+          })
+        }
+      case adminConstants.UPDATE_JOTFORM_STATUS_FAILURE:
+        return {...state, updateStatus:false}
+
+      case adminConstants.ALLOW_LOCATION_ADD_REQUEST:
+          return {...state, updateStatus:true}
+      case adminConstants.ALLOW_LOCATION_ADD_SUCCESS:
+          return {...state, 
+            updateStatus:false,
+            jotformList: state.jotformList.map(user => {
+              if (user._id === action.data._id) {
+                return { ...user, allowLocationAdd: action.data.allowLocationAdd };
+              }
+              return user;
+            })
+          }
+      case adminConstants.ALLOW_LOCATION_ADD_FAILURE:
+          return {...state, updateStatus:false}
+      default : return state
+  }
+}
+
+export function fetchDashboardCount(state = {fetchingDashboardCount:false, dashboardCount:{totalProvider:0,totalLocations:0,totalJotforms:0}}, action){
   switch(action.type){
       case adminConstants.DASHBOARD_COUNT_REQUEST:
           return {...state, fetchingDashboardCount:true}
@@ -144,6 +193,18 @@ export function addTwilioNumber(state={}, action){
         return {...state, addingTwilioNumber:false}
     case adminConstants.ADD_TWILIO_FAILURE:
         return {...state, addingTwilioNumber:false}
+    default : return state
+  }
+}
+
+export function addLocationJotform(state={}, action){
+  switch(action.type){
+    case adminConstants.ADD_LOCATION_JOTFORM_REQUEST:
+      return{...state, addingLocationJotform:true}
+    case adminConstants.ADD_LOCATION_JOTFORM_SUCCESS:
+        return {...state, addingLocationJotform:false}
+    case adminConstants.ADD_LOCATION_JOTFORM_FAILURE:
+        return {...state, addingLocationJotform:false}
     default : return state
   }
 }

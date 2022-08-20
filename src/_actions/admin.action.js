@@ -7,11 +7,14 @@ export const adminActions = {
     login,
     logout,
     fetchClientList:fetchClientList,
+    fetchJotformList:fetchJotformList,
     fetchDashboardCount:fetchDashboardCount,
     fetchLocationList:fetchLocationList,
     addTwilioNumber:addTwilioNumber,
+    addLocationJotform,
     clientRegister,
     addLocation,
+    addJotform,
     resetLocation,
     updateClientStatus,
     allowLocationADD,
@@ -102,6 +105,31 @@ function success(data) { return { type: adminConstants.CLIENT_LIST_SUCCESS, data
 function failure(error) { return { type: adminConstants.CLIENT_LIST_FAILURE, error } }
 }
 
+function fetchJotformList(){
+    return dispatch => {
+        dispatch(request())
+        adminService.fetchJotformList('admin/jotform-list?page=1&limit=10')
+            .then(
+                response => {
+                    if(response.status){
+                     dispatch(success(response.data))
+                    }
+                    else
+                    {
+                    dispatch(failure(response.message))
+                    }
+                },
+                error => {
+                    console.log(error)
+                    dispatch(failure(error.toString()))
+                    errorToast(error.toString())
+                }
+            );
+    }
+function request() { return { type: adminConstants.JOTFORM_LIST_REQUEST } }
+function success(data) { return { type: adminConstants.JOTFORM_LIST_SUCCESS, data } }
+function failure(error) { return { type: adminConstants.JOTFORM_LIST_FAILURE, error } }
+}
 
 function fetchLocationList(clientId){
 
@@ -154,6 +182,31 @@ function addTwilioNumber(payload){
     function success() { return { type: adminConstants.ADD_TWILIO_SUCCESS } }
     function failure(error) { return { type: adminConstants.ADD_TWILIO_FAILURE, error } }
 }
+function addLocationJotform(payload){
+    return dispatch => {
+        dispatch(request())
+        adminService.postAdmin(`admin/add-location-jotform`, payload)
+        .then(response=>{
+            if(response.status){
+                successToast('jotform added success');
+                dispatch(success(response.data))
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+               }
+               else
+               {
+                errorToast(response.message)
+                dispatch(failure(response.message))
+               }
+        })
+
+    }
+
+    function request() { return { type: adminConstants.ADD_LOCATION_JOTFORM_REQUEST } }
+    function success() { return { type: adminConstants.ADD_LOCATION_JOTFORM_SUCCESS } }
+    function failure(error) { return { type: adminConstants.ADD_LOCATION_JOTFORM_FAILURE, error } }
+}
 function clientRegister(user) {
     return dispatch => {
         dispatch(request(user));
@@ -203,6 +256,31 @@ function addLocation(payload) {
     function request(location) { return { type: adminConstants.LOCATION_ADD_REQUEST, location } }
     function success(location) { return { type: adminConstants.LOCATION_ADD_SUCCESS, location } }
     function failure(error) { return { type: adminConstants.LOCATION_ADD_FAILURE, error } }
+}
+function addJotform(payload) {
+    return dispatch => {
+        dispatch(request(payload));
+        adminService.postAdmin(`admin/add-jotform`, payload)
+            .then(response => { 
+                    if(response.status){
+                        dispatch(success(response.data))
+                    }
+                    else
+                    {
+                    dispatch(failure(response.message))
+                    errorToast(response.message);
+                    }
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    errorToast(error.toString())
+                }
+            );
+    };
+
+    function request(jotform) { return { type: adminConstants.JOTFORM_ADD_REQUEST, jotform } }
+    function success(jotform) { return { type: adminConstants.JOTFORM_ADD_SUCCESS, jotform } }
+    function failure(error) { return { type: adminConstants.JOTFORM_ADD_FAILURE, error } }
 }
 function resetLocation() {
     return dispatch => {
