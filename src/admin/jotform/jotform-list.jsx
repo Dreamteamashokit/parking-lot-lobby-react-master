@@ -2,6 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import "../../_assets/css/sass/visitor-review.scss";
 import "react-phone-number-input/style.css";
+import { default as dropdownSMSVG } from "../../_assets/images/dropdown-sm.svg";
+import { default as accessProfileSVG } from "../../_assets/images/access-profile.svg";
+import { history } from "../../_helpers";
 import Modal from "react-bootstrap/Modal";
 import { adminActions } from "../../_actions";
 import { Link } from "react-router-dom";
@@ -182,6 +185,64 @@ class ClientJotform extends React.Component {
                             <td className="name" key="jotformIdValue_{index}">
                               <div className="name-inner">
                                 <h3>{value.jotformId}</h3>
+                              </div>
+                            </td>
+                            <td className="actions" key="actionFields_{index}">
+                              <div className="filerdrop-holder">
+                                <div className="dropdown">
+                                  <a
+                                    className="nav-link"
+                                    href="#"
+                                    id="nameDropdown2"
+                                    role="button"
+                                    data-display="static"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                  >
+                                    <span className="dropbtn">
+                                      <span className="icon">
+                                        {" "}
+                                        <img src={dropdownSMSVG} alt="" />{" "}
+                                      </span>
+                                    </span>
+                                  </a>
+                                  <div
+                                    className="dropdown-menu dropdown-menu-lg-right"
+                                    aria-labelledby="nameDropdown2"
+                                  >
+                                    <div className="smsdrop-holder">
+                                      <div className="smsbody">
+                                        <label htmlFor="setting-action">
+                                          Jotform Settings
+                                        </label>
+                                        <ul className="test,....">
+                                          <li key="_sub1_{index}">
+                                            <a
+                                              className="btn"
+                                              onClick={() =>
+                                                history.push(
+                                                  `/admin/jotform-questions/${value.jotformId}`
+                                                )
+                                              }
+                                            >
+                                              <span className="icon">
+                                                {" "}
+                                                <img
+                                                  src={accessProfileSVG}
+                                                  alt=""
+                                                />{" "}
+                                              </span>
+                                              <span className="txbx">
+                                                Questions
+                                              </span>
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </td>
                           </tr>

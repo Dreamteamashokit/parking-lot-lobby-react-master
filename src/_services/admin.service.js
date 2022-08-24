@@ -6,6 +6,8 @@ export const adminService = {
     logout,
     fetchClientList:fetchClientList,
     fetchJotformList:fetchJotformList,
+    fetchJotformQuestions,
+    deleteJotformQuestion,
     fetchDashboardCount:fetchDashboardCount,
     fetchLocationList:fetchLocationList,
     postAdmin:postAdmin,
@@ -70,6 +72,34 @@ async function fetchJotformList(endpoint) {
     }
     const requestOptions = {
         method: 'GET',
+        headers: headerPayload,
+    };
+    return fetch(`${config.apiUrl}/${endpoint}`, requestOptions)
+        .then((handleResponse)=>handleResponse.json())
+} 
+
+async function fetchJotformQuestions(endpoint) {
+    const headerObject = adminAuthHeader();
+    const headerPayload = {
+        'Content-Type': 'application/json',
+        ...headerObject
+    }
+    const requestOptions = {
+        method: 'GET',
+        headers: headerPayload,
+    };
+    return fetch(`${config.apiUrl}/${endpoint}`, requestOptions)
+        .then((handleResponse)=>handleResponse.json())
+} 
+
+async function deleteJotformQuestion(endpoint) {
+    const headerObject = adminAuthHeader();
+    const headerPayload = {
+        'Content-Type': 'application/json',
+        ...headerObject
+    }
+    const requestOptions = {
+        method: 'DELETE',
         headers: headerPayload,
     };
     return fetch(`${config.apiUrl}/${endpoint}`, requestOptions)

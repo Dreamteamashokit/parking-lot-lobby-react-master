@@ -118,6 +118,55 @@ export function adminJotformlist(state = {fetchingJotformList:false,jotformList:
   }
 }
 
+export function adminJotformQuestions(state = {fetchingJotformQuestions:false,jotformQuestions:[], registering:false, registerError:false, updateStatus:false}, action){
+  switch(action.type){
+      case adminConstants.JOTFORM_QUESTIONS_REQUEST:
+          return {...state, fetchingJotformQuestions:true}
+      case adminConstants.JOTFORM_QUESTIONS_SUCCESS:
+          return {...state, fetchingJotformQuestions:false, jotformQuestions: action.data.providers}
+      case adminConstants.JOTFORM_QUESTIONS_FAILURE:
+          return {...state, fetchingJotformQuestions:false, clientJotformError:true}
+      
+      case adminConstants.REGISTER_REQUEST:
+          return {...state, registering:true, registerError:false}
+      case adminConstants.REGISTER_SUCCESS:
+          return {...state, registering:false, registerError:false}
+      case adminConstants.REGISTER_FAILURE:
+          return {...state, registering:false, registerError:true}
+
+      case adminConstants.UPDATE_JOTFORM_STATUS_REQUEST:
+        return {...state, updateStatus:true}
+      case adminConstants.UPDATE_JOTFORM_STATUS_SUCCESS:
+        return {...state, 
+          updateStatus:false,
+          jotformQuestions: state.jotformQuestions.map(user => {
+            if (user._id === action.data._id) {
+              return { ...user, status: action.data.status };
+            }
+            return user;
+          })
+        }
+      case adminConstants.UPDATE_JOTFORM_STATUS_FAILURE:
+        return {...state, updateStatus:false}
+
+      case adminConstants.ALLOW_LOCATION_ADD_REQUEST:
+          return {...state, updateStatus:true}
+      case adminConstants.ALLOW_LOCATION_ADD_SUCCESS:
+          return {...state, 
+            updateStatus:false,
+            jotformQuestions: state.jotformQuestions.map(user => {
+              if (user._id === action.data._id) {
+                return { ...user, allowLocationAdd: action.data.allowLocationAdd };
+              }
+              return user;
+            })
+          }
+      case adminConstants.ALLOW_LOCATION_ADD_FAILURE:
+          return {...state, updateStatus:false}
+      default : return state
+  }
+}
+
 export function fetchDashboardCount(state = {fetchingDashboardCount:false, dashboardCount:{totalProvider:0,totalLocations:0,totalJotforms:0}}, action){
   switch(action.type){
       case adminConstants.DASHBOARD_COUNT_REQUEST:

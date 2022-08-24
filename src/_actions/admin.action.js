@@ -11,6 +11,9 @@ export const adminActions = {
     fetchDashboardCount:fetchDashboardCount,
     fetchLocationList:fetchLocationList,
     addTwilioNumber:addTwilioNumber,
+    fetchJotformQuestions,
+    addJotformQuestion,
+    deleteJotformQuestion,
     addLocationJotform,
     clientRegister,
     addLocation,
@@ -129,6 +132,32 @@ function fetchJotformList(){
 function request() { return { type: adminConstants.JOTFORM_LIST_REQUEST } }
 function success(data) { return { type: adminConstants.JOTFORM_LIST_SUCCESS, data } }
 function failure(error) { return { type: adminConstants.JOTFORM_LIST_FAILURE, error } }
+}
+
+function fetchJotformQuestions(formId){
+    return dispatch => {
+        dispatch(request())
+        adminService.fetchJotformQuestions(`jotform/form/${formId}/questions`)
+            .then(
+                response => {
+                    if(response.status){
+                     dispatch(success(response.data))
+                    }
+                    else
+                    {
+                    dispatch(failure(response.message))
+                    }
+                },
+                error => {
+                    console.log(error)
+                    dispatch(failure(error.toString()))
+                    errorToast(error.toString())
+                }
+            );
+    }
+function request() { return { type: adminConstants.JOTFORM_QUESTIONS_REQUEST } }
+function success(data) { return { type: adminConstants.JOTFORM_QUESTIONS_SUCCESS, data } }
+function failure(error) { return { type: adminConstants.JOTFORM_QUESTIONS_FAILURE, error } }
 }
 
 function fetchLocationList(clientId){
@@ -281,6 +310,55 @@ function addJotform(payload) {
     function request(jotform) { return { type: adminConstants.JOTFORM_ADD_REQUEST, jotform } }
     function success(jotform) { return { type: adminConstants.JOTFORM_ADD_SUCCESS, jotform } }
     function failure(error) { return { type: adminConstants.JOTFORM_ADD_FAILURE, error } }
+}
+function addJotformQuestion(formId, payload) {
+    return dispatch => {
+        dispatch(request(payload));
+        adminService.postAdmin(`jotform/form/${formId}/questions`, payload)
+            .then(response => { 
+                    if(response.status){
+                        dispatch(success(response.data))
+                    }
+                    else
+                    {
+                    dispatch(failure(response.message))
+                    errorToast(response.message);
+                    }
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    errorToast(error.toString())
+                }
+            );
+    };
+
+    function request(jotform) { return { type: adminConstants.JOTFORM_QUESTION_ADD_REQUEST, jotform } }
+    function success(jotform) { return { type: adminConstants.JOTFORM_QUESTION_ADD_SUCCESS, jotform } }
+    function failure(error) { return { type: adminConstants.JOTFORM_QUESTION_ADD_FAILURE, error } }
+}
+function deleteJotformQuestion(formId, questionId) {
+    return dispatch => {
+        adminService.deleteJotformQuestion(`jotform/form/${formId}/question/${questionId}`)
+            .then(response => { 
+                    if(response.status){
+                        dispatch(success(response.data))
+                    }
+                    else
+                    {
+                    dispatch(failure(response.message))
+                    errorToast(response.message);
+                    }
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    errorToast(error.toString())
+                }
+            );
+    };
+
+    function request(jotform) { return { type: adminConstants.JOTFORM_QUESTION_DELETE_REQUEST, jotform } }
+    function success(jotform) { return { type: adminConstants.JOTFORM_QUESTION_DELETE_SUCCESS, jotform } }
+    function failure(error) { return { type: adminConstants.JOTFORM_QUESTION_DELETE_FAILURE, error } }
 }
 function resetLocation() {
     return dispatch => {
