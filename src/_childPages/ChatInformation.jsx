@@ -21,8 +21,6 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import { saveAs } from "file-saver";
 import { commonService } from "../_services";
-import axios from "axios";
-import PdfPreview from "./pdfPreview";
 import { default as exportSVG } from "../_assets/images/export.svg";
 import JSZip from "jszip";
 import JSZipUtils from "jszip-utils";
@@ -56,6 +54,7 @@ class ChatInformation extends React.Component {
       isDownloading2: false,
       isPreviewModelShow: false,
       pdfUrl: null,
+      pdfHtml: null,
       isZoomModelShow: false,
       zoomImage: null,
       isDownloadAll:false
@@ -519,6 +518,26 @@ class ChatInformation extends React.Component {
       }
     });
   };
+  previewPdf = async (submissionId, type) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { response } = await commonService.previewPdf(
+          submissionId,
+          type
+        );
+        if (response && response.status) {
+          return resolve(response.data);
+        } else {
+          let messagePayload = response.message
+            ? response.message
+            : "Something wrong during preview pdf.";
+          return reject(messagePayload);
+        }
+      } catch (err) {
+        return reject(err);
+      }
+    });
+  };
 
   //============pdf preview =========//
   hidePreviewModal = () => {
@@ -527,9 +546,9 @@ class ChatInformation extends React.Component {
   openPreviewModal = async (submissionId, type) => {
     try {
       this.uploadeIsLoader(type, true);
-      if (!this.state.pdfUrl) {
-        const pdfUrl = await this.generatePdf(submissionId, type);
-        this.setState({ isPreviewModelShow: true, pdfUrl: pdfUrl });
+      if (1 || !this.state.pdfHtml) {
+        const pdfHtml = await this.previewPdf(submissionId, type);
+        this.setState({ isPreviewModelShow: true, pdfHtml });
       } else {
         this.setState({ isPreviewModelShow: true });
       }
@@ -568,6 +587,7 @@ class ChatInformation extends React.Component {
       popupData,
       updateNote,
       listType,
+      pdfHtml,
       isDownloading1,
       isDownloading2,
     } = this.state;
@@ -785,6 +805,7 @@ class ChatInformation extends React.Component {
                   {(listType !== "waiting" ||
                     popupData.is_delay ||
                     popupData.isNotify ||
+                    1 ||
                     popupData.noShow) && (
                     <div className="tag-pills">
                       <ul>
@@ -844,6 +865,13 @@ class ChatInformation extends React.Component {
                           <li>
                             <button type="button" name="button" className="btn">
                               Exited
+                            </button>
+                          </li>
+                        )}
+                        {(
+                          <li>
+                            <button type="button" name="button" className="btn">
+                              {popupData.isExisting ? 'Existing' : 'New'}
                             </button>
                           </li>
                         )}
@@ -1042,8 +1070,7 @@ class ChatInformation extends React.Component {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div className="modal-body">
-            <PdfPreview pdfUrl={this.state.pdfUrl} />
+          <div className="modal-body" dangerouslySetInnerHTML={{__html: pdfHtml}}>
           </div>
         </Modal>
         <Modal

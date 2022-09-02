@@ -25,6 +25,7 @@ export const commonService = {
     updateCarLobby,
     fetchFormUploads,
     downloadPdf,
+    previewPdf,
     fetchAttachement,
     reviewDocument
 }
@@ -336,6 +337,26 @@ async function downloadPdf(submissionID,type) {
             headers: headerPayload
         };
         const response = await fetch(`${config.apiUrl}/common/${CommonApiEndpoint.generatePdf}?submissionID=${submissionID}&type=${type}`, requestOptions).then(handleResponse);
+        return resolve({backend_url: config.apiUrl, response:response});
+       } catch (err) {
+        return reject(err);
+       }
+   })
+}
+
+async function previewPdf(submissionID,type) {
+   return new Promise(async (resolve,reject)=> {
+       try {
+        const headerObject = authHeader();
+        const headerPayload = {
+            'Content-Type': 'application/json',
+            ...headerObject
+        }
+        const requestOptions = {
+            method: 'GET',
+            headers: headerPayload
+        };
+        const response = await fetch(`${config.apiUrl}/common/${CommonApiEndpoint.generatePdf}?submissionID=${submissionID}&type=${type}&preview=true`, requestOptions).then(handleResponse);
         return resolve({backend_url: config.apiUrl, response:response});
        } catch (err) {
         return reject(err);
