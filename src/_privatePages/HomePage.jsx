@@ -1060,6 +1060,8 @@ class HomePage extends React.Component {
                                                         </div>
                                                         <div className="notify-btn">
                                                             <button type="button" name="button" className="btn">Exited</button>
+                                                            <button type="button" name="button" className="btn ml-2">{value.isExisting ? 'Existing' : 'New'}</button>
+                                                            {value.subPatientData.length === 0 ? '' : <button type="button" name="button" className="btn ml-2">Multi-patient</button>}
                                                         </div>
                                                     </div>
                                                 </div>

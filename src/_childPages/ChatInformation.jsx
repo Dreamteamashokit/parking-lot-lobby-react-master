@@ -384,12 +384,12 @@ class ChatInformation extends React.Component {
       errorToast(message);
     }
   };
-  downloadImageOnClick = async (index) => {
+  downloadImageOnClick = async (index, type = 'png') => {
     try {
       console.log("\n downloadOuterImage index:", index);
       if (index >= 0) {
         const response = await this.bufferImage(this.props.upload_list[index]);
-        saveAs(response, `image_${index}.bmp`);
+        saveAs(response, `image_${index}.${type}`);
       }
     } catch (err) {
       let message =
@@ -399,7 +399,7 @@ class ChatInformation extends React.Component {
       errorToast(message);
     }
   };
-  downloadAllImages = async () => {
+  downloadAllImages = async (type = 'png') => {
     try {
       if (this.props.upload_list && this.props.upload_list.length > 0) {
         const urls = this.props.upload_list;
@@ -410,7 +410,7 @@ class ChatInformation extends React.Component {
         this.setState({isDownloadAll:true});
         urls.forEach(async function (url, index) {
           //const urlArr = url.split('/');
-          const filename = `image_${index + 1}.bmp`;
+          const filename = `image_${index + 1}.${type}`;
           //const filename = urlArr[urlArr.length - 1];
           console.log("\n filename:", filename);
           try {
@@ -805,7 +805,6 @@ class ChatInformation extends React.Component {
                   {(listType !== "waiting" ||
                     popupData.is_delay ||
                     popupData.isNotify ||
-                    1 ||
                     popupData.noShow) && (
                     <div className="tag-pills">
                       <ul>
@@ -1037,20 +1036,50 @@ class ChatInformation extends React.Component {
                     <p
                       onClick={() => this.downloadImageOnClick(index)}
                       className="legend"
+                      style={{bottom: "140px"}}
                     >
-                      Download
+                      PNG
+                    </p>
+                    <p
+                      onClick={() => this.downloadImageOnClick(index, 'jpg')}
+                      className="legend"
+                      style={{bottom: "90px"}}
+                    >
+                      JPG
+                    </p>
+                    <p
+                      onClick={() => this.downloadImageOnClick(index, 'bmp')}
+                      className="legend"
+                    >
+                      BMP
                     </p>
                   </div>
                 ))}
             </Carousel>
             <div className="download-all">
               <button
-                className="btn-download-all"
+                className="btn-download-all mx-1"
                 disabled={this.state.isDownloadAll}
                 onClick={() => this.downloadAllImages()}
               >
                 {this.state.isDownloadAll && <img className="loader download-all-loader" src={loaderGIF} alt="" />}
-                {!this.state.isDownloadAll && <span><img src={exportSVG} alt="" /> All</span>}
+                {!this.state.isDownloadAll && <span><img src={exportSVG} alt="" /> All PNG</span>}
+              </button>
+              <button
+                className="btn-download-all mx-1"
+                disabled={this.state.isDownloadAll}
+                onClick={() => this.downloadAllImages('jpg')}
+              >
+                {this.state.isDownloadAll && <img className="loader download-all-loader" src={loaderGIF} alt="" />}
+                {!this.state.isDownloadAll && <span><img src={exportSVG} alt="" /> All JPG</span>}
+              </button>
+              <button
+                className="btn-download-all mx-1"
+                disabled={this.state.isDownloadAll}
+                onClick={() => this.downloadAllImages('bmp')}
+              >
+                {this.state.isDownloadAll && <img className="loader download-all-loader" src={loaderGIF} alt="" />}
+                {!this.state.isDownloadAll && <span><img src={exportSVG} alt="" /> All BMP</span>}
               </button>
             </div>
           </div>
