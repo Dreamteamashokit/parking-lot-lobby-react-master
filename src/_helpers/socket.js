@@ -14,12 +14,16 @@ export function getLoginUserId() {
         }
    })
 }
-export function updatelocationOpen(locationIsOpen=false) {
+export function updatelocationOpen(locationIsOpen=false, refresh = false) {
     return new Promise((resolve,reject)=>{
          try {
              let userData = JSON.parse(localStorage.getItem('user'));
+             const isChanged = userData.locationIsOpen !== locationIsOpen;
              userData.locationIsOpen = locationIsOpen;
              localStorage.setItem('user', JSON.stringify(userData));
+             if(isChanged && refresh) {
+                window.location.reload();
+             }
              resolve({user:userData});
          } catch (error) {
              reject(error);

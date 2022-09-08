@@ -42,6 +42,8 @@ export function fetchFormType(type) {
             return resolve('ClientInformation');
         case formConstants.Signage_Information:
            return resolve('SignageInformation');
+        case formConstants.ScheduleInformation:
+           return resolve('ScheduleInformation');
             
         default:
             break;
@@ -123,6 +125,8 @@ export function fetchAPIEndpoint(type) {
             return resolve(SettingsAPIConstants.GET_Settings);
           case formConstants.Signage_Information:
             return resolve(SettingsAPIConstants.Signage_Information);
+          case formConstants.ScheduleInformation:
+            return resolve(SettingsAPIConstants.ScheduleInformation);
           default:
               break;
       }

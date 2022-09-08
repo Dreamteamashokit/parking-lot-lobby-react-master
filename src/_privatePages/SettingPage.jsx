@@ -27,6 +27,12 @@ class SettingPage extends React.Component {
                     selectedTimeZone: '',
                     selectedLanguage: ''
                 },
+                ScheduleInformation: {
+                    isScheduleOpen: false,
+                    selectedTimeZone: '',
+                    openingTime: '',
+                    closingTime: '',
+                },
                 AlertSettings: {
                     confirmation: false,
                     nextInLine: false,
@@ -69,6 +75,8 @@ class SettingPage extends React.Component {
                     companyAddress: { info: '', status: true },
                     companyNumber: { info: '', status: true },
                 },
+                ScheduleInformation: {
+                },
                 AlertSettings: {
 
                 },
@@ -91,6 +99,7 @@ class SettingPage extends React.Component {
             },
             submitted: {
                 BusinessInformation: false,
+                ScheduleInformation: false,
                 AlertSettings: false,
                 AdditionalFeatures: false,
                 Styling: false,
@@ -152,6 +161,12 @@ class SettingPage extends React.Component {
                 errors.BusinessInformation.companyAddress.status = (businessData.companyAddress) ? false : true;
                 errors.BusinessInformation.companyNumber.status = (businessData.companyNumber) ? false : true;
             }
+
+            settings.ScheduleInformation.isScheduleOpen = settingData.scheduleInformation?.isScheduleOpen || false;
+            settings.ScheduleInformation.openingTime = settingData.scheduleInformation?.openingTime || '';
+            settings.ScheduleInformation.closingTime = settingData.scheduleInformation?.closingTime || '';
+            settings.ScheduleInformation.selectedTimeZone = settingData.scheduleInformation?.selectedTimeZone || '';
+
 
             settings.AlertSettings.checkingIn = (settingData.checkInAlert && settingData.checkInAlert.is_active) ? settingData.checkInAlert.is_active : false;
             settings.AlertSettings.checkOut = (settingData.checkOutAlert && settingData.checkOutAlert.is_active) ? settingData.checkOutAlert.is_active : false;
@@ -299,10 +314,13 @@ class SettingPage extends React.Component {
             const name = (type === 1) ? 'selectedTimeZone' : 'selectedLanguage';
             const formType = await fetchFormType(form);
             if (name == 'selectedTimeZone') {
-                const option = {
+                let option = {
                     label: value.label,
                     value: (value.value) ? value.value : value.name
                 };
+                if(form === 'ScheduleInformation') {
+                    option['offset'] = value.utcOffset || value.dstOffset || 0
+                }
                 settings[formType] = { ...settings[formType], [name]: option };
             } else {
                 settings[formType] = { ...settings[formType], [name]: value };
@@ -328,7 +346,7 @@ class SettingPage extends React.Component {
                 console.error('not valid form.')
                 return;
             }
-            if(formType.AlertSettings && errors.certainTime || (isNaN(parseInt(certainTime)))) {
+            if(type !== 'ScheduleInformation' && (formType.AlertSettings && errors.certainTime || (isNaN(parseInt(certainTime))))) {
                 this.setState({certainTime:''})
                 return;
             }
@@ -341,6 +359,9 @@ class SettingPage extends React.Component {
                     break;
                 case 'AdditionalFeatures':
                     payload = await this.createAdditionalPayload(settings[formType]);
+                    break;
+                case 'ScheduleInformation':
+                    payload = {...settings[formType]}
                     break;
                 case 'ClientInformation':
                     payload = {
@@ -683,6 +704,71 @@ class SettingPage extends React.Component {
                                                         </div>
                                                         <div className="col-md-12 submitbtn-holder">
                                                             <button type="submit" name="button" className="submit-btn btn" onClick={(e) => this.handleSubmit(e, formConstants.Business_Information)} disabled={settingUpdating}>
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="card">
+                                        <div className="card-header" id="headingOne">
+                                            <h2 className="mb-0">
+                                                <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne">
+                                                    Clinic Timing
+                                                    <span className="expand-arrow">
+                                                        <img src={expandImage} alt="" />
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="collapseOne2" className="collapse" aria-labelledby="headingOne" data-parent="#settingsAccordion">
+                                            <div className="card-body">
+                                                <div className="companyinfo-holder">
+                                                    <div className="row">
+                                                        <div className="col-12 mb-3">
+                                                            <div className="togglebtn d-flex align-items-center">
+                                                                <label className="switch">
+                                                                    <input type="checkbox"
+                                                                        name="isScheduleOpen"
+                                                                        checked={settings.ScheduleInformation.isScheduleOpen}
+                                                                        onChange={(e) => this.handleChange(e, formConstants.ScheduleInformation, true)}
+                                                                    />
+                                                                    <span className="slider round"></span>
+                                                                </label>
+                                                                &nbsp; <label className='mb-0 ml-2'>Schedule Open/Close Clinic</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-4">
+                                                            <div className="form-group">
+                                                                <label>Opening Time</label>
+                                                                <input type="time" name="openingTime" value={settings.ScheduleInformation.openingTime} className="form-control" onChange={(e) => this.handleChange(e, formConstants.ScheduleInformation)} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-4">
+                                                            <div className="form-group">
+                                                                <label>Closing Time</label>
+                                                                <input type="time" name="closingTime" value={settings.ScheduleInformation.closingTime} className="form-control" onChange={(e) => this.handleChange(e, formConstants.ScheduleInformation)} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-4">
+                                                            <div className="dropdown">
+                                                                <label>Timezone</label>
+                                                                <Select
+                                                                    value={settings.ScheduleInformation.selectedTimeZone}
+                                                                    onChange={(e) => this.handleSelectedChange(e, formConstants.ScheduleInformation, 1)}
+                                                                    options={timeZoneOptions}
+                                                                    className="btn"
+                                                                    name="selectedTimeZone"
+                                                                    placeholder="Time Zone"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-12 submitbtn-holder">
+                                                            <button type="submit" name="button" className="submit-btn btn" onClick={(e) => this.handleSubmit(e, formConstants.ScheduleInformation)} disabled={settingUpdating}>
                                                                 Save
                                                             </button>
                                                         </div>

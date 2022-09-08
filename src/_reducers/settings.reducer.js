@@ -1,10 +1,12 @@
 import { userConstants } from '../_constants';
+import { updatelocationOpen } from '../_helpers';
 
 export function settings(state = {settingFetching: false, settingData:{}}, action) {
   switch (action.type) {
     case userConstants.GET_SETTING_REQUEST:
         return {...state,settingFetching: true };
     case userConstants.GET_SETTING_SUCCESS:
+      updatelocationOpen(action.response.scheduleInformation.isOpen, true)
        return {...state,settingFetching: false, settingData:action.response};
     case userConstants.GET_SETTING_FAILURE:
         return {...state,settingFetching: false};
