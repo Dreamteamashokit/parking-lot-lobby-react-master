@@ -906,6 +906,12 @@ class HomePage extends React.Component {
                                                             }
                                                         </div>
                                                     </div>
+                                                    <div className="basic-infobx  mt-2">
+                                                        <div className="notify-btn" style={{flexBasis: 'auto', maxWidth: 'initial'}}>
+                                                            <button type="button" name="button" className="btn ml-2">{value.isExisting ? 'Existing' : 'New'}</button>
+                                                            {value.subPatientData.length === 0 ? '' : <button type="button" name="button" className="btn ml-2">Multi-patient</button>}
+                                                        </div>
+                                                    </div>
                                                     <div className="alert-infobx">
                                                         <span>
                                                             <button type="button" name="button" className="btn" onClick={() => this.handleClickOnNotify(-1)}>
@@ -989,13 +995,15 @@ class HomePage extends React.Component {
                                                 </div>
                                                 <div className={"action-footbx " + (notifyDiv === 10 ? 'alert-open' : '')}>
                                                     <div className="basic-infobx">
-                                                        <div className="action-btns">
+                                                        <div className="action-btns" style={{flexShrink: 1, flexBasis: 'auto'}}>
                                                             <button type="button" name="button" className="checkbtn" onClick={() => this.hideShowConfirmationModal(true, index, 'checkInOut')} disabled={this.props.isMoveToServed}>
                                                                 <img src={exploreImage} alt="" />
                                                             </button>
                                                         </div>
-                                                        <div className="notify-btn">
-                                                            <button type="button" name="button" className="btn">With Provider</button>
+                                                        <div className="notify-btn" style={{flexGrow: 1, flexBasis: 'auto', maxWidth: 'initial'}}>
+                                                            <button type="button" name="button" className="btn ml-2">{value.isExisting ? 'Existing' : 'New'}</button>
+                                                            {value.subPatientData.length === 0 ? '' : <button type="button" name="button" className="btn ml-2">Multi-patient</button>}
+                                                            <button type="button" name="button" className="btn ml-2">With Provider</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1055,10 +1063,7 @@ class HomePage extends React.Component {
                                                 </div>
                                                 <div className={"action-footbx " + (notifyDiv === 11 ? 'alert-open' : '')}>
                                                     <div className="basic-infobx">
-                                                        <div className="action-btns">
-
-                                                        </div>
-                                                        <div className="notify-btn">
+                                                        <div className="notify-btn" style={{flexBasis: 'auto', maxWidth: 'initial'}}>
                                                             <button type="button" name="button" className="btn">Exited</button>
                                                             <button type="button" name="button" className="btn ml-2">{value.isExisting ? 'Existing' : 'New'}</button>
                                                             {value.subPatientData.length === 0 ? '' : <button type="button" name="button" className="btn ml-2">Multi-patient</button>}

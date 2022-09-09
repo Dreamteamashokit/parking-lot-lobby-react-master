@@ -70,6 +70,15 @@ class HeaderPage extends React.Component {
                 this.props.fetchNotifications();
             }
         })
+        socket.on('location-open', async (response) => {
+            let {userId, locationId} = await getLoginUserId();
+            if (!userId || !locationId) {
+                return;
+            }
+            if (locationId == response.locationId && this.props.user.locationIsOpen !== response.isOpen) {
+                this.props.updateIsOpenSetting('updateIsOpenSetting', {isOpen:response.isOpen});
+            }
+        })
     }
     async componentDidMount() {
         const apiEndpoint = await fetchAPIEndpoint(formConstants.GET_Settings);

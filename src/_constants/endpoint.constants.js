@@ -1,6 +1,7 @@
 export const SettingsAPIConstants = {
     GET_Settings:'settings',
     Business_Information: 'updateBusinessInformation',
+    ScheduleInformation: 'scheduleInformation',
     Alert_Settings: 'updateAlertSettings',
     Additional_Features:'updateAdditionalSettings',
     Styling:'updateStylingSettings',
