@@ -906,6 +906,12 @@ class HomePage extends React.Component {
                                                             }
                                                         </div>
                                                     </div>
+                                                    <div className="basic-infobx  mt-2">
+                                                        <div className="notify-btn" style={{flexBasis: 'auto', maxWidth: 'initial'}}>
+                                                            <button type="button" name="button" className="btn ml-2">{value.isExisting ? 'Existing' : 'New'}</button>
+                                                            {value.subPatientData.length === 0 ? '' : <button type="button" name="button" className="btn ml-2">Multi-patient</button>}
+                                                        </div>
+                                                    </div>
                                                     <div className="alert-infobx">
                                                         <span>
                                                             <button type="button" name="button" className="btn" onClick={() => this.handleClickOnNotify(-1)}>
@@ -997,7 +1003,7 @@ class HomePage extends React.Component {
                                                         <div className="notify-btn" style={{flexGrow: 1, flexBasis: 'auto', maxWidth: 'initial'}}>
                                                             <button type="button" name="button" className="btn ml-2">{value.isExisting ? 'Existing' : 'New'}</button>
                                                             {value.subPatientData.length === 0 ? '' : <button type="button" name="button" className="btn ml-2">Multi-patient</button>}
-                                                            <button type="button" name="button" className="btn">With Provider</button>
+                                                            <button type="button" name="button" className="btn ml-2">With Provider</button>
                                                         </div>
                                                     </div>
                                                 </div>
