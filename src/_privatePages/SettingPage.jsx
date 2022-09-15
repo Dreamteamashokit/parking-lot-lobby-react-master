@@ -47,6 +47,7 @@ class SettingPage extends React.Component {
                 AdditionalFeatures: {
                     desktopNotification: false,
                     clientPosition: false,
+                    clientIncomplete: false,
                     timer: false,
                     checkIn: false,
                     exit: false,
@@ -192,6 +193,7 @@ class SettingPage extends React.Component {
             
             settings.AdditionalFeatures.desktopNotification = (settingData.desktopAdditional && settingData.desktopAdditional.is_active) ? settingData.desktopAdditional.is_active : false;
             settings.AdditionalFeatures.clientPosition = (settingData.inforClientPositionLine) ? settingData.inforClientPositionLine : false;
+            settings.AdditionalFeatures.clientIncomplete = (settingData.clientIncomplete) ? settingData.clientIncomplete : false;
             settings.AdditionalFeatures.timer = (settingData.desktopAdditional && settingData.desktopAdditional.is_timer) ? settingData.desktopAdditional.is_timer : false;
             settings.AdditionalFeatures.checkIn = (settingData.desktopAdditional && settingData.desktopAdditional.is_checkIn) ? settingData.desktopAdditional.is_checkIn : false;
             settings.AdditionalFeatures.exit = (settingData.desktopAdditional && settingData.desktopAdditional.is_exit) ? settingData.desktopAdditional.is_exit : false;
@@ -534,6 +536,7 @@ class SettingPage extends React.Component {
                         is_delayed: formData.delay
                     },
                     inforClientPositionLine: formData.clientPosition,
+                    clientIncomplete: formData.clientIncomplete,
                     statusSetting: {
                         isSendStatus:formData.isSendStatus,
                         sendStatusTime: (formData.sendStatusTime) ? formData.sendStatusTime : 0
@@ -1069,6 +1072,21 @@ class SettingPage extends React.Component {
                                                         </div>
                                                         <div className="togglelabel">
                                                             Inform client of their position in line
+                                                        </div>
+                                                    </div>
+                                                    <div className="alertbx">
+                                                        <div className="togglebtn">
+                                                            <label className="switch">
+                                                                <input type="checkbox"
+                                                                    checked={settings.AdditionalFeatures.clientIncomplete}
+                                                                    name="clientIncomplete" value={settings.AdditionalFeatures.clientIncomplete}
+                                                                    onChange={(e) => this.handleChange(e, formConstants.Additional_Features, true)}
+                                                                />
+                                                                <span className="slider round"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div className="togglelabel">
+                                                            Show client who didn't submit form
                                                         </div>
                                                     </div>
                                                     <div className="alertbx">
