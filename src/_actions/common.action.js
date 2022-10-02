@@ -37,7 +37,7 @@ export const commonActions = {
 
 function fetchWaitingList(isSearch=false, searchBy='') {
     return dispatch => {
-        dispatch(request({}));
+        // dispatch(request({}));
         commonService.fetchPatientList(1, isSearch, searchBy)
         .then(
             response => {
@@ -62,7 +62,7 @@ function fetchWaitingList(isSearch=false, searchBy='') {
 }
 function fetchCheckInOutList(isSearch=false, searchBy='') {
     return dispatch => {
-        dispatch(request({}));
+        // dispatch(request({}));
         commonService.fetchPatientList(2, isSearch, searchBy)
         .then(
             response => {
@@ -85,7 +85,7 @@ function fetchCheckInOutList(isSearch=false, searchBy='') {
 }
 function fetchServedPatientList(isSearch=false, searchBy='') {
     return dispatch => {
-        dispatch(request({}));
+        // dispatch(request({}));
         commonService.fetchPatientList(3,isSearch, searchBy)
         .then(
             response => {

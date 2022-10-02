@@ -30,8 +30,13 @@ export function commons(state = { waitingList: [], checkInOutList: [], servedPat
         moveToCheckIN: action.patientId,
         waitingList: state.waitingList.filter(function (e) {
           return e.patientId._id !== action.patientId.patientId;
+        }),
+        servedPatient: state.waitingList.filter(function (e) {
+          return e.patientId._id !== action.patientId.patientId;
         })
       };
+    case commonConstants.REMOVE_PATIENT_REQUEST:
+      return { ...state };
     case commonConstants.To_CHECKIN_FAILURE:
       return { ...state, isMoveToCheckIn: false, moveToCheckIN: action.patientId };
 

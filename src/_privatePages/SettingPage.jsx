@@ -29,6 +29,7 @@ class SettingPage extends React.Component {
                 },
                 ScheduleInformation: {
                     isScheduleOpen: false,
+                    isScheduleClose: false,
                     selectedTimeZone: '',
                     openingTime: '',
                     closingTime: '',
@@ -164,6 +165,7 @@ class SettingPage extends React.Component {
             }
 
             settings.ScheduleInformation.isScheduleOpen = settingData.scheduleInformation?.isScheduleOpen || false;
+            settings.ScheduleInformation.isScheduleClose = settingData.scheduleInformation?.isScheduleClose || false;
             settings.ScheduleInformation.openingTime = settingData.scheduleInformation?.openingTime || '';
             settings.ScheduleInformation.closingTime = settingData.scheduleInformation?.closingTime || '';
             settings.ScheduleInformation.selectedTimeZone = settingData.scheduleInformation?.selectedTimeZone || '';
@@ -732,7 +734,7 @@ class SettingPage extends React.Component {
                                             <div className="card-body">
                                                 <div className="companyinfo-holder">
                                                     <div className="row">
-                                                        <div className="col-12 mb-3">
+                                                        <div className="col-4 mb-3">
                                                             <div className="togglebtn d-flex align-items-center">
                                                                 <label className="switch">
                                                                     <input type="checkbox"
@@ -742,7 +744,20 @@ class SettingPage extends React.Component {
                                                                     />
                                                                     <span className="slider round"></span>
                                                                 </label>
-                                                                &nbsp; <label className='mb-0 ml-2'>Schedule Open/Close Clinic</label>
+                                                                &nbsp; <label className='mb-0 ml-2'>Schedule Clinic Open</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-8 mb-3">
+                                                            <div className="togglebtn d-flex align-items-center">
+                                                                <label className="switch">
+                                                                    <input type="checkbox"
+                                                                        name="isScheduleClose"
+                                                                        checked={settings.ScheduleInformation.isScheduleClose}
+                                                                        onChange={(e) => this.handleChange(e, formConstants.ScheduleInformation, true)}
+                                                                    />
+                                                                    <span className="slider round"></span>
+                                                                </label>
+                                                                &nbsp; <label className='mb-0 ml-2'>Schedule Clinic Close</label>
                                                             </div>
                                                         </div>
                                                         <div className="col-md-4">

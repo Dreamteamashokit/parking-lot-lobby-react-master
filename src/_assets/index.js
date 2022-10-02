@@ -27,3 +27,4 @@ export {default as plusBlue} from './images/plus-blue.svg'
 export {default as canceldrop} from './images/canceldrop.svg';
 export {default as blueNotification} from './images/notification_blue.svg';
 export { default as documentImage} from './images/document.svg';
+export { default as checkInImage} from './images/checkin.svg';
