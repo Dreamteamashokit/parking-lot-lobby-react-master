@@ -29,6 +29,7 @@ class SettingPage extends React.Component {
                 },
                 ScheduleInformation: {
                     isScheduleOpen: false,
+                    isScheduleClose: false,
                     selectedTimeZone: '',
                     openingTime: '',
                     closingTime: '',
@@ -47,6 +48,7 @@ class SettingPage extends React.Component {
                 AdditionalFeatures: {
                     desktopNotification: false,
                     clientPosition: false,
+                    clientIncomplete: false,
                     timer: false,
                     checkIn: false,
                     exit: false,
@@ -163,6 +165,7 @@ class SettingPage extends React.Component {
             }
 
             settings.ScheduleInformation.isScheduleOpen = settingData.scheduleInformation?.isScheduleOpen || false;
+            settings.ScheduleInformation.isScheduleClose = settingData.scheduleInformation?.isScheduleClose || false;
             settings.ScheduleInformation.openingTime = settingData.scheduleInformation?.openingTime || '';
             settings.ScheduleInformation.closingTime = settingData.scheduleInformation?.closingTime || '';
             settings.ScheduleInformation.selectedTimeZone = settingData.scheduleInformation?.selectedTimeZone || '';
@@ -192,6 +195,7 @@ class SettingPage extends React.Component {
             
             settings.AdditionalFeatures.desktopNotification = (settingData.desktopAdditional && settingData.desktopAdditional.is_active) ? settingData.desktopAdditional.is_active : false;
             settings.AdditionalFeatures.clientPosition = (settingData.inforClientPositionLine) ? settingData.inforClientPositionLine : false;
+            settings.AdditionalFeatures.clientIncomplete = (settingData.clientIncomplete) ? settingData.clientIncomplete : false;
             settings.AdditionalFeatures.timer = (settingData.desktopAdditional && settingData.desktopAdditional.is_timer) ? settingData.desktopAdditional.is_timer : false;
             settings.AdditionalFeatures.checkIn = (settingData.desktopAdditional && settingData.desktopAdditional.is_checkIn) ? settingData.desktopAdditional.is_checkIn : false;
             settings.AdditionalFeatures.exit = (settingData.desktopAdditional && settingData.desktopAdditional.is_exit) ? settingData.desktopAdditional.is_exit : false;
@@ -534,6 +538,7 @@ class SettingPage extends React.Component {
                         is_delayed: formData.delay
                     },
                     inforClientPositionLine: formData.clientPosition,
+                    clientIncomplete: formData.clientIncomplete,
                     statusSetting: {
                         isSendStatus:formData.isSendStatus,
                         sendStatusTime: (formData.sendStatusTime) ? formData.sendStatusTime : 0
@@ -729,7 +734,7 @@ class SettingPage extends React.Component {
                                             <div className="card-body">
                                                 <div className="companyinfo-holder">
                                                     <div className="row">
-                                                        <div className="col-12 mb-3">
+                                                        <div className="col-4 mb-3">
                                                             <div className="togglebtn d-flex align-items-center">
                                                                 <label className="switch">
                                                                     <input type="checkbox"
@@ -739,7 +744,20 @@ class SettingPage extends React.Component {
                                                                     />
                                                                     <span className="slider round"></span>
                                                                 </label>
-                                                                &nbsp; <label className='mb-0 ml-2'>Schedule Open/Close Clinic</label>
+                                                                &nbsp; <label className='mb-0 ml-2'>Schedule Clinic Open</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-8 mb-3">
+                                                            <div className="togglebtn d-flex align-items-center">
+                                                                <label className="switch">
+                                                                    <input type="checkbox"
+                                                                        name="isScheduleClose"
+                                                                        checked={settings.ScheduleInformation.isScheduleClose}
+                                                                        onChange={(e) => this.handleChange(e, formConstants.ScheduleInformation, true)}
+                                                                    />
+                                                                    <span className="slider round"></span>
+                                                                </label>
+                                                                &nbsp; <label className='mb-0 ml-2'>Schedule Clinic Close</label>
                                                             </div>
                                                         </div>
                                                         <div className="col-md-4">
@@ -1069,6 +1087,21 @@ class SettingPage extends React.Component {
                                                         </div>
                                                         <div className="togglelabel">
                                                             Inform client of their position in line
+                                                        </div>
+                                                    </div>
+                                                    <div className="alertbx">
+                                                        <div className="togglebtn">
+                                                            <label className="switch">
+                                                                <input type="checkbox"
+                                                                    checked={settings.AdditionalFeatures.clientIncomplete}
+                                                                    name="clientIncomplete" value={settings.AdditionalFeatures.clientIncomplete}
+                                                                    onChange={(e) => this.handleChange(e, formConstants.Additional_Features, true)}
+                                                                />
+                                                                <span className="slider round"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div className="togglelabel">
+                                                            Show client who didn't submit form
                                                         </div>
                                                     </div>
                                                     <div className="alertbx">

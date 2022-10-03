@@ -4,6 +4,7 @@ import {
   dropMenuImage,
   checkImage,
   exploreImage,
+  checkInImage,
   cancelImage,
   sendImage,
 } from "../_assets";
@@ -313,6 +314,16 @@ class ChatInformation extends React.Component {
       let { popupData } = this.state;
       if (popupData.patientId && popupData.patientId._id) {
         this.props.confirmToMove(popupData.patientId._id, 2);
+      }
+    } catch (err) {
+      console.log("\n movePatientToServed error:", err.message || err);
+    }
+  }
+  async movePatientToCheckIn() {
+    try {
+      let { popupData } = this.state;
+      if (popupData.patientId && popupData.patientId._id) {
+        this.props.confirmToMove(popupData.patientId._id, 1);
       }
     } catch (err) {
       console.log("\n movePatientToServed error:", err.message || err);
@@ -744,6 +755,20 @@ class ChatInformation extends React.Component {
                             <span className="icon">
                               {" "}
                               <img src={refreshSVG} alt="" />{" "}
+                            </span>
+                          </button>
+                        </div>
+                        <div className="btn-holder">
+                          <button
+                            type="button"
+                            name="button"
+                            className="btn greenbtn"
+                            onClick={() => this.movePatientToCheckIn()}
+                          >
+                            <span className="txbx">Move to Check-in</span>
+                            <span className="icon">
+                              {" "}
+                            <img src={checkInImage} alt="" />{" "}
                             </span>
                           </button>
                         </div>
