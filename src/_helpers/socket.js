@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import config from 'config';
-export const socket = io.connect(config.apiUrl);
+export const socket = io.connect(config.apiUrl, {transports: ['polling']});
 
 export function getLoginUserId() {
    return new Promise((resolve,reject)=>{
