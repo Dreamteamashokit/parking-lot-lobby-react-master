@@ -313,7 +313,7 @@ class ChatInformation extends React.Component {
     try {
       let { popupData } = this.state;
       if (popupData.patientId && popupData.patientId._id) {
-        this.props.confirmToMove(popupData.patientId._id, 2);
+        this.props.confirmToMove(popupData._id, popupData.patientId._id, 2);
       }
     } catch (err) {
       console.log("\n movePatientToServed error:", err.message || err);
@@ -323,7 +323,7 @@ class ChatInformation extends React.Component {
     try {
       let { popupData } = this.state;
       if (popupData.patientId && popupData.patientId._id) {
-        this.props.confirmToMove(popupData.patientId._id, 1);
+        this.props.confirmToMove(popupData._id, popupData.patientId._id, 1);
       }
     } catch (err) {
       console.log("\n movePatientToServed error:", err.message || err);

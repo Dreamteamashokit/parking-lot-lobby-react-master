@@ -541,11 +541,13 @@ class HomePage extends React.Component {
         try {
             //this.setState({moveObject :{id:'' , userName: '', columnType:0}});
             if (isSet) {
+                let a_id = '';
                 switch (type) {
                     case 'waiting':
                         const { waitingList } = this.props;
+                        a_id = waitingList[index]._id || '';
                         const w_id = (waitingList[index].patientId && waitingList[index].patientId._id) ? waitingList[index].patientId._id : '';
-                        this.confirmToMove(w_id, 1)
+                        this.confirmToMove(a_id, w_id, 1)
                         /* const w_firstname = (waitingList[index].patientId && waitingList[index].patientId.first_name) ? waitingList[index].patientId.first_name : '';
                         const w_lastname = (waitingList[index].patientId && waitingList[index].patientId.last_name) ? waitingList[index].patientId.last_name:'';
                         const w_fullName = w_firstname + ' ' + w_lastname;
@@ -554,7 +556,8 @@ class HomePage extends React.Component {
                     case 'checkInOut':
                         const { checkInOutList } = this.props;
                         const c_id = (checkInOutList[index].patientId && checkInOutList[index].patientId._id) ? checkInOutList[index].patientId._id : '';
-                        this.confirmToMove(c_id, 2)
+                        a_id = checkInOutList[index]._id || '';
+                        this.confirmToMove(a_id, c_id, 2)
                         /* const c_firstname = (checkInOutList[index].patientId && checkInOutList[index].patientId.first_name) ? checkInOutList[index].patientId.first_name : '';
                         const c_lastname = (checkInOutList[index].patientId && checkInOutList[index].patientId.last_name) ? checkInOutList[index].patientId.last_name:'';
                         const c_fullName = c_firstname + ' ' + c_lastname;
@@ -573,7 +576,7 @@ class HomePage extends React.Component {
             errorToast(message)
         }
     }
-    confirmToMove = async (patientId = '', type = 0) => {
+    confirmToMove = async (appointmentId, patientId = '', type = 0) => {
         try {
             if (!patientId || patientId == '') {
                 return;
@@ -581,10 +584,10 @@ class HomePage extends React.Component {
             this.hideShowConfirmationModal();
             switch (type) {
                 case 1:
-                    await this.props.moveToCheckIn({ patientId: patientId });
+                    await this.props.moveToCheckIn({ patientId: patientId, appointmentId });
                     break;
                 case 2:
-                    await this.props.moveToServed({ patientId: patientId });
+                    await this.props.moveToServed({ patientId: patientId, appointmentId });
                     break;
                 default:
                     break;
