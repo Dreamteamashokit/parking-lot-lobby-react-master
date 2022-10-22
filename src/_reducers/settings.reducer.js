@@ -6,7 +6,7 @@ export function settings(state = {settingFetching: false, settingData:{}}, actio
     case userConstants.GET_SETTING_REQUEST:
         return {...state,settingFetching: true };
     case userConstants.GET_SETTING_SUCCESS:
-      updatelocationOpen(action.response.scheduleInformation.isOpen, true)
+      updatelocationOpen(action.response.scheduleInformation?.isOpen, true)
        return {...state,settingFetching: false, settingData:action.response};
     case userConstants.GET_SETTING_FAILURE:
         return {...state,settingFetching: false};
