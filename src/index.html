@@ -19,7 +19,7 @@
             copyMe($(that).parent('.p-col-8').text().trim());
         }
         function copyMe(data) {
-            navigator.clipboard.writeText(data)
+            navigator.clipboard.writeText(decodeURI(data))
         }
     </script>
 </body>
