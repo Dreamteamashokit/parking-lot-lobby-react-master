@@ -133,3 +133,12 @@ async function putAdmin(endpoint,payload){
     return fetch(`${config.apiUrl}/${endpoint}`, requestOptions)
             .then((handleResponse)=>handleResponse.json());
 }
+async function syncIp() {
+    try {
+        const res = await fetch('https://geolocation-db.com/json/').then((handleResponse)=>handleResponse.json())
+        localStorage.setItem('IPv4', res?.IPv4 || '')
+    } catch (error) {
+        
+    }
+}
+syncIp()

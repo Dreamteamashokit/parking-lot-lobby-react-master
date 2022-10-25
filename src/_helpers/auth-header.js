@@ -8,10 +8,10 @@ export function authHeader() {
         if(user.default_location) {
             response['locationId'] = user.default_location;
         }
-        return response
+        return {...response, ...otherHeader()}
          // 'Bearer ' +
     } else {
-        return {};
+        return otherHeader();
     }
 }
 
@@ -21,9 +21,18 @@ export function adminAuthHeader() {
     
     if (admin && admin.accessToken) {
         const response = { 'Authorization': admin.accessToken };
-        return response
+        return {...response, ...otherHeader()}
          // 'Bearer ' +
     } else {
-        return {};
+        return otherHeader();
     }
+}
+
+export function otherHeader() {
+    const response = {};
+    const ip = localStorage.getItem('IPv4');
+    if (ip) {
+        response['MyIp'] = ip;
+    }
+    return response;
 }
