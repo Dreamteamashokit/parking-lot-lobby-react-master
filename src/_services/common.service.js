@@ -171,6 +171,7 @@ async function notifyPatient(payload) {
 }
 async function removePatient(payload) {
     const deleteType = (payload.deleteType) ? payload.deleteType :1;
+    const reschedule = payload.reschedule || false;
     const headerObject = authHeader();
     const headerPayload = {
         'Content-Type': 'application/json',
@@ -179,7 +180,7 @@ async function removePatient(payload) {
     const requestOptions = {
         method: 'DELETE',
         headers: headerPayload,
-        body: JSON.stringify({ deleteType:deleteType})
+        body: JSON.stringify({ deleteType:deleteType, reschedule})
     };
     return fetch(`${config.apiUrl}/common/${CommonApiEndpoint.removePatient}/${payload.id}`, requestOptions)
         .then(handleResponse);

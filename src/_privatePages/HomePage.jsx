@@ -344,26 +344,27 @@ class HomePage extends React.Component {
         });
     }
 
-    handleClickOnRemoveProfile = (type = 0) => {
+    handleClickOnRemoveProfile = (type = 0, reschedule = false) => {
         switch (type) {
             case 1:
                 //this.setState({isConfirmModelShow : true});
-                this.confirmDeleteProfile();
+                this.confirmDeleteProfile(reschedule);
                 return;
             case 2:
-                this.confirmDeleteProfile();
+                this.confirmDeleteProfile(reschedule);
                 return;
             default:
                 this.setState({ isConfirmModelShow: false });
         }
     }
-    confirmDeleteProfile = async () => {
+    confirmDeleteProfile = async (reschedule = false) => {
         try {
             const { selected, deleteType } = this.state;
             console.log('\n deleteType:', deleteType)
             const payload = {
                 id: selected._id,
                 type: selected.recordType,
+                reschedule,
                 deleteType: deleteType
             }
             await this.props.removePatient(payload)
@@ -1124,6 +1125,7 @@ class HomePage extends React.Component {
                     {deleteType === 2 &&
                         <div className="modal-footer">
                             <button type="button" className="btn redbtn" onClick={() => this.handleClickOnRemoveProfile(1)}>Delete</button>
+                            <button type="button" className="btn redbtn" onClick={() => this.handleClickOnRemoveProfile(1, true)}>Delete & Reschedule</button>
                             <button type="button" className="btn bluebtn" onClick={() => this.hideModal()}>DON'T DELETE</button>
                         </div>
                     }
