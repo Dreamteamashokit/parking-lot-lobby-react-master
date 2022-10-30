@@ -610,7 +610,7 @@ onSelectQuickResponse = (quickMessage = '') => {
                             </td>
                             <td className="name" key="dateValue_{index}">
                               <div className="name-inner">
-                                {value.visitDate}
+                                {value.visitDateFormat}
                               </div>
                             </td>
                             <td className="actions" key="actionFields_{index}">
