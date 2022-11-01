@@ -33,6 +33,7 @@ class SettingPage extends React.Component {
                     selectedTimeZone: '',
                     openingTime: '',
                     closingTime: '',
+                    twilioNumber: '',
                 },
                 AlertSettings: {
                     confirmation: false,
@@ -169,6 +170,7 @@ class SettingPage extends React.Component {
             settings.ScheduleInformation.openingTime = settingData.scheduleInformation?.openingTime || '';
             settings.ScheduleInformation.closingTime = settingData.scheduleInformation?.closingTime || '';
             settings.ScheduleInformation.selectedTimeZone = settingData.scheduleInformation?.selectedTimeZone || '';
+            settings.ScheduleInformation.twilioNumber = settingData.scheduleInformation?.twilioNumber || '';
 
 
             settings.AlertSettings.checkingIn = (settingData.checkInAlert && settingData.checkInAlert.is_active) ? settingData.checkInAlert.is_active : false;
@@ -722,7 +724,7 @@ class SettingPage extends React.Component {
                                         <div className="card-header" id="headingOne">
                                             <h2 className="mb-0">
                                                 <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne">
-                                                    Clinic Timing
+                                                    Clinic Settings
                                                     <span className="expand-arrow">
                                                         <img src={expandImage} alt="" />
                                                     </span>
@@ -734,6 +736,12 @@ class SettingPage extends React.Component {
                                             <div className="card-body">
                                                 <div className="companyinfo-holder">
                                                     <div className="row">
+                                                        <div className="col-12 mb-3">
+                                                            <div className="form-group">
+                                                                <label>Twilio Number</label>
+                                                                <input disabled type="tel" name="twilioNumber" value={settings.ScheduleInformation.twilioNumber} className="form-control" />
+                                                            </div>
+                                                        </div>
                                                         <div className="col-4 mb-3">
                                                             <div className="togglebtn d-flex align-items-center">
                                                                 <label className="switch">
