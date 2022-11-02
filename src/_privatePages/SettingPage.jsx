@@ -356,7 +356,7 @@ class SettingPage extends React.Component {
                 this.setState({certainTime:''})
                 return;
             }
-            let payload = settings[formType];
+            let payload = JSON.parse(JSON.stringify(settings[formType]));
 
             switch (formType) {
                 case 'AlertSettings':
@@ -650,13 +650,14 @@ class SettingPage extends React.Component {
                                                         </div>
                                                         <div className="col-md-12">
                                                             <div className="form-group">
-                                                                <input type="text"
+                                                                <input type="tel"
                                                                 onKeyPress={(event) => {
-                                                                    if (!/[0-9]/.test(event.key)) {
+                                                                    if (!/[0-9\+]/.test(event.key)) {
                                                                         event.preventDefault();
                                                                     }
                                                                 }}
-                                                                 name="companyNumber" value={settings.BusinessInformation.companyNumber} className="form-control" placeholder="Company Number" readOnly />
+                                                                onChange={(e) => this.handleChange(e, formConstants.Business_Information)}
+                                                                name="companyNumber" value={settings.BusinessInformation.companyNumber} className="form-control" placeholder="Company Number" />
                                                                 {/* onChange={(e) => this.handleChange(e, formConstants.Business_Information)} */}
                                                                 {errors.BusinessInformation.companyNumber.info.length > 0 &&
                                                                     <span className='error-alert error help-block'>{errors.BusinessInformation.companyNumber.info}</span>}
