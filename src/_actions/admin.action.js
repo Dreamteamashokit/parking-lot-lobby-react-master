@@ -11,6 +11,7 @@ export const adminActions = {
     fetchDashboardCount:fetchDashboardCount,
     fetchLocationList:fetchLocationList,
     addTwilioNumber:addTwilioNumber,
+    resetClientPassword,
     addLocationJotform,
     clientRegister,
     addLocation,
@@ -181,6 +182,31 @@ function addTwilioNumber(payload){
     function request() { return { type: adminConstants.ADD_TWILIO_REQUEST } }
     function success() { return { type: adminConstants.ADD_TWILIO_SUCCESS } }
     function failure(error) { return { type: adminConstants.ADD_TWILIO_FAILURE, error } }
+}
+function resetClientPassword(payload){
+    return dispatch => {
+        dispatch(request())
+        adminService.postAdmin(`admin/reset-client-password`, payload)
+        .then(response=>{
+            if(response.status){
+                successToast('Password reset success');
+                dispatch(success(response.data))
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+               }
+               else
+               {
+                errorToast(response.message)
+                dispatch(failure(response.message))
+               }
+        })
+
+    }
+
+    function request() { return { type: adminConstants.RESET_CLIENT_PASSWORD_REQUEST } }
+    function success() { return { type: adminConstants.RESET_CLIENT_PASSWORD_SUCCESS } }
+    function failure(error) { return { type: adminConstants.RESET_CLIENT_PASSWORD_FAILURE, error } }
 }
 function addLocationJotform(payload){
     return dispatch => {
