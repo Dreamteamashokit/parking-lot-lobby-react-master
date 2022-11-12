@@ -5,13 +5,17 @@ import "../../_assets/css/sass/visitor-review.scss";
 import { default as dropdownSMSVG } from "../../_assets/images/dropdown-sm.svg";
 import { history } from "../../_helpers";
 import { default as accessProfileSVG } from "../../_assets/images/access-profile.svg";
-
+import Modal from "react-bootstrap/Modal";
 import { adminActions } from "../../_actions";
 import { Link } from "react-router-dom";
 class ClientList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isOpen: false,
+      selectedClient: '',
+      password: '',
+    };
     this.fetchData = this.fetchData.bind(this);
   }
 
@@ -40,6 +44,16 @@ class ClientList extends React.Component {
         let message = (err && err.message) ? err.message : 'Something went wrong';
         errorToast(message);
     }
+  }
+  openPasswordModal = (val) => {
+    this.setState({isOpen: true, selectedClient: val._id, password: ''})
+  }
+  submitPassword = () => {
+    console.log(this.state)
+    this.props.resetClientPassword({
+      client: this.state.selectedClient,
+      password: this.state.password
+    })
   }
 
 
@@ -195,6 +209,23 @@ class ClientList extends React.Component {
                                               </span>
                                             </a>
                                           </li>
+                                          <li key="_sub2_{index}">
+                                            <a
+                                              className="btn"
+                                              onClick={() => this.openPasswordModal(value)}
+                                            >
+                                              <span className="icon">
+                                                {" "}
+                                                <img
+                                                  src={accessProfileSVG}
+                                                  alt=""
+                                                />{" "}
+                                              </span>
+                                              <span className="txbx">
+                                                Set Password
+                                              </span>
+                                            </a>
+                                          </li>
                                         </ul>
                                       </div>
                                     </div>
@@ -233,6 +264,40 @@ class ClientList extends React.Component {
             </div>
           </div>
         </section>
+        <Modal
+          onHide={() => this.setState({ isOpen: false })}
+          show={this.state.isOpen}
+          dialogClassName={"modal-dialog-centered"}
+          contentClassName={"delete-modal-content"}
+        >
+          <div className="modal-header">
+            <button
+              type="button"
+              className="close"
+              onClick={() => this.setState({ isOpen: false })}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            <h1 className="add-twilio-number">Set Password</h1>
+            <div className="form-group">
+              <input type="password" className="form-control"
+                onChange={(e) =>  this.setState({ password: e.target.value })} />
+            </div>
+          </div>
+
+          <div className="modal-footer">
+            <button
+              onClick={() => this.submitPassword()}
+              disabled={this.state.password.length < 6}
+              type="button"
+              className="btn bluebtn"
+            >
+              Submit Now
+            </button>
+          </div>
+        </Modal>
       </div>
     );
   }
@@ -245,6 +310,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
+  resetClientPassword: adminActions.resetClientPassword,
   fetchClientList: adminActions.fetchClientList,
   updateClientStatus:adminActions.updateClientStatus,
   allowLocationADD:adminActions.allowLocationADD,

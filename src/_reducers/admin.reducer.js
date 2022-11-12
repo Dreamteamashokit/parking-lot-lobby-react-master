@@ -197,6 +197,18 @@ export function addTwilioNumber(state={}, action){
   }
 }
 
+export function resetClientPassword(state={}, action){
+  switch(action.type){
+    case adminConstants.RESET_CLIENT_PASSWORD_REQUEST:
+      return{...state, resettingClientPassword:true}
+    case adminConstants.RESET_CLIENT_PASSWORD_SUCCESS:
+        return {...state, resettingClientPassword:false}
+    case adminConstants.RESET_CLIENT_PASSWORD_FAILURE:
+        return {...state, resettingClientPassword:false}
+    default : return state
+  }
+}
+
 export function addLocationJotform(state={}, action){
   switch(action.type){
     case adminConstants.ADD_LOCATION_JOTFORM_REQUEST:

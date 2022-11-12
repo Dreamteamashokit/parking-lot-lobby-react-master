@@ -94,8 +94,10 @@ class ResetPasswordPage extends React.Component {
     async handleSubmit(event) {
         try {
             event.preventDefault();
+            const params = (new URL(document.location)).searchParams;
+            const resetToken = params.get("token");
             this.setState({ submitted: true });
-            const {resetToken, user, errors} = this.state;
+            const {user, errors} = this.state;
             const checkError = await validateForm(errors);
             if(!checkError) {
                 console.error('not valid form.')
