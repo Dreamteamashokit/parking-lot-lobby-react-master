@@ -14,12 +14,15 @@ import { capitalize, history, fetchAPIEndpoint, getLoginUserId, socket, errorToa
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import Notification from "react-web-notification";
+import QRCode from "react-qr-code";
 import { default as usersGroupSVG } from '../_assets/images/users-group.svg';
 import { default as mapSignsSVG } from '../_assets/images/map-signs.svg';
 import Modal from "react-bootstrap/Modal";
 import { default as plusSVG } from '../_assets/images/plus.svg';
 import "../_assets/css/sass/_location.scss";
 import { default as deleteSVG } from '../_assets/images/delete.svg';
+import { default as qrSVG } from '../_assets/images/qrcode.svg';
+import config from 'config';
 
 
 class HeaderPage extends React.Component {
@@ -29,6 +32,8 @@ class HeaderPage extends React.Component {
             notificationTitle: null,
             notificationBody: null,
             isModelShow: false,
+            isQrShow: false,
+            qrString: '',
             locations: [
                 { name: 'Location 1' },
                 { name: 'Location 2' },
@@ -207,6 +212,10 @@ class HeaderPage extends React.Component {
         this.props.fetchlocations();
         this.setState({ isModelShow: true });
     }
+    openQr = () => {
+        const qrString = config.apiUrl + '/twillio/jotform/' + this.props.user.default_location
+        this.setState({ isQrShow: true, qrString });
+    }
     async handleSelection(index) {
         try {
             const selectedData = this.props.clinic_locations[index];
@@ -277,6 +286,7 @@ class HeaderPage extends React.Component {
     render() {
         const { settingData, notification } = this.props;
         const { notificationTitle, notificationBody,
+            qrString,
             selectedLocation,
             error_addlocation, addlocation } = this.state;
         return (
@@ -391,6 +401,9 @@ class HeaderPage extends React.Component {
                                         <span className="icon">
                                             <Link className="navbar-brand" to="/visitor-list">
                                                 <img src={usersGroupSVG} alt="" /></Link> </span>
+                                    </button>
+                                    <button type="button" name="button" className="btn"  onClick={this.openQr}>
+                                        <span className="icon"> <img src={qrSVG} alt="" /> </span>
                                     </button>
                                     {this.props.user.hasOwnProperty('locationIsOpen') && this.props.user.locationIsOpen !== null && 
                                     <div className="togglebtn-holder">
@@ -533,6 +546,26 @@ class HeaderPage extends React.Component {
                                             </div>
                                         </div>
                                     </div></div></div></div></div>
+                </Modal>
+                <Modal
+                    show={this.state.isQrShow}
+                    onHide={() => this.setState({ isQrShow: false })}
+                    dialogClassName={"chatbx-container locationbx-container"}
+                    contentClassName={"cstm-overlay"}
+                >
+                    <div className="cancel-chatbtn">
+                        <a className="btn" onClick={() => this.setState({ isQrShow: false })}>
+                            <img src={deleteSVG} alt="" />
+                        </a>
+                    </div>
+                    <div style={{ height: "100%", margin: "0 auto", maxHeight: 400, width: "auto" }}>
+                        <QRCode
+                            size={400}
+                            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                            value={qrString}
+                            viewBox={`0 0 400 400`}
+                        />
+                    </div>
                 </Modal>
             </section>
 
