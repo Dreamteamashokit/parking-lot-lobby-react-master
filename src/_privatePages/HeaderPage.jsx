@@ -213,7 +213,7 @@ class HeaderPage extends React.Component {
         this.setState({ isModelShow: true });
     }
     openQr = () => {
-        const qrString = config.apiUrl + '/twillio/jotform/' + this.props.user.default_location
+        const qrString = config.apiUrl + '/twilio/jotform/' + this.props.user.default_location
         this.setState({ isQrShow: true, qrString });
     }
     async handleSelection(index) {
