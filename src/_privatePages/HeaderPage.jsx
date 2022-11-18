@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import Notification from "react-web-notification";
 import QRCode from "react-qr-code";
+import * as htmlToImage from 'html-to-image';
 import { default as usersGroupSVG } from '../_assets/images/users-group.svg';
 import { default as mapSignsSVG } from '../_assets/images/map-signs.svg';
 import Modal from "react-bootstrap/Modal";
@@ -22,6 +23,7 @@ import { default as plusSVG } from '../_assets/images/plus.svg';
 import "../_assets/css/sass/_location.scss";
 import { default as deleteSVG } from '../_assets/images/delete.svg';
 import { default as qrSVG } from '../_assets/images/qrcode.svg';
+import { default as downloadSVG } from '../_assets/images/download.svg';
 import config from 'config';
 
 
@@ -213,8 +215,17 @@ class HeaderPage extends React.Component {
         this.setState({ isModelShow: true });
     }
     openQr = () => {
-        const qrString = config.apiUrl + '/twilio/jotform/' + this.props.user.default_location
+        const qrString = config.apiUrl + '/twilio/jotform/' + this.props.user.default_location;
+        console.log(qrString);
         this.setState({ isQrShow: true, qrString });
+    }
+    saveQr = () => {
+        htmlToImage.toJpeg(document.getElementById('qrElement'), {pixelRatio: 5}).then(dataUrl => {
+            const link = document.createElement("a");
+            link.href = dataUrl;
+            link.download = `qr-${this.props.user.default_location}.jpg`;
+            link.click();
+        }).catch(err => console.log(err))
     }
     async handleSelection(index) {
         try {
@@ -356,6 +367,8 @@ class HeaderPage extends React.Component {
                                                 <span>JD</span>
                                             </a>
                                             <div className="dropdown-menu" aria-labelledby="userDropdown">
+                                                <a className="dropdown-item" >Membership</a>
+                                                <div className="dropdown-divider"></div>
                                                 <a className="dropdown-item" onClick={this.openModal} >Locations</a>
                                                 <div className="dropdown-divider"></div>
                                                 <a className="dropdown-item" onClick={() => this.handleLogout()}>Logout</a>
@@ -554,12 +567,16 @@ class HeaderPage extends React.Component {
                     contentClassName={"cstm-overlay"}
                 >
                     <div className="cancel-chatbtn">
+                        <a className="btn" onClick={() => this.saveQr()}>
+                            <img src={downloadSVG} alt="" />
+                        </a>
                         <a className="btn" onClick={() => this.setState({ isQrShow: false })}>
                             <img src={deleteSVG} alt="" />
                         </a>
                     </div>
                     <div style={{ height: "100%", margin: "0 auto", maxHeight: 400, width: "auto" }}>
                         <QRCode
+                            id="qrElement"
                             size={400}
                             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                             value={qrString}
