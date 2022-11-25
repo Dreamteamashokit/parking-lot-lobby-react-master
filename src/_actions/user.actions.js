@@ -12,6 +12,10 @@ export const userActions = {
     forgot:forgot,
     resetPassword:resetPassword,
     updateSettings:updateSettings,
+    updateCard,
+    getPlan,
+    fetchCards,
+    payMembership,
     getSettings:getSettings,
     fetchNotifications:fetchNotifications,
     markNotifications:markNotifications,
@@ -164,6 +168,120 @@ function updateSettings(endPoint, payload) {
     function request(payload) { return { type: userConstants.UPDATE_SETTING_REQUEST, payload } }
     function success(response) { return { type: userConstants.UPDATE_SETTING_SUCCESS, response } }
     function failure(error) { return { type: userConstants.UPDATE_SETTING_FAILURE, error } }
+}
+function updateCard(payload) {
+    return dispatch => {
+        try {
+            dispatch(request({ payload }));
+            userService.updateCard(payload)
+                .then(
+                    response => {
+                        dispatch(fetchCards());
+                        let message = response.message ? response.message : 'Update card successfully';
+                        successToast(message)
+                        let responseObject = response.data ? response.data : {}
+                        dispatch(success(responseObject));
+                    },
+                    error => {
+                        dispatch(failure(error.toString()));
+                        errorToast(error.toString())
+                        dispatch(alertActions.error(error.toString()));
+                    }
+
+                )
+        } catch (error) {
+            const message = error.message ? error.message.toString() : 'Something went wrong during update settings';
+            errorToast(message)
+            dispatch(failure(message));
+            dispatch(alertActions.error(message));
+        }
+    };
+    function request(payload) { return { type: userConstants.UPDATE_CARD_REQUEST, payload } }
+    function success(response) { return { type: userConstants.UPDATE_CARD_SUCCESS, response } }
+    function failure(error) { return { type: userConstants.UPDATE_CARD_FAILURE, error } }
+}
+function payMembership(payload) {
+    return dispatch => {
+        try {
+            userService.payMembership(payload)
+                .then(
+                    response => {
+                        dispatch(getPlan());
+                        let message = response.message ? response.message : 'Paid successfully';
+                        successToast(message)
+                        let responseObject = response.data ? response.data : {}
+                        dispatch(success(responseObject));
+                    },
+                    error => {
+                        errorToast(error.toString())
+                        dispatch(alertActions.error(error.toString()));
+                    }
+                )
+        } catch (error) {
+            const message = error.message ? error.message.toString() : 'Something went wrong';
+            errorToast(message)
+            dispatch(alertActions.error(message));
+        }
+    };
+    function success(response) { return { type: userConstants.UPDATE_CARD_SUCCESS, response } }
+}
+function getPlan() {
+    return dispatch => {
+        try {
+            dispatch(request({}));
+            userService.getPlan()
+            .then(
+                response => {
+                    let responseObject = response.data ? response.data : {}
+                    dispatch(success(responseObject));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    errorToast(error.toString())
+                    dispatch(alertActions.error(error.toString()));
+                }
+
+            )
+        } catch (error) {
+            const message = error.message ? error.message.toString() : 'Something went wrong during get plan';
+            errorToast(message)
+            dispatch(failure(message));
+            dispatch(alertActions.error(message));
+        }
+    };
+    function request(payload) { return { type: userConstants.MY_PLAN_REQUEST, payload } }
+    function success(response) { return { type: userConstants.MY_PLAN_SUCCESS, response } }
+    function failure(error) { return { type: userConstants.MY_PLAN_FAILURE, error } }
+}
+function fetchCards() {
+    return dispatch => {
+        try {
+            // dispatch(request({}));
+            userService.fetchCards()
+            .then(
+                response => {
+                    let responseObject = response.data ? response.data : {}
+                    dispatch(success(responseObject));
+                },
+                error => {
+                    const message = error.message ? error.message.toString() : 'Something went wrong during get plan';
+            errorToast(message)
+            dispatch(failure(message));
+            dispatch(alertActions.error(message));
+                }
+
+            )
+        } catch (error) {
+            console.log(error)
+            // const message = error.message ? error.message.toString() : 'Something went wrong during get plan';
+            // errorToast(message)
+            // dispatch(failure(message));
+            // dispatch(alertActions.error(message));
+        }
+    };
+    // function request(payload) { return { type: userConstants.MY_PLAN_REQUEST, payload } }
+    function success(response) { return { type: userConstants.GET_CARDS_SUCCESS, response } }
+    // function failure(error) { return { type: userConstants.MY_PLAN_FAILURE, error } }
 }
 function getSettings(endPoint) {
     return dispatch => {

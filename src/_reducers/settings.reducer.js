@@ -21,3 +21,20 @@ export function settings(state = {settingFetching: false, settingData:{}}, actio
       return state
   }
 }
+
+export function plan(state = {plan:{ plan: 0, amount: 0}, cards: []}, action) {
+  switch (action.type) {
+    // case userConstants.MY_PLAN_REQUEST:
+    //   return {fetchingVisitorList:true}
+    case userConstants.MY_PLAN_SUCCESS:
+        return { ...state, plan: action.response }
+    // case userConstants.MY_PLAN_FAILURE:
+    //     return {fetchingVisitorList:false, visitoListError:true}
+    case userConstants.GET_CARDS_SUCCESS:
+      console.log('car', action.response);
+      return { ...state, cards: action.response }
+    default:
+
+      return state
+  }
+}

@@ -209,6 +209,18 @@ export function resetClientPassword(state={}, action){
   }
 }
 
+export function updateClientMembership(state={}, action){
+  switch(action.type){
+    case adminConstants.CLIENT_MEMBERSHIP_PLAN_REQUEST:
+      return{...state, updatingMembershipPlan:true}
+    case adminConstants.CLIENT_MEMBERSHIP_PLAN_SUCCESS:
+        return {...state, updatingMembershipPlan:false}
+    case adminConstants.CLIENT_MEMBERSHIP_PLAN_FAILURE:
+        return {...state, updatingMembershipPlan:false}
+    default : return state
+  }
+}
+
 export function addLocationJotform(state={}, action){
   switch(action.type){
     case adminConstants.ADD_LOCATION_JOTFORM_REQUEST:

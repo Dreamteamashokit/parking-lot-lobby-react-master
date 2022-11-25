@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "../../_assets/css/sass/visitor-review.scss";
 
 import { default as dropdownSMSVG } from "../../_assets/images/dropdown-sm.svg";
-import { history } from "../../_helpers";
+import { history, errorToast } from "../../_helpers";
 import { default as accessProfileSVG } from "../../_assets/images/access-profile.svg";
 import Modal from "react-bootstrap/Modal";
 import { adminActions } from "../../_actions";
@@ -13,6 +13,11 @@ class ClientList extends React.Component {
     super(props);
     this.state = {
       isOpen: false,
+      isMembershipOpen: false,
+      membership: {
+        plan: '',
+        amount: ''
+      },
       selectedClient: '',
       password: '',
     };
@@ -48,6 +53,38 @@ class ClientList extends React.Component {
   openPasswordModal = (val) => {
     this.setState({isOpen: true, selectedClient: val._id, password: ''})
   }
+  openMembershipModal = (val) => {
+    const membership = {
+      plan: val?.membership?.plan|| '',
+      amount: val?.membership?.amount || '',
+    }
+    this.setState({isMembershipOpen: true, selectedClient: val._id, membership})
+  }
+  async handleChange(event) {
+    try {
+      let { name, value } = event.target;
+      let { membership } = this.state;
+      console.log({ name, value })
+      membership = { ...membership, [name]: value };
+      this.setState({ membership });
+    } catch (e) {
+      let message = e.message || 'Something went wrong in handleChange';
+      errorToast(message)
+    }
+  }
+  submitMembership = async (e) => {
+    try {
+      e.preventDefault();
+      const { membership } = this.state;
+      let payload = JSON.parse(JSON.stringify(membership));
+      this.props.updateClientMembership({ client: this.state.selectedClient, ...payload });
+      this.setState({isMembershipOpen: false})
+    } catch (error) {
+      console.log('\n error.handleSubmit :', error.message || error);
+      let message = error.message || 'Something went wrong in handleSubmit';
+      errorToast(message)
+    }
+  }
   submitPassword = () => {
     console.log(this.state)
     this.props.resetClientPassword({
@@ -60,6 +97,7 @@ class ClientList extends React.Component {
   render() {
     console.log(this.props);
     const { fetchingClientList, clientList } = this.props;
+    const { membership } = this.state;
     return (
       <div>
         <section className="visitor-review-holder">
@@ -226,6 +264,23 @@ class ClientList extends React.Component {
                                               </span>
                                             </a>
                                           </li>
+                                          <li key="_sub3_{index}">
+                                            <a
+                                              className="btn"
+                                              onClick={() => this.openMembershipModal(value)}
+                                            >
+                                              <span className="icon">
+                                                {" "}
+                                                <img
+                                                  src={accessProfileSVG}
+                                                  alt=""
+                                                />{" "}
+                                              </span>
+                                              <span className="txbx">
+                                                Membership
+                                              </span>
+                                            </a>
+                                          </li>
                                         </ul>
                                       </div>
                                     </div>
@@ -298,6 +353,46 @@ class ClientList extends React.Component {
             </button>
           </div>
         </Modal>
+        <Modal
+          onHide={() => this.setState({ isMembershipOpen: false })}
+          show={this.state.isMembershipOpen}
+          dialogClassName={"modal-dialog-centered"}
+          contentClassName={"delete-modal-content"}
+        >
+          <div className="modal-header">
+            <button
+              type="button"
+              className="close"
+              onClick={() => this.setState({ isMembershipOpen: false })}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            <h1 className="add-twilio-number">Plan</h1>
+            <div className="form-group">
+              <select name="plan" className="form-control" value={membership.plan} onChange={(e) => this.handleChange(e)}>
+                <option value="" hidden>Select Plan</option>
+                <option value={1}>Monthly</option>
+                <option value={12}>Yearly</option>
+              </select>
+            </div>
+            <h1 className="add-twilio-number">Amount</h1>
+            <div className="form-group">
+              <input type="number" name="amount" className="form-control" value={membership.amount} onChange={(e) => this.handleChange(e)} />
+            </div>
+          </div>
+
+          <div className="modal-footer">
+            <button
+              onClick={(e) => this.submitMembership(e)}
+              type="button"
+              className="btn bluebtn"
+            >
+              Update
+            </button>
+          </div>
+        </Modal>
       </div>
     );
   }
@@ -311,6 +406,7 @@ function mapState(state) {
 
 const actionCreators = {
   resetClientPassword: adminActions.resetClientPassword,
+  updateClientMembership: adminActions.updateClientMembership,
   fetchClientList: adminActions.fetchClientList,
   updateClientStatus:adminActions.updateClientStatus,
   allowLocationADD:adminActions.allowLocationADD,
