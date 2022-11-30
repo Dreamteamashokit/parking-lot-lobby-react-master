@@ -63,6 +63,7 @@ class VisitorList extends React.Component {
       ],
       isDeleteShow: false,
       selectedPatientId: -1,
+      timeOffset: new Date().getTimezoneOffset() * -1,
     };
     this.onSelectVisitType = this.onSelectVisitType.bind(this);
     this.onRemoveVisitType = this.onRemoveVisitType.bind(this);
@@ -124,6 +125,7 @@ class VisitorList extends React.Component {
           searchQuery = `searchBy=${searchBy}`;
         }
       }
+      searchQuery += '&timeOffset=' + this.state.timeOffset;
       this.setState({ selectedPatientData: null, listType:null });
       this.props.fetchVisitorList(searchQuery);
     } catch (err) {
@@ -610,7 +612,7 @@ onSelectQuickResponse = (quickMessage = '') => {
                             </td>
                             <td className="name" key="dateValue_{index}">
                               <div className="name-inner">
-                                {value.visitDate}
+                              <Moment format="lll" local>{value.visitDate}</Moment>
                               </div>
                             </td>
                             <td className="actions" key="actionFields_{index}">
