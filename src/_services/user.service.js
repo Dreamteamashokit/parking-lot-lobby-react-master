@@ -15,6 +15,7 @@ export const userService = {
     resetPassword: resetPassword,
     updateSettings: updateSettings,
     updateCard,
+    removeCard,
     getPlan,
     fetchCards,
     payMembership,
@@ -170,6 +171,14 @@ async function updateCard(card) {
         body: JSON.stringify(card)
     };
     return fetch(`${config.apiUrl}/user/pay/card`, requestOptions).then(handleResponse);;
+}
+
+async function removeCard(source) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    };
+    return fetch(`${config.apiUrl}/user/pay/card/${source}`, requestOptions).then(handleResponse);;
 }
 
 async function getPlan() {

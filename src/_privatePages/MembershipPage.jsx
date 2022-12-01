@@ -85,7 +85,7 @@ class MembershipPage extends React.Component {
     }
   }
   render() {
-    const { isUpdating, plan, cards } = this.props;
+    const { plan, cards, removeCard } = this.props;
     const { card } = this.state;
     return (
       <section className='settings-contbx-wrap'>
@@ -97,7 +97,7 @@ class MembershipPage extends React.Component {
               <b>Validity:</b> {plan?.validity && plan?.isActive ? <Moment format="ll" >{plan?.validity}</Moment> : 'Not Available'}<br />
               <div className="subrgtbtn-holder">
                 <div className="submitbtn-holder">
-                  {plan?.isActive === false && <button className="btn" type="button" id="submitButton" name="button" onClick={() => this.setState({ isPayOpen: true })}>
+                  {plan?.isActive !== false && <button className="btn" type="button" id="submitButton" name="button" onClick={() => this.setState({ isPayOpen: true })}>
                     Pay ${plan?.amount}
                   </button>}
                 </div>
@@ -112,7 +112,8 @@ class MembershipPage extends React.Component {
                 cards.map(c =>
                 (
                   <div key={c.id} className='py-3'>
-                    <b>{c.brand}</b> **** **** {c?.last4}<br />
+                    <b>{c.brand}</b> **** **** {c?.last4} <button className='btn btn-sm float-right' onClick={() => removeCard(c?.id)}>🗙	</button>
+                    <br />
                     {c?.exp_month}/{c?.exp_year} <br />
                   </div>
                 ))
@@ -233,6 +234,7 @@ const actionCreators = {
   getPlan: userActions.getPlan,
   fetchCards: userActions.fetchCards,
   payMembership: userActions.payMembership,
+  removeCard: userActions.removeCard,
 }
 
 export default connect(mapState, actionCreators)(MembershipPage);

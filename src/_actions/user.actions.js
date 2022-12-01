@@ -13,6 +13,7 @@ export const userActions = {
     resetPassword:resetPassword,
     updateSettings:updateSettings,
     updateCard,
+    removeCard,
     getPlan,
     fetchCards,
     payMembership,
@@ -199,6 +200,29 @@ function updateCard(payload) {
     function request(payload) { return { type: userConstants.UPDATE_CARD_REQUEST, payload } }
     function success(response) { return { type: userConstants.UPDATE_CARD_SUCCESS, response } }
     function failure(error) { return { type: userConstants.UPDATE_CARD_FAILURE, error } }
+}
+function removeCard(source) {
+    return dispatch => {
+        try {
+            userService.removeCard(source)
+                .then(
+                    response => {
+                        dispatch(fetchCards());
+                        let message = response.message ? response.message : 'remove card successfully';
+                        successToast(message)
+                    },
+                    error => {
+                        errorToast(error.toString())
+                        dispatch(alertActions.error(error.toString()));
+                    }
+
+                )
+        } catch (error) {
+            const message = error.message ? error.message.toString() : 'Something went wrong during update settings';
+            errorToast(message)
+            dispatch(alertActions.error(message));
+        }
+    };
 }
 function payMembership(payload) {
     return dispatch => {
