@@ -97,7 +97,7 @@ class MembershipPage extends React.Component {
               <b>Validity:</b> {plan?.validity && plan?.isActive ? <Moment format="ll" >{plan?.validity}</Moment> : 'Not Available'}<br />
               <div className="subrgtbtn-holder">
                 <div className="submitbtn-holder">
-                  {plan?.isActive !== false && <button className="btn" type="button" id="submitButton" name="button" onClick={() => this.setState({ isPayOpen: true })}>
+                  {plan?.isActive === false && <button className="btn" type="button" id="submitButton" name="button" onClick={() => this.setState({ isPayOpen: true })}>
                     Pay ${plan?.amount}
                   </button>}
                 </div>
