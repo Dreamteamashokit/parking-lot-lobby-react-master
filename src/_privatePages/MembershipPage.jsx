@@ -91,18 +91,26 @@ class MembershipPage extends React.Component {
       <section className='settings-contbx-wrap'>
         <div className='container'>
           <div className="row">
-            <div className='col-6' style={{ fontSize: '22px' }}>
-              <b>Plan:</b> {plan?.plan} Months <br />
-              <b>Amount:</b> {plan?.amount} USD <br />
-              <b>Validity:</b> {plan?.validity && plan?.isActive ? <Moment format="ll" >{plan?.validity}</Moment> : 'Not Available'}<br />
-              <div className="subrgtbtn-holder">
-                <div className="submitbtn-holder">
-                  {plan?.isActive === false && <button className="btn" type="button" id="submitButton" name="button" onClick={() => this.setState({ isPayOpen: true })}>
-                    Pay ${plan?.amount}
-                  </button>}
+            {
+              plan?.amount && plan?.plan
+                ?
+                <div className='col-6' style={{ fontSize: '22px' }}>
+                  <b>Plan:</b> {plan?.plan} Months <br />
+                  <b>Amount:</b> {plan?.amount} USD <br />
+                  <b>Validity:</b> {plan?.validity && plan?.isActive ? <Moment format="ll" >{plan?.validity}</Moment> : 'Not Available'}<br />
+                  <div className="subrgtbtn-holder">
+                    <div className="submitbtn-holder">
+                      {plan?.isActive === false && <button className="btn" type="button" id="submitButton" name="button" onClick={() => this.setState({ isPayOpen: true })}>
+                        Pay ${plan?.amount}
+                      </button>}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+                :
+                <div className='col-6'>
+                  <h4 class="text-danger">No plan set by admin</h4>
+                </div>
+            }
             <div className='col-6'>
               <div className='d-flex justify-content-between'>
                 <h4>Saved Cards</h4>
