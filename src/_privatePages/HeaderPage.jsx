@@ -91,6 +91,7 @@ class HeaderPage extends React.Component {
         const apiEndpoint = await fetchAPIEndpoint(formConstants.GET_Settings);
         this.props.getSettings(apiEndpoint);
         this.props.fetchNotifications();
+        this.props.getPlan();
         this.getUserIdAndSubscribe(1);
         /* if(this.props.user &&  !this.props.user.default_location) {
             this.openModal();
@@ -295,13 +296,20 @@ class HeaderPage extends React.Component {
 
 
     render() {
-        const { settingData, notification } = this.props;
+        const { settingData, notification, plan } = this.props;
         const { notificationTitle, notificationBody,
             qrString,
             selectedLocation,
             error_addlocation, addlocation } = this.state;
         return (
             <section className="header-container">
+                {
+                    plan.isActive === false
+                    &&
+                    <div className='text-center bg-warning'>
+                        <Link className='text-white' to="/membership">Activate Plan - Click Here</Link>
+                    </div>
+                }
                 <header className="header">
                     <div className="container-fluid">
                         <nav className="navbar navbar-expand-lg">
@@ -367,7 +375,7 @@ class HeaderPage extends React.Component {
                                                 <span>JD</span>
                                             </a>
                                             <div className="dropdown-menu" aria-labelledby="userDropdown">
-                                                <a className="dropdown-item" >Membership</a>
+                                                <Link to="/membership" className="dropdown-item" >Membership</Link>
                                                 <div className="dropdown-divider"></div>
                                                 <a className="dropdown-item" onClick={this.openModal} >Locations</a>
                                                 <div className="dropdown-divider"></div>
@@ -595,13 +603,15 @@ function mapState(state) {
     const { settingData } = settings;
     const { user, openLocationModel, isOpenRequest } = authentication;
     const { notification } = users;
+    const { plan } = state.plan
     const { islocationRegister, fetching_locations, clinic_locations, isAddLocationComplete, addLocationError } = commons;
-    return { user,openLocationModel, notification, settingData, islocationRegister, isAddLocationComplete, fetching_locations, clinic_locations, isOpenRequest, addLocationError };
+    return { plan, user,openLocationModel, notification, settingData, islocationRegister, isAddLocationComplete, fetching_locations, clinic_locations, isOpenRequest, addLocationError };
 }
 
 const actionCreators = {
     getUsers: userActions.getAll,
     deleteUser: userActions.delete,
+    getPlan: userActions.getPlan,
     logout: userActions.logout,
     getSettings: userActions.getSettings,
     getwaitingList: commonActions.fetchWaitingList,

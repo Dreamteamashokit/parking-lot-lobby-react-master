@@ -19,6 +19,7 @@ const My404Component = lazy(()=> import('../_commanPages/My404Component'));
 const ResetPasswordPage = lazy(()=> import('../_commanPages/ResetPasswordPage'));
 const HomePage = lazy(()=> import('../_privatePages/HomePage'));
 const SettingPage = lazy(()=> import('../_privatePages/SettingPage'));
+const MembershipPage = lazy(()=> import('../_privatePages/MembershipPage'));
 const ModalPage = lazy(()=> import('../_privatePages/ModelPage'));
 const PatientForm = lazy(()=> import('../_commanPages/PatientForm'));
 const CommanHeader = lazy(()=> import('../_commanPages/CommanHeader'));
@@ -48,6 +49,7 @@ class App extends React.Component {
                     <Switch>
                         <PrivateRoute exact path="/" component={HomePage} />
                         <PrivateRoute exact path="/settings" component={SettingPage} />
+                        <PrivateRoute exact path="/membership" component={MembershipPage} />
                         <PrivateRoute exact path="/modal" component={ModalPage} />
                         <PrivateRoute exact path="/visitor-reviews" component={lazy(()=> import('../_privatePages/VisitorReviews'))} />
                         <PrivateRoute exact path="/visitor-list" component={lazy(()=> import('../_privatePages/VisitorList'))} />

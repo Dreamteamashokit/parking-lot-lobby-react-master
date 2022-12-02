@@ -14,6 +14,11 @@ export const userService = {
     forgot: forgot,
     resetPassword: resetPassword,
     updateSettings: updateSettings,
+    updateCard,
+    removeCard,
+    getPlan,
+    fetchCards,
+    payMembership,
     getSettings: getSettings,
     fetchNotifications: fetchNotifications,
     markNotifications: markNotifications,
@@ -148,6 +153,48 @@ async function update(user) {
     };
 
     return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
+}
+
+async function payMembership(data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    };
+    return fetch(`${config.apiUrl}/user/pay/membership`, requestOptions).then(handleResponse);;
+}
+
+async function updateCard(card) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(card)
+    };
+    return fetch(`${config.apiUrl}/user/pay/card`, requestOptions).then(handleResponse);;
+}
+
+async function removeCard(source) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    };
+    return fetch(`${config.apiUrl}/user/pay/card/${source}`, requestOptions).then(handleResponse);;
+}
+
+async function getPlan() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+    return fetch(`${config.apiUrl}/user/plan`, requestOptions).then(handleResponse);
+}
+
+async function fetchCards() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+    return fetch(`${config.apiUrl}/user/pay/cards`, requestOptions).then(handleResponse);
 }
 
 async function fetchNotifications() {

@@ -12,6 +12,7 @@ export const adminActions = {
     fetchLocationList:fetchLocationList,
     addTwilioNumber:addTwilioNumber,
     resetClientPassword,
+    updateClientMembership,
     addLocationJotform,
     clientRegister,
     addLocation,
@@ -190,10 +191,7 @@ function resetClientPassword(payload){
         .then(response=>{
             if(response.status){
                 successToast('Password reset success');
-                dispatch(success(response.data))
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
+                dispatch(success(response.data));
                }
                else
                {
@@ -207,6 +205,29 @@ function resetClientPassword(payload){
     function request() { return { type: adminConstants.RESET_CLIENT_PASSWORD_REQUEST } }
     function success() { return { type: adminConstants.RESET_CLIENT_PASSWORD_SUCCESS } }
     function failure(error) { return { type: adminConstants.RESET_CLIENT_PASSWORD_FAILURE, error } }
+}
+function updateClientMembership(payload){
+    return dispatch => {
+        dispatch(request())
+        adminService.postAdmin(`admin/client-membership`, payload)
+        .then(response=>{
+            if(response.status){
+                successToast('Plan updated');
+                dispatch(fetchClientList());
+                dispatch(success(response.data))
+               }
+               else
+               {
+                errorToast(response.message)
+                dispatch(failure(response.message))
+               }
+        })
+
+    }
+
+    function request() { return { type: adminConstants.CLIENT_MEMBERSHIP_PLAN_REQUEST } }
+    function success() { return { type: adminConstants.CLIENT_MEMBERSHIP_PLAN_SUCCESS } }
+    function failure(error) { return { type: adminConstants.CLIENT_MEMBERSHIP_PLAN_FAILURE, error } }
 }
 function addLocationJotform(payload){
     return dispatch => {
