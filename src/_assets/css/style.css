@@ -1382,6 +1382,20 @@ input:checked + .slider:before {
   top: 26px;
   min-width: 80px;
 }
+.chatbx-container .chatbx-holder .chat-body .float-inputbx .btn-paperpin {
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  left: 8px;
+  top: 16px;
+  padding: 0;
+  cursor: pointer;
+}
+.chatbx-container .chatbx-holder .chat-body .float-inputbx .btn-paperpin img {
+  height: 36px;
+  padding-top: 3px;
+}
 .chatbx-container .chatbx-holder .chat-body .response_boxes {
   height: calc(100% - 85px);
   overflow: auto;
