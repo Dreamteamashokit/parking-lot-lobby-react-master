@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {sendImage} from '../_assets';
 import { userActions,commonActions } from '../_actions';
 import { getLoginUserId, socket} from '../_helpers';
+import { default as paperClipSVG } from '../_assets/images/paperclip.svg';
 class ChatBox extends React.Component {
     messagesEnd = React.createRef();
     constructor(props) {
@@ -90,6 +91,21 @@ class ChatBox extends React.Component {
     getAlert(message) {
         this.setState({message:message,isError:false})
     }
+    toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+    async onMMSMedia(files) {
+        let {patientId} = this.state;
+        const requestPayload = {
+            patientId,
+            message: '',
+            media: await this.toBase64(files[0]),
+        }
+        this.props.addChatMessage(requestPayload)
+    }
     scrollToBottom() {
             this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     }
@@ -112,9 +128,17 @@ class ChatBox extends React.Component {
                                     <li className={(value.type === 1 ? 'lftchat' : 'rgtchat')} key={'c_'+index}>
                                     { value.type === 2 && <span>{this.props.getMomentTime(3, value.createdAt)}</span>}
                                     <div className="thread-entry">
+                                        {!!value.content &&
                                         <div className="thread-entry-inner">
                                            {value.content}
-                                        </div>
+                                        </div>}
+                                        { value.media.map(file =>
+                                        <div>
+                                            {file.isImage ?
+                                            <img className='img-thumbnail' src={file.link} />
+                                            : <a href={file.link} download target='_blank'>{file.name}</a>
+                                            }
+                                        </div>)}
                                     </div>
                                     { value.type === 1 && <span>{this.props.getMomentTime(3, value.createdAt)}</span>}
                                    </li>
@@ -128,7 +152,11 @@ class ChatBox extends React.Component {
                             ref={(el) => { this.messagesEnd = el; }}>
                         </div>
                     </div>
-                    <div className="float-inputbx">
+                    <div className="float-inputbx" style={{paddingLeft: '55px'}}>
+                        <label className='btn-paperpin'>
+                            <img src={paperClipSVG} alt="" />
+                            <input type="file" onChange={(e) => this.onMMSMedia(e.target.files)} style={{display: 'none'}} />
+                        </label>
                         <input type="text" name="" value={message} className="form-control" placeholder="Type your message.."  onChange={(e)=>this.handleChange(e)} />
                         {isError && 
                            <label htmlFor="" className='error-alert error help-block'>required</label>
