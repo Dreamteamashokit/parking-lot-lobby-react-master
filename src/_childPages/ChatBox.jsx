@@ -134,7 +134,10 @@ class ChatBox extends React.Component {
                                         </div>}
                                         { value.media.map(file =>
                                         <div>
-                                            <a href={file.link} download target='_blank'>{file.name}</a>
+                                            {file.isImage ?
+                                            <img className='img-thumbnail' src={file.link} />
+                                            : <a href={file.link} download target='_blank'>{file.name}</a>
+                                            }
                                         </div>)}
                                     </div>
                                     { value.type === 1 && <span>{this.props.getMomentTime(3, value.createdAt)}</span>}
