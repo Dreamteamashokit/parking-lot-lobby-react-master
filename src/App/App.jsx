@@ -53,6 +53,7 @@ class App extends React.Component {
                         <PrivateRoute exact path="/modal" component={ModalPage} />
                         <PrivateRoute exact path="/visitor-reviews" component={lazy(()=> import('../_privatePages/VisitorReviews'))} />
                         <PrivateRoute exact path="/visitor-list" component={lazy(()=> import('../_privatePages/VisitorList'))} />
+                        <PrivateRoute exact path="/user-list" component={lazy(()=> import('../_privatePages/UserList'))} />
                         <Route exact path="/patient/:locationId/:patientId" component={PatientForm} />
                         <Route exact path="/add-another-patient/:locationId" component={AddAnotherPatientForm} />
                         <Route exact path="/review/:locationId/:patientId" component={ReviewPage} />

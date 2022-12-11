@@ -18,6 +18,9 @@ class ChatBox extends React.Component {
                 if(patientId == response.patientId) {
                     this.props.fetchPatientChat(patientId);
                     this.props.markNotifications(patientId);
+                } else if(this.props?.isUser) {
+                    this.props.fetchUserChat(this.props.popupData._id);
+                    this.props.markNotifications(this.props.popupData._id);
                 }
             }
         })
@@ -37,6 +40,10 @@ class ChatBox extends React.Component {
         if(patientId) {
             this.props.fetchPatientChat(patientId);
             this.props.markNotifications(patientId);
+            this.scrollToBottom();
+        } else if(this.props?.isUser) {
+            this.props.fetchPatientChat(this.props.popupData._id);
+            this.props.markNotifications(this.props.popupData._id);
             this.scrollToBottom();
         }
     }
@@ -180,6 +187,7 @@ function mapState(state) {
 
 const actionCreators = {
     fetchPatientChat: commonActions.fetchPatientChat,
+    fetchUserChat: commonActions.fetchUserChat,
     addChatMessage:commonActions.addChatMessage,
     markNotifications:userActions.markNotifications
 }

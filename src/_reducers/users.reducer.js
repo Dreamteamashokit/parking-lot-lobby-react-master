@@ -1,6 +1,6 @@
 import { userConstants } from '../_constants';
 
-export function users(state = {notification:[], visitorList: []}, action) {
+export function users(state = {notification:[], visitorList: [], userList: {total: 0, page: 1, data: []}}, action) {
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
       return {
@@ -62,6 +62,10 @@ export function users(state = {notification:[], visitorList: []}, action) {
       return {fetchingVisitorList:true}
     case userConstants.VISITOR_LIST_SUCCESS:
         return {fetchingVisitorList:false, visitorList: action.list}
+    case userConstants.USER_LIST_REQUEST:
+        return {...state, fetchingUserList: true}
+    case userConstants.USER_LIST_SUCCESS:
+        return {...state, fetchingUserList:false, userList: action.list}
     case userConstants.REMOVE_PATIENT_REQUEST:
       return { ...state };
     case userConstants.VISITOR_LIST_FAILURE:
