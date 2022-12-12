@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import Moment from 'react-moment';
 import {sendImage} from '../_assets';
 import { userActions,commonActions } from '../_actions';
 import { getLoginUserId, socket} from '../_helpers';
@@ -42,6 +44,7 @@ class ChatBox extends React.Component {
             this.props.markNotifications(patientId);
             this.scrollToBottom();
         } else if(this.props?.isUser) {
+            this.setState({patientId:this.props.popupData._id});
             this.props.fetchPatientChat(this.props.popupData._id);
             this.props.markNotifications(this.props.popupData._id);
             this.scrollToBottom();
@@ -113,6 +116,9 @@ class ChatBox extends React.Component {
         }
         this.props.addChatMessage(requestPayload)
     }
+    isSameDay(oldDate, newDate) {
+        return moment(oldDate).isSame(newDate, 'day')
+    }
     scrollToBottom() {
             this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     }
@@ -132,23 +138,32 @@ class ChatBox extends React.Component {
                         <ul id="chat-box">
                         {!fetchingChat && chatData && chatData.length > 0 ?
                                   chatData.map((value, index) => (
+                                    <>
+                                    {
+                                        (index === 0 || !this.isSameDay(chatData[index -1].createdAt, value.createdAt)) &&
+                                        <li className='chat-date-head'>
+                                            <Moment date={value.createdAt} format="ll"></Moment>
+                                        </li>
+                                    }
                                     <li className={(value.type === 1 ? 'lftchat' : 'rgtchat')} key={'c_'+index}>
                                     { value.type === 2 && <span>{this.props.getMomentTime(3, value.createdAt)}</span>}
-                                    <div className="thread-entry">
-                                        {!!value.content &&
-                                        <div className="thread-entry-inner">
-                                           {value.content}
-                                        </div>}
-                                        { value.media.map(file =>
-                                        <div>
-                                            {file.isImage ?
-                                            <img className='img-thumbnail' src={file.link} />
-                                            : <a href={file.link} download target='_blank'>{file.name}</a>
-                                            }
-                                        </div>)}
-                                    </div>
+                                              <div className="thread-entry">
+                                                  {!!value.content &&
+                                                      <div className="thread-entry-inner">
+                                                          {value.content}
+                                                      </div>}
+                                                  {value.media.map(file =>
+                                                      <div>
+                                                          <a href={file.link} download target='_blank'>
+                                                              {file.isImage ?
+                                                                  <img className='img-thumbnail' src={file.link} />
+                                                                  : <>{ file.name }</>
+                                                              }
+                                                          </a>
+                                                      </div>)}
+                                              </div>
                                     { value.type === 1 && <span>{this.props.getMomentTime(3, value.createdAt)}</span>}
-                                   </li>
+                                   </li></>
                                  )) : <li className="txt-center">
                                   {fetchingChat && <div className="thread-entry"><div className="thread-entry-inner">Loading....</div></div>}
                                    {!fetchingChat && <div className="thread-entry"><div className="thread-entry-inner">No Chat Found..</div></div>}
