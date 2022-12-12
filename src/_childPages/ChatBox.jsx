@@ -154,7 +154,7 @@ class ChatBox extends React.Component {
                                                       </div>}
                                                   {value.media.map(file =>
                                                       <div>
-                                                          <a href={file.link} download target='_blank'>
+                                                          <a href={file.link} download>
                                                               {file.isImage ?
                                                                   <img className='img-thumbnail' src={file.link} />
                                                                   : <>{ file.name }</>
