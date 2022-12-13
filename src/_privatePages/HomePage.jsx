@@ -4,6 +4,7 @@ import { commonActions,userActions } from '../_actions';
 import Modal from "react-bootstrap/Modal";
 import Moment from 'react-moment';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import {
     capitalize, errorToast,
     getLoginUserId,
@@ -34,6 +35,7 @@ import { range } from 'underscore';
 
 import { default as carSVG } from '../_assets/images/car.svg';
 import { default as chairSVG } from '../_assets/images/chair.svg';
+import { default as usersGroup2SVG } from '../_assets/images/users-group2.svg';
 
 import { default as paperClipSVG } from '../_assets/images/paperclip-solid.svg';
 
@@ -818,6 +820,9 @@ class HomePage extends React.Component {
                     <button type="button" className="client-btn btn btnn-hide" onClick={() => this.addClientPopupOpen()}>
                         <span> <img src={plusBlue} alt="" /></span>
                     </button>
+                    <Link className="client-btn btn btnn-hide ml-2" to="/user-list">
+                        <span> <img src={usersGroup2SVG} alt="" /></span>
+                    </Link>
                 </div>
                 <div className="serv-btn-box">
                     <button type="button" className="served-btn btn btnn-hide" onClick={() => this.collapsedSection()}>

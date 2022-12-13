@@ -89,7 +89,7 @@ module.exports = {
         config: JSON.stringify({
             //apiUrl: 'https://api.pll.matrixm.io'
             //apiUrl: 'http://localhost:8005'
-            apiUrl: 'https://api.parkinglotlobby.com'
+            apiUrl: 'https://testapi.parkinglotlobby.com'
         })
     }
 }

@@ -24,6 +24,7 @@ export const userActions = {
     patientRegister:patientRegister,
     fetchVisitorReviews,
     fetchVisitorList,
+    fetchUserList,
     updateIsOpenSetting,
     OpenLocationModelAction,
     closeLocationModelAction,
@@ -483,6 +484,24 @@ function fetchVisitorList(searchQuery) {
     function request(searchQuery) { return { type: userConstants.VISITOR_LIST_REQUEST } }
     function success(list) { return { type: userConstants.VISITOR_LIST_SUCCESS, list } }
     function failure(error) { return { type: userConstants.VISITOR_LIST_FAILURE, error } }
+ 
+}
+function fetchUserList(searchQuery) {
+    return dispatch => {
+        dispatch(request(searchQuery));
+        userService.fetchData('user/user-list', new URLSearchParams(searchQuery).toString())
+            .then(
+                response => {
+                    if(response.status)
+                     dispatch(success(response.data))
+                },
+                error => {
+                    errorToast(error.toString())
+                }
+            );
+    };
+    function request() { return { type: userConstants.USER_LIST_REQUEST } }
+    function success(list) { return { type: userConstants.USER_LIST_SUCCESS, list } }
  
 }
 function fetchVisitorReviews(searchQuery) {
