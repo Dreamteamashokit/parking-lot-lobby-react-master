@@ -81,6 +81,7 @@ module.exports = {
      new ModuleConcatenationPlugin()
 ],
     devServer: {
+      //port: 8000,
         port: 8080,
         historyApiFallback: true
     },

@@ -69,6 +69,7 @@ class HomePage extends React.Component {
                 fullNumber: '',
                 dob: '',
                 visitNotes: '',
+                visitDate: new Date(),
                 waitingOrCheckIn:false,
                 parkingSpot: ''
             },
@@ -78,9 +79,11 @@ class HomePage extends React.Component {
                 fullNumber: false,
                 dob: false,
                 visitNotes: false,
+                visitDate: false,
                 parkingSpot: false
             },
             years: range(1970, getYear(new Date()) + 1, 1),
+            yearsVisitCalendar: range(getYear(new Date()), getYear(new Date()) + 2, 1),
             months: [
                 "January",
                 "February",
@@ -701,9 +704,10 @@ class HomePage extends React.Component {
     hideAddClientModal = () => {
         this.setState({
             isAddClientModelShow: false,
-            client: { first_name: '', last_name: '', fullNumber: '', dob: '', visitNotes: '', parkingSpot: '' },
-            clientError: { first_name: false, last_name: false, fullNumber: false, dob: false, visitNotes: false, parkingSpot: false }
+            client: { first_name: '', last_name: '', fullNumber: '', dob: '', visitNotes: '', parkingSpot: '', visitDate: new Date() },
+            clientError: { first_name: false, last_name: false, fullNumber: false, dob: false, visitNotes: false, parkingSpot: false, visitDate: false, }
         });
+        this.props.getwaitingList();
     }
     submitClientInfo = async () => {
         try {
@@ -725,7 +729,10 @@ class HomePage extends React.Component {
             if (!client.dob || client.dob == '') {
                 clientError['dob'] = true;
             }
-            if (clientError.first_name || clientError.last_name || clientError.fullNumber || clientError.dob) {
+            if (!client.visitDate || client.visitDate == '') {
+                clientError['visitDate'] = true;
+            }
+            if (clientError.first_name || clientError.last_name || clientError.fullNumber || clientError.dob || clientError.visitDate) {
                 this.setState({ ...clientError });
                 return;
             }
@@ -734,6 +741,7 @@ class HomePage extends React.Component {
                 last_name: client.last_name,
                 fullNumber: client.fullNumber,
                 dob: moment(client.dob).format('MM/DD/yyyy'),
+                visitDate: moment(client.visitDate),
                 waitingOrCheckIn: (client.waitingOrCheckIn) ? true : false
             }
             if (client.visitNotes && (client.visitNotes !== '')) {
@@ -779,6 +787,15 @@ class HomePage extends React.Component {
                 const { client } = this.state;
                 client['waitingOrCheckIn'] = event.target.checked;
                 this.setState({ ...client});
+            } else if (type === 5) {
+                console.log('\n event:', event);
+                const { client, clientError } = this.state;
+                clientError["visitDate"] = false;
+                if (!event) {
+                    clientError["visitDate"] = true;
+                }
+                client["visitDate"] = event;
+                this.setState({ ...client, ...clientError });
             }
         } catch (err) {
             console.log('\n err  in handleClientChange:', err.message || err);
@@ -1340,6 +1357,67 @@ class HomePage extends React.Component {
                                         name="parkingSpot" value={client.parkingSpot} className={clientError.parkingSpot ? 'form-control error-box' : 'form-control'} placeholder="Parking Spot Number(if applicable)" onChange={(e) => this.handleClientChange(e)} />
                                     </div>
                                 </div>
+                                <div className="col-md-6">
+                                <div className="form-group">
+                                    <div className='react-date-picker'>
+                                        <DatePicker
+                                        calendarClassName="dob-calender"
+                                        placeholderText='Visit Date'
+                                        dateFormat="dd-MM-yyyy"
+                                            className={clientError.visitDate ? 'form-control error-box dob-main' : 'form-control dob-main'}
+                                            renderCustomHeader={({
+                                                date,
+                                                changeYear,
+                                                changeMonth,
+                                                decreaseMonth,
+                                                increaseMonth,
+                                                prevMonthButtonDisabled,
+                                                nextMonthButtonDisabled,
+                                            }) => (
+                                                <div className='calender-popup-box' >
+                                                    <button className='left-date-slider' onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                                        {"<"}
+                                                    </button>
+                                                    <select
+                                                        className='year-selecter'
+                                                        value={getYear(date)}
+                                                        onChange={({ target: { value } }) => changeYear(value)}
+                                                    >
+                                                        {this.state.yearsVisitCalendar.map((option) => (
+                                                            <option key={option} value={option}>
+                                                                {option}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+
+                                                    <select
+                                                       className='month-selecter'
+                                                        value={this.state.months[getMonth(date)]}
+                                                        onChange={({ target: { value } }) =>
+                                                            changeMonth(this.state.months.indexOf(value))
+                                                        }
+                                                    >
+                                                        {this.state.months.map((option) => (
+                                                            <option key={option} value={option}>
+                                                                {option}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+
+                                                    <button className='right-date-slider' onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                                        {">"}
+                                                    </button>
+
+
+                                                </div>
+                                            )}
+                                            selected={client.visitDate}
+                                            onChange={(date) => this.handleClientChange(date, 5)}
+                                        />
+                                        {/* <input type="text" name="dob" value={client.dob} className="form-control" placeholder="Date of Birth(01/01/2021)" onChange={(e) => this.handleClientChange(e)} /> */}
+                                    </div>
+                                </div>
+                            </div>
                                 {/* <div className="attachment  ">
                                     <div className="form-group">
                                         <div className="form-control atchment-holder">
