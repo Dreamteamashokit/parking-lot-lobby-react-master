@@ -16,7 +16,8 @@ class ClientList extends React.Component {
       isMembershipOpen: false,
       membership: {
         plan: '',
-        amount: ''
+        amount: '',
+        isAutoPayEnable: false
       },
       selectedClient: '',
       password: '',
@@ -57,6 +58,7 @@ class ClientList extends React.Component {
     const membership = {
       plan: val?.membership?.plan|| '',
       amount: val?.membership?.amount || '',
+      isAutoPayEnable : val?.membership?.isAutoPayEnable
     }
     this.setState({isMembershipOpen: true, selectedClient: val._id, membership})
   }
@@ -69,6 +71,20 @@ class ClientList extends React.Component {
       this.setState({ membership });
     } catch (e) {
       let message = e.message || 'Something went wrong in handleChange';
+      errorToast(message)
+    }
+  }
+  async handleCheckboxChange(event) {
+    try {
+      let { membership } = this.state;
+      let name = 'isAutoPayEnable';
+      let value = !membership.isAutoPayEnable;
+      console.log(membership.isAutoPayEnable);
+      console.log('selectedValue ',value);
+      membership = { ...membership, [name]: value };
+      this.setState({ membership });
+    } catch (e) {
+      let message = e.message || 'Something went wrong in handleCheckboxChange';
       errorToast(message)
     }
   }
@@ -380,6 +396,10 @@ class ClientList extends React.Component {
             <h1 className="add-twilio-number">Amount</h1>
             <div className="form-group">
               <input type="number" name="amount" className="form-control" value={membership.amount} onChange={(e) => this.handleChange(e)} />
+            </div>
+            <h1 className="add-twilio-number">Enable Auto Pay</h1>
+            <div className="form-group">
+              <input type="checkbox" name="isAutoPayEnable" className="form-control" checked={membership.isAutoPayEnable} onChange={(e) => this.handleCheckboxChange(e)} />
             </div>
           </div>
 
