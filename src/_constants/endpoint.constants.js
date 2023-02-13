@@ -33,7 +33,8 @@ export const CommonApiEndpoint = {
     fetchFormUploads:"fetchFormUploads",
     generatePdf:"generatePdf",
     getAttachmentFromUrl:"getAttachmentFromUrl",
-    reviewDocument:"review-document"
+    reviewDocument:"review-document",
+    bookAppointment: "scheduleappointment"
 }
 export const twilioApiEndpoint = {
     send : '/twilio/send'

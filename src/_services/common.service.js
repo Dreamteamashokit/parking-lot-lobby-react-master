@@ -18,6 +18,7 @@ export const commonService = {
     updateDelayForPatient:updateDelayForPatient,
     updateNotesForPatient:updateNotesForPatient,
     createProfileAction:createProfileAction,
+    bookingAppointments: bookingAppointments,
     addlocationAction,
     fetchlocations,
     updatePatientInfor,
@@ -185,6 +186,23 @@ async function removePatient(payload) {
     return fetch(`${config.apiUrl}/common/${CommonApiEndpoint.removePatient}/${payload.id}`, requestOptions)
         .then(handleResponse);
 }
+
+async function bookingAppointments(payload) {
+    const headerObject = authHeader();
+    const headerPayload = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        ...headerObject
+    }
+    const requestOptions = {
+        method: 'POST',
+        headers: headerPayload,
+        body: JSON.stringify({ ...payload })
+    };
+    return fetch(`${config.apiUrl}/${CommonApiEndpoint.bookAppointment}`, requestOptions)
+        .then(handleResponse);
+}
+
 async function noShowSet(payload) {
     const headerObject = authHeader();
     const headerPayload = {

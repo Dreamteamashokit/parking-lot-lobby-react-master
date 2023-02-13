@@ -1697,4 +1697,9 @@ input:checked + .slider:before {
   font-weight: 600;
 }
 
+.logo-img-parking-lot
+{
+  width: 118px;
+  height: 40px;
+}
 /*# sourceMappingURL=style.css.map */
