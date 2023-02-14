@@ -4,6 +4,7 @@ import { commonActions,userActions } from '../_actions';
 import Modal from "react-bootstrap/Modal";
 import Moment from 'react-moment';
 import moment from 'moment';
+import { MdFlag } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import {
     capitalize, errorToast,
@@ -858,7 +859,7 @@ class HomePage extends React.Component {
                                                 </div>
                                                 <div className="middlebx">
                                                     <div className="lftbx">
-                                                        <h1 onClick={() => this.backChatDropModal(index, 'waiting')}>{this.getField(index, 'name', 'waiting')}</h1>
+                                                        <h1 onClick={() => this.backChatDropModal(index, 'waiting')}>{this.getField(index, 'name', 'waiting')}{waitingList[index].scheduleByUser?<MdFlag />:''}</h1>
                                                         {this.calculateDiff(index, value.inQueueAt)}
                                                         <p className={(value.overFlow) ? 'red' : ''}>
                                                             {this.getMomentTime(1, value.inQueueAt)}
@@ -985,7 +986,7 @@ class HomePage extends React.Component {
                                                 </div>
                                                 <div className="middlebx">
                                                     <div className="lftbx">
-                                                        <h1 onClick={() => this.backChatDropModal(index, 'checkInOut')}>{this.getField(index, 'name', 'checkInout')}</h1>
+                                                        <h1 onClick={() => this.backChatDropModal(index, 'checkInOut')}>{this.getField(index, 'name', 'checkInout')}{checkInOutList[index].scheduleByUser?<MdFlag />:''}</h1>
                                                         <p>
                                                             {this.getMomentTime(1, value.checkIn)}
                                                             {/* <span className="left-margin">({this.getMomentTime(2, value.checkIn)})</span> */}
@@ -1053,7 +1054,8 @@ class HomePage extends React.Component {
                                                 </div>
                                                 <div className="middlebx">
                                                     <div className="lftbx">
-                                                        <h1 onClick={() => this.backChatDropModal(index, 'servedSection')}>{this.getField(index, 'name', 'served')}</h1>
+                                                    
+                                                        <h1 onClick={() => this.backChatDropModal(index, 'servedSection')}>{this.getField(index, 'name', 'served')}{servedPatient[index].scheduleByUser?<MdFlag />:''}</h1>
                                                         <p>
                                                             {this.getMomentTime(1, value.checkOut)}
                                                             {/* <span className="left-margin">({this.getMomentTime(2, value.checkOut)})</span> */}
@@ -1386,6 +1388,10 @@ function mapState(state) {
     const { waitingList, isWaiting,
         isCheckInOUT, checkInOutList,
         isServed, servedPatient, isMoveToCheckIn, isMoveToServed, isNotifyProccess, updatedPatient, addClientProccess } = commons;
+        console.log('waitingList');
+        console.log(waitingList);
+        console.log('servedPatient');
+        console.log(servedPatient);
     const { user } = authentication;
         return {
         waitingList, isWaiting,
