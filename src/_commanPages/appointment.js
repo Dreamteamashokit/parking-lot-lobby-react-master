@@ -332,11 +332,12 @@ function appointment() {
           locationId: locationId,
           mobile: `+${countryCode}${appointmentDetails?.mobileNumber}`,
           visitDate: moment(appointmentDetails?.appointmentDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
-          // dateOfBirth: appointmentDetails?.dateOfBirth,
-          // reason: appointmentDetails?.reason,
+          dob: appointmentDetails?.dateOfBirth,
+          visitReason: appointmentDetails?.reason,
           LastName: appointmentDetails?.lastName,
           FirstName: appointmentDetails?.firstName
         };
+        console.log(reqPayload);
         bookingAppointments(reqPayload).then((response)=>{
           console.log(response);
          swal.fire({
