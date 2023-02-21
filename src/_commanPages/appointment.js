@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import config from 'config';
 import swal from "sweetalert2";
 import moment from 'moment';
@@ -25,6 +25,7 @@ function appointment() {
   const [checkValidation, setValidation] = useState(false);
   const [loading, setLoading] = useState(false);
   const [countryCode, setCountryCode] = useState('1');
+  const [appointmentTiming, setAppointmentTiming] = useState({});
   const countryCodeArray = [{"country":"Afghanistan","code":"93","iso":"AF"},
   {"country":"Albania","code":"355","iso":"AL"},
   {"country":"Algeria","code":"213","iso":"DZ"},
@@ -320,12 +321,67 @@ function appointment() {
       }
     });
   }
+
+  async function scheduleTimeByLocation(payload) {
+    return new Promise((resolve, reject) => {
+      try {
+        commonService.scheduleTimeByLocation(payload)
+            .then(
+                response => {
+                  if(response && response.data)
+                    return resolve(response.data);
+                  else
+                    return reject({message:"no Content found"});
+                },
+                error => {
+                  return reject (error);
+                }
+            )
+      } catch (error) {
+        return reject(error);
+      }
+    });
+  }
+
+  useEffect(() => {
+    scheduleTimeByLocation(locationId).then(response=>{
+      setAppointmentTiming(response.scheduleInformation);
+    }).catch(err=>{
+      console.log(err);
+    })
+  }, []);
+
   const handleMobileNumberSection =(e, getFields)=>{
     e.preventDefault();
     if(validation(getFields))
     {
 
       setMobileNumberSubmitted(true);
+      if(getFields == 'checkMobilseSection'){
+         let closeTimeArray = appointmentTiming.closingTime.split(":");
+         let openTimeArray = appointmentTiming.openingTime.split(":");
+         let closeTime = (parseInt(closeTimeArray[0])*60) + parseInt(closeTimeArray[1])
+         let openTime = (parseInt(openTimeArray[0])*60) + parseInt(openTimeArray[1])
+         let closingTime = new Date(appointmentDetails.appointmentDate);//moment(appointmentDetails?.appointmentDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+         let openingTime = new Date(appointmentDetails.appointmentDate);
+         closingTime.setHours(closeTimeArray[0]);
+         closingTime.setSeconds(closeTimeArray[1]);
+         openingTime.setHours(openTimeArray[0]);
+         openingTime.setSeconds(openTimeArray[1]);
+        if(openTime>closeTime){
+           closingTime.setDate(closingTime.getDate()+1);
+         }
+        if(closingTime < new Date(appointmentDetails.appointmentDate) || new Date(appointmentDetails.appointmentDate)<openingTime){
+          swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Selected slot is not available. Try again with available slots",
+        });
+        setMobileNumberSubmitted(false);
+        return;
+        }
+
+      }
       if(getFields == 'checkUserProfileSection'){
         setLoading(true);
         let reqPayload = {
@@ -337,24 +393,22 @@ function appointment() {
           LastName: appointmentDetails?.lastName,
           FirstName: appointmentDetails?.firstName
         };
-        console.log(reqPayload);
         bookingAppointments(reqPayload).then((response)=>{
-          console.log(response);
-         swal.fire({
-        icon: "success",
-        title: "Appointment booked",
-        text: "Appointment booked successfully",
-      });
-      setLoading(false);
-        }).catch((err)=>{
-          setLoading(false);
-        swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Something went wrong. Try after sometime",
-      });
-      });
-    }
+          swal.fire({
+          icon: "success",
+          title: "Appointment booked",
+          text: "Appointment booked successfully",
+        });
+        setLoading(false);
+          }).catch((err)=>{
+            setLoading(false);
+          swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Something went wrong. Try after sometime",
+        });
+        });
+      }
   }
   }
 
