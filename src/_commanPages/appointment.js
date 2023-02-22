@@ -24,6 +24,7 @@ function appointment() {
   const [checkValidationForMobileSec, setValidationForMobileSec] = useState(false);
   const [checkValidation, setValidation] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [detailSection, setDetailSection] = useState(true);
   const [countryCode, setCountryCode] = useState('1');
   const [appointmentTiming, setAppointmentTiming] = useState({});
   const countryCodeArray = [{"country":"Afghanistan","code":"93","iso":"AF"},
@@ -394,12 +395,14 @@ function appointment() {
           FirstName: appointmentDetails?.firstName
         };
         bookingAppointments(reqPayload).then((response)=>{
-          swal.fire({
-          icon: "success",
-          title: "Appointment booked",
-          text: "Appointment booked successfully",
-        });
+          console.log(response);
+        //   swal.fire({
+        //   icon: "success",
+        //   title: "Appointment booked",
+        //   text: "Appointment booked successfully",
+        // });
         setLoading(false);
+        setDetailSection(false);
           }).catch((err)=>{
             setLoading(false);
           swal.fire({
@@ -455,152 +458,227 @@ function appointment() {
     <>
     <nav className="navbar nav-green-bg shadow-sm">
   <div>
-     <Link className="navbar-brand logo-img-parking-lot" to="/"><img src={logoImage} alt="" /></Link>
+     <Link className="navbar-brand logo-img-parking-lot" onClick={()=>window.location.reload(false)}><img src={logoImage} alt="" /></Link>
   </div>
 </nav>
+  {detailSection?
     <div className="d-flex m-5 flex-column align-items-center">
-{!mobileNumberSubmitted ? (<form onSubmit={(e)=> handleMobileNumberSection(e, 'checkMobilseSection')}>
-<div className="form-row">
-    <div className="form-group col-md-6"> 
-    <h4>
-      <a className="navbar-brand" style={{color: 'green', fontWeight: 'bold'}} onClick={() => history.push("/")}>Book Appointment</a>
-      </h4>
+    {!mobileNumberSubmitted ? (<form onSubmit={(e)=> handleMobileNumberSection(e, 'checkMobilseSection')}>
+    <div className="form-row">
+        <div className="form-group col-md-6"> 
+        <h4>
+          <a className="navbar-brand" style={{color: 'green', fontWeight: 'bold'}} onClick={() => history.push(`/scheduleappointment/${locationId}`)}>Book Appointment</a>
+          </h4>
+        </div>
     </div>
- </div>
-  <div className="form-row">
-    <div className="form-group col-md-6">
-      <label htmlFor="mobileNumber">Mobile number<span style={{ color: "red" }}>*</span></label>
-      <div className='d-flex'>
-      <select className="form-control w-auto mx-1" value={countryCode} onChange={(e)=>{setCountryCode(e.target.value)}}>
-        {
-        countryCodeArray.map((e, key) => {
-        return <option key={key} value={e.code}>{e.iso}</option>;
-        })
-        }</select>
-        <div className='w-100'>
-        <input type="number" className={`form-control mobile-number-form ${
-                    checkValidationForMobileSec && phonenumber()
-                      ? "is-invalid"
+      <div className="form-row">
+        <div className="form-group col-md-6">
+          <label htmlFor="mobileNumber">Mobile number<span style={{ color: "red" }}>*</span></label>
+          <div className='d-flex'>
+          <select className="form-control w-auto mx-1" value={countryCode} onChange={(e)=>{setCountryCode(e.target.value)}}>
+            {
+            countryCodeArray.map((e, key) => {
+            return <option key={key} value={e.code}>{e.iso}</option>;
+            })
+            }</select>
+            <div className='w-100'>
+            <input type="number" className={`form-control mobile-number-form ${
+                        checkValidationForMobileSec && phonenumber()
+                          ? "is-invalid"
+                          : "valid"
+                      }`} id="mobileNumber" 
+          name="mobileNumber"
+          maxLength="10"
+          value={appointmentDetails?.mobileNumber  || ''}
+          onChange={(e) => onInputChange(e.target)}
+          placeholder="Mobile number"/>
+            <label className="invalid-feedback">
+                  Please enter a vaild mobile number.
+          </label>
+            </div>
+          </div>
+        </div>
+        <div className="form-group col-md-6">
+          <label htmlFor="appointmentDate">Select appointment date <span style={{ color: "red" }}>*</span></label>
+          <input type="datetime-local" name="appointmentDate"
+          className={`form-control ${
+                      checkValidationForMobileSec && !appointmentDetails['appointmentDate']
+                        ? "is-invalid"
                       : "valid"
-                  }`} id="mobileNumber" 
-       name="mobileNumber"
-       maxLength="10"
-       value={appointmentDetails?.mobileNumber  || ''}
-       onChange={(e) => onInputChange(e.target)}
-       placeholder="Mobile number"/>
-        <label className="invalid-feedback">
-               Please enter a vaild mobile number.
-      </label>
+                    }`} id="appointmentDate"
+                    min={appointmentMin}
+                    format="YYYY-MM-DD hh:mm"
+                value={appointmentDetails?.appointmentDate  || ''}
+              onChange={(e) => onInputChange(e.target)}/>
+          {/* <div className='react-date-picker custom-date-appointment'>
+            <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                showTimeSelect
+                minDate={startDate}
+                filterTime={filterPassedTime}
+                dateFormat="MM/dd/yyyy:hh:mm"
+                timeCaption="Time"
+            />
+          </div> */}
+              <label className="invalid-feedback">
+                  Please select the appointment date.
+          </label>
         </div>
       </div>
-    </div>
-    <div className="form-group col-md-6">
-      <label htmlFor="appointmentDate">Select appointment date <span style={{ color: "red" }}>*</span></label>
-      <input type="datetime-local" name="appointmentDate"
-      className={`form-control ${
-                  checkValidationForMobileSec && !appointmentDetails['appointmentDate']
-                     ? "is-invalid"
-                  : "valid"
-                 }`} id="appointmentDate"
-                min={appointmentMin}
-                format="YYYY-MM-DD hh:mm"
-            value={appointmentDetails?.appointmentDate  || ''}
-          onChange={(e) => onInputChange(e.target)}/>
-      {/* <div className='react-date-picker custom-date-appointment'>
-        <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            showTimeSelect
-            minDate={startDate}
-            filterTime={filterPassedTime}
-            dateFormat="MM/dd/yyyy:hh:mm"
-            timeCaption="Time"
-        />
-      </div> */}
-           <label className="invalid-feedback">
-               Please select the appointment date.
-      </label>
-    </div>
-  </div>
-  <button type="submit" className="btn nav-green-bg w-100">Next</button>
-</form>) :
+      <button type="submit" className="btn nav-green-bg w-100">Next</button>
+    </form>) :
 
- (<form onSubmit={(e)=> handleMobileNumberSection(e, 'checkUserProfileSection')}>
+    (<form onSubmit={(e)=> handleMobileNumberSection(e, 'checkUserProfileSection')}>
+        <div className="form-row">
+        <div className="form-group col-md-6"> 
+        <h4>
+          <a className="navbar-brand" style={{color: 'green', fontWeight: 'bold'}} onClick={() => history.push(`/scheduleappointment/${locationId}`)}>Book Appointment</a>
+          </h4>
+        </div>
+    </div>
+      <div className="form-row">
+        <div className="form-group col-md-6">
+          <label htmlFor="firstName">First name<span style={{ color: "red" }}>*</span></label>
+          <input type="text"  className={`form-control ${
+                        checkValidation && !appointmentDetails['firstName']
+                          ? "is-invalid"
+                          : "valid"
+                      }`} id="firstName"
+                      name="firstName"
+                      value={appointmentDetails?.firstName  || ''}
+                      onChange={(e) => onInputChange(e.target)}
+          placeholder="First Name"/>
+                          <label className="invalid-feedback">
+                  Please enter the first name.
+          </label>
+        </div>
+        <div className="form-group col-md-6">
+          <label htmlFor="lastName">Last Name<span style={{ color: "red" }}>*</span></label>
+          <input type="text"  className={`form-control ${
+                        checkValidation && !appointmentDetails['lastName']
+                          ? "is-invalid"
+                          : "valid"
+                      }`}  id="lastName"
+                            name="lastName"
+                            value={appointmentDetails?.lastName  || ''}
+                            onChange={(e) => onInputChange(e.target)}
+          placeholder="Last Name"/>
+                    <label className="invalid-feedback">
+                  Please enter the last name.
+          </label>
+        </div>
+      </div>
+      <div className="form-row">
+      <div className="form-group col-md-6">
+          <label htmlFor="reason">Reason for visit<span style={{ color: "red" }}>*</span></label>
+          <input type="text"  className={`form-control ${
+                        checkValidation && !appointmentDetails['reason']
+                          ? "is-invalid"
+                          : "valid"
+                      }`} id="reason"
+                            name="reason"
+                            value={appointmentDetails?.reason  || ''}
+                            onChange={(e) => onInputChange(e.target)}
+          placeholder="Reason"/>
+              <label className="invalid-feedback">
+                  Please enter the reason.
+          </label>
+        </div>
+      <div className="form-group col-md-6">
+        <label htmlFor="dateOfBirth">Date of birth <span style={{ color: "red" }}>*</span></label>
+        <input type="date" className={`form-control ${
+                        checkValidation && !appointmentDetails['dateOfBirth']
+                          ? "is-invalid"
+                          : "valid"
+                      }`}
+                                name="dateOfBirth"
+                                max={dobMax} 
+                                value={appointmentDetails?.dateOfBirth  || ''}
+                                onChange={(e) => onInputChange(e.target)}
+        id="dateOfBirth"/>
+        <label className="invalid-feedback">
+                  Please select the date of birth.
+          </label>
+      </div>
+      </div>
+      <button type="submit" className="btn nav-green-bg w-100">{loading ? 'Loading...' : 'Submit'}</button>
+    </form>)}
+    </div>
+: <div className="d-flex m-5 flex-column align-items-center">
     <div className="form-row">
-    <div className="form-group col-md-6"> 
-    <h4>
-      <a className="navbar-brand" style={{color: 'green', fontWeight: 'bold'}} onClick={() => history.push("/")}>Book Appointment</a>
-      </h4>
+        <div className="form-group col-md-6"> 
+        <h4>
+          <a className="navbar-brand" style={{color: 'green', fontWeight: 'bold'}} onClick={() => history.push(`/scheduleappointment/${locationId}`)}>Appointment Details</a>
+          </h4>
+        </div>
     </div>
- </div>
-  <div className="form-row">
-    <div className="form-group col-md-6">
-      <label htmlFor="firstName">First name<span style={{ color: "red" }}>*</span></label>
-      <input type="text"  className={`form-control ${
-                    checkValidation && !appointmentDetails['firstName']
-                      ? "is-invalid"
-                      : "valid"
-                  }`} id="firstName"
-                   name="firstName"
-                   value={appointmentDetails?.firstName  || ''}
-                   onChange={(e) => onInputChange(e.target)}
-      placeholder="First Name"/>
-                       <label className="invalid-feedback">
-               Please enter the first name.
-      </label>
-    </div>
-    <div className="form-group col-md-6">
-      <label htmlFor="lastName">Last Name<span style={{ color: "red" }}>*</span></label>
-      <input type="text"  className={`form-control ${
-                    checkValidation && !appointmentDetails['lastName']
-                      ? "is-invalid"
-                      : "valid"
-                  }`}  id="lastName"
-                         name="lastName"
-                         value={appointmentDetails?.lastName  || ''}
-                         onChange={(e) => onInputChange(e.target)}
-      placeholder="Last Name"/>
-                 <label className="invalid-feedback">
-               Please enter the last name.
-      </label>
-    </div>
-  </div>
-  <div className="form-row">
-  <div className="form-group col-md-6">
-      <label htmlFor="reason">Reason for visit<span style={{ color: "red" }}>*</span></label>
-      <input type="text"  className={`form-control ${
-                    checkValidation && !appointmentDetails['reason']
-                      ? "is-invalid"
-                      : "valid"
-                  }`} id="reason"
-                         name="reason"
-                         value={appointmentDetails?.reason  || ''}
-                         onChange={(e) => onInputChange(e.target)}
-      placeholder="Reason"/>
-           <label className="invalid-feedback">
-               Please enter the reason.
-      </label>
-    </div>
-  <div className="form-group col-md-6">
-    <label htmlFor="dateOfBirth">Date of birth <span style={{ color: "red" }}>*</span></label>
-    <input type="date" className={`form-control ${
-                    checkValidation && !appointmentDetails['dateOfBirth']
-                      ? "is-invalid"
-                      : "valid"
-                  }`}
-                             name="dateOfBirth"
-                             max={dobMax} 
-                             value={appointmentDetails?.dateOfBirth  || ''}
-                             onChange={(e) => onInputChange(e.target)}
-    id="dateOfBirth"/>
-     <label className="invalid-feedback">
-               Please select the date of birth.
-      </label>
-  </div>
-  </div>
-  <button type="submit" className="btn nav-green-bg w-100">{loading ? 'Loading...' : 'Submit'}</button>
-</form>)}
-</div>
+      <div className="form-row">
+      <div className="form-group col-md-12">
+      <h6 style={{color: 'black', fontWeight: 'bold'}}>
+          Thanks!! Your Appointment has been scheduled, please see the details below.
+      </h6>
+
+      </div>
+      </div>
+      <div className="form-row">
+        <div className="form-group col-md-6">
+          <label htmlFor="mobileNumber">Mobile Number</label>
+          <div className='d-flex'>
+          <input type="number" disabled className={`form-control mobile-number-form valid`} id="mobileNumber" 
+                name="mobileNumber"
+                maxLength="10"
+                value={appointmentDetails?.mobileNumber  || ''}
+                placeholder="Mobile number"/>
+          </div>
+        </div>
+        <div className="form-group col-md-6">
+          <label htmlFor="appointmentDate">Appointment Date</label>
+          <input type="datetime-local" disabled name="appointmentDate"
+            className={`form-control valid` } id="appointmentDate"
+                      format="YYYY-MM-DD hh:mm"
+                  value={appointmentDetails?.appointmentDate  || ''}
+            />
+        </div>
+
+      </div>
+      <div className="form-row">
+        <div className="form-group col-md-6">
+            <label htmlFor="firstName">First Name</label>
+            <input type="text" disabled className={`form-control valid`} id="firstName"
+                        name="firstName"
+                        value={appointmentDetails?.firstName  || ''}
+                />
+                      
+        </div>
+        <div className="form-group col-md-6">
+          <label htmlFor="lastName">Last Name</label>
+          <input type="text" disabled className={`form-control valid`}  
+                            id="lastName"
+                            name="lastName"
+                            value={appointmentDetails?.lastName  || ''}
+                            />
+                  
+        </div>
+      </div>
+      <div className="form-row">
+      <div className="form-group col-md-6">
+          <label htmlFor="reason">Reason for Visit</label>
+          <input type="text" disabled className={`form-control valid`} id="reason"
+                            name="reason"
+                            value={appointmentDetails?.reason  || ''}
+            />
+        </div>
+      <div className="form-group col-md-6">
+        <label htmlFor="dateOfBirth">Date of Birth</label>
+        <input type="date" disabled className={`form-control valid`}
+                    name="dateOfBirth"
+                    value={appointmentDetails?.dateOfBirth  || ''}
+            id="dateOfBirth"/>
+        </div>
+      </div>
+  </div>}
+    
 </>
   )
 }
