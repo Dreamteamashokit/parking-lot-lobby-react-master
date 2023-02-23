@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import config from 'config';
 import swal from "sweetalert2";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import moment from 'moment';
 import {logoImage} from '../_assets';
 import { useHistory } from "react-router-dom";
@@ -20,6 +22,7 @@ function appointment() {
   const dobMax = moment().subtract(2, "days").format("YYYY-MM-DD");
   const appointmentMin = moment().format("YYYY-MM-DD hh:mm");
   const [mobileNumberSubmitted, setMobileNumberSubmitted] = useState(false);
+  const [businessInformation, setBusinessInformation] = useState({});
   const [appointmentDetails, setappointmentDetails] = useState({appointmentDate: appointmentMin});
   const [checkValidationForMobileSec, setValidationForMobileSec] = useState(false);
   const [checkValidation, setValidation] = useState(false);
@@ -346,6 +349,8 @@ function appointment() {
 
   useEffect(() => {
     scheduleTimeByLocation(locationId).then(response=>{
+      console.log(response);
+      setBusinessInformation(response.businessInformation.businessInformation);
       setAppointmentTiming(response.scheduleInformation);
     }).catch(err=>{
       console.log(err);
@@ -606,77 +611,79 @@ function appointment() {
     </form>)}
     </div>
 : <div className="d-flex m-5 flex-column align-items-center">
-    <div className="form-row">
-        <div className="form-group col-md-6"> 
-        <h4>
-          <a className="navbar-brand" style={{color: 'green', fontWeight: 'bold'}} onClick={() => history.push(`/scheduleappointment/${locationId}`)}>Appointment Details</a>
-          </h4>
-        </div>
-    </div>
-      <div className="form-row">
-      <div className="form-group col-md-12">
-      <h6 style={{color: 'black', fontWeight: 'bold'}}>
+    
+      <Card className="d-flex m-5 flex-column align-items-center">
+      <Card.Body style={{padding: '0.5rem'}}>
+        <Card.Title className="nav-green-bg w-100">
+        <button className="btn nav-green-bg w-100" ><strong>Appointment Details</strong></button>
+          {/* <h4 className="align-items-center">
+          <a className="navbar-brand" style={{color: 'white', fontWeight: 'bold'}} onClick={() => history.push(`/scheduleappointment/${locationId}`)}>Appointment Details</a>
+          </h4> */}
+        </Card.Title>
+        <Card.Text>
+        <h6 style={{color: 'black', fontWeight: 'bold'}}>
           Thanks!! Your Appointment has been scheduled, please see the details below.
-      </h6>
-
-      </div>
-      </div>
-      <div className="form-row">
-        <div className="form-group col-md-6">
-          <label htmlFor="mobileNumber">Mobile Number</label>
-          <div className='d-flex'>
-          <input type="number" disabled className={`form-control mobile-number-form valid`} id="mobileNumber" 
-                name="mobileNumber"
-                maxLength="10"
-                value={appointmentDetails?.mobileNumber  || ''}
-                placeholder="Mobile number"/>
-          </div>
+        </h6>
+          <div className="form-row">
+            <div className="form-group col-md-12">
+              <label htmlFor="clinicName"><strong>Clinic Name : </strong></label>
+              {/* <div className='d-flex'> */}
+                {businessInformation.companyName}
+              {/* </div> */}
+            </div>
         </div>
-        <div className="form-group col-md-6">
-          <label htmlFor="appointmentDate">Appointment Date</label>
-          <input type="datetime-local" disabled name="appointmentDate"
-            className={`form-control valid` } id="appointmentDate"
-                      format="YYYY-MM-DD hh:mm"
-                  value={appointmentDetails?.appointmentDate  || ''}
-            />
+        <div className="form-row">
+            <div className="form-group col-md-12">
+              <label htmlFor="clinicName"><strong>Clinic Address : </strong></label>
+              {/* <div className='d-flex'> */}
+                {businessInformation.companyAddress}
+              {/* </div> */}
+            </div>
         </div>
-
-      </div>
-      <div className="form-row">
-        <div className="form-group col-md-6">
-            <label htmlFor="firstName">First Name</label>
-            <input type="text" disabled className={`form-control valid`} id="firstName"
-                        name="firstName"
-                        value={appointmentDetails?.firstName  || ''}
-                />
-                      
+        <div className="form-row">
+            <div className="form-group col-md-12">
+              <label htmlFor="appointmentDate"><strong>Appointment Date : </strong></label>
+              {/* <div className='d-flex'> */}
+                  {appointmentDetails.appointmentDate}
+              {/* </div> */}
+            </div>
         </div>
-        <div className="form-group col-md-6">
-          <label htmlFor="lastName">Last Name</label>
-          <input type="text" disabled className={`form-control valid`}  
-                            id="lastName"
-                            name="lastName"
-                            value={appointmentDetails?.lastName  || ''}
-                            />
-                  
+        <div className="form-row">
+            <div className="form-group col-md-12">
+              <label htmlFor="reason"><strong>Reason for Appointment : </strong></label>
+              {/* <div className='d-flex'> */}
+                {appointmentDetails.reason}
+              {/* </div> */}
+            </div>
         </div>
-      </div>
-      <div className="form-row">
-      <div className="form-group col-md-6">
-          <label htmlFor="reason">Reason for Visit</label>
-          <input type="text" disabled className={`form-control valid`} id="reason"
-                            name="reason"
-                            value={appointmentDetails?.reason  || ''}
-            />
+        <div className="form-row">
+            <div className="form-group col-md-12">
+                <label htmlFor="Name"><strong>Name : </strong></label>
+                {/* <div className='d-flex'> */}
+                  {`${appointmentDetails.firstName} ${appointmentDetails.lastName}`}
+                {/* </div> */}
+            </div>
         </div>
-      <div className="form-group col-md-6">
-        <label htmlFor="dateOfBirth">Date of Birth</label>
-        <input type="date" disabled className={`form-control valid`}
-                    name="dateOfBirth"
-                    value={appointmentDetails?.dateOfBirth  || ''}
-            id="dateOfBirth"/>
+        <div className="form-row">
+            <div className="form-group col-md-12">
+              <label htmlFor="mobileNumber"><strong>Mobile Number : </strong></label>
+              {/* <div className='d-flex'> */}
+                {appointmentDetails.mobileNumber}
+              {/* </div> */}
+            </div>
         </div>
-      </div>
+        <div className="form-row">
+            <div className="form-group col-md-12">
+              <label htmlFor="dateOfBirth"><strong>Date of Birth : </strong></label>
+              {/* <div className='d-flex'> */}
+                  {appointmentDetails.dateOfBirth}
+              {/* </div> */}
+            </div>
+        </div>
+        </Card.Text>
+        <button className="btn nav-green-bg w-100" onClick={()=>window.location.reload(false)}>Book New Appointment</button>
+      </Card.Body>
+    </Card>
   </div>}
     
 </>
