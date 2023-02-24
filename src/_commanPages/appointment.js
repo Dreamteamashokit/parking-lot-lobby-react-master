@@ -4,6 +4,7 @@ import swal from "sweetalert2";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import moment from 'moment';
+import "./appointment.css";
 import {logoImage} from '../_assets';
 import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -16,6 +17,8 @@ import {authHeader} from "../_helpers";
 import {CommonApiEndpoint} from "../_constants";
 import { commonService } from "../_services";
 import {setHours, setMinutes} from "date-fns";
+import { MdOutlineApartment, MdOutlinePlace, MdCalendarToday, MdFolderShared, MdPerson, MdMobileScreenShare } from 'react-icons/md';
+
 function appointment() {
   const { locationId } = useParams();
   const [value, setValue] = useState()
@@ -612,78 +615,70 @@ function appointment() {
     </div>
 : <div className="d-flex m-5 flex-column align-items-center">
     
-      <Card className="d-flex m-5 flex-column align-items-center">
-      <Card.Body style={{padding: '0.5rem'}}>
-        <Card.Title className="nav-green-bg w-100">
-        <button className="btn nav-green-bg w-100" ><strong>Appointment Details</strong></button>
-          {/* <h4 className="align-items-center">
-          <a className="navbar-brand" style={{color: 'white', fontWeight: 'bold'}} onClick={() => history.push(`/scheduleappointment/${locationId}`)}>Appointment Details</a>
-          </h4> */}
-        </Card.Title>
-        <Card.Text>
-        <h6 style={{color: 'black', fontWeight: 'bold'}}>
-          Thanks!! Your Appointment has been scheduled, please see the details below.
-        </h6>
-          <div className="form-row">
-            <div className="form-group col-md-12">
-              <label htmlFor="clinicName"><strong>Clinic Name : </strong></label>
-              {/* <div className='d-flex'> */}
-                {businessInformation.companyName}
-              {/* </div> */}
+    <h6 style={{color: 'black', fontWeight: 'bold'}}>
+              Thanks!! Your Appointment has been scheduled, please see the details below.
+    </h6>
+    <div id="ViewComplete" className="row text-center">
+        
+            <div style={{ maxWidth: '800px', margin: 'auto' }}>
+              <div className="nameDiv">
+                <div className="imageDiv">
+                  <MdOutlineApartment height={30} width={30} />
+                </div>
+                <div className="labelList">
+                  <p className="labelName">Clinic Name : </p>
+                  <p>{businessInformation?.companyName}</p>
+                </div>
+              </div>
+              <div className="nameDiv">
+                <div className="imageDiv">
+                  <MdOutlinePlace height={30} width={30} />
+                </div>
+                <div className="labelList">
+                  <p className="labelName">Clinic Address :  </p>
+                  <p>{businessInformation?.companyAddress}</p>
+                </div>
+              </div>
+              <div className="nameDiv">
+                <div className="imageDiv">
+                  <MdCalendarToday height={30} width={30} />
+                </div>
+                <div className="labelList">
+                  <p className="labelName">Appointment Date & Time  </p>
+                  <p><span>{appointmentDetails?.appointmentDate}</span></p>
+                </div>
+              </div>
+              <div className="nameDiv">
+                <div className="imageDiv">
+                  <MdPerson height={30} width={30} />
+                </div>
+                <div className="labelList">
+                  <p className="labelName">Name </p>
+                  <p>{`${appointmentDetails.firstName} ${appointmentDetails.lastName}`}</p>
+                </div>
+              </div>
+              <div className="nameDiv">
+                <div className="imageDiv">
+                  <MdMobileScreenShare height={30} width={30}/>
+                </div>
+                <div className="labelList">
+                  <p className="labelName">Mobile Number </p>
+                  <p>{appointmentDetails.mobileNumber}</p>
+                  
+                </div>
+              </div>
             </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group col-md-12">
-              <label htmlFor="clinicName"><strong>Clinic Address : </strong></label>
-              {/* <div className='d-flex'> */}
-                {businessInformation.companyAddress}
-              {/* </div> */}
+            <div className="col-12 mb-3 py-5">
+              <button
+                type="button"
+                className="btn new-appointment-btn"
+                onClick={()=>window.location.reload(false)}
+              >
+                Book New Appointment
+              </button>
+              
             </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group col-md-12">
-              <label htmlFor="appointmentDate"><strong>Appointment Date : </strong></label>
-              {/* <div className='d-flex'> */}
-                  {appointmentDetails.appointmentDate}
-              {/* </div> */}
-            </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group col-md-12">
-              <label htmlFor="reason"><strong>Reason for Appointment : </strong></label>
-              {/* <div className='d-flex'> */}
-                {appointmentDetails.reason}
-              {/* </div> */}
-            </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group col-md-12">
-                <label htmlFor="Name"><strong>Name : </strong></label>
-                {/* <div className='d-flex'> */}
-                  {`${appointmentDetails.firstName} ${appointmentDetails.lastName}`}
-                {/* </div> */}
-            </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group col-md-12">
-              <label htmlFor="mobileNumber"><strong>Mobile Number : </strong></label>
-              {/* <div className='d-flex'> */}
-                {appointmentDetails.mobileNumber}
-              {/* </div> */}
-            </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group col-md-12">
-              <label htmlFor="dateOfBirth"><strong>Date of Birth : </strong></label>
-              {/* <div className='d-flex'> */}
-                  {appointmentDetails.dateOfBirth}
-              {/* </div> */}
-            </div>
-        </div>
-        </Card.Text>
-        <button className="btn nav-green-bg w-100" onClick={()=>window.location.reload(false)}>Book New Appointment</button>
-      </Card.Body>
-    </Card>
+          </div>
   </div>}
     
 </>
