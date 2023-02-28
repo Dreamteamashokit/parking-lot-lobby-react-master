@@ -34,6 +34,7 @@ class SettingPage extends React.Component {
                     openingTime: '',
                     closingTime: '',
                     twilioNumber: '',
+                    scheduleURL: '',
                 },
                 AlertSettings: {
                     confirmation: false,
@@ -171,8 +172,9 @@ class SettingPage extends React.Component {
             settings.ScheduleInformation.closingTime = settingData.scheduleInformation?.closingTime || '';
             settings.ScheduleInformation.selectedTimeZone = settingData.scheduleInformation?.selectedTimeZone || '';
             settings.ScheduleInformation.twilioNumber = settingData.scheduleInformation?.twilioNumber || '';
-
-
+            let user = JSON.parse(localStorage.getItem('user'));
+            const locationId = (user && user.default_location) ? user.default_location : null;
+            settings.ScheduleInformation.scheduleURL = `${window.location.origin}/scheduleappointment/${locationId}`;
             settings.AlertSettings.checkingIn = (settingData.checkInAlert && settingData.checkInAlert.is_active) ? settingData.checkInAlert.is_active : false;
             settings.AlertSettings.checkOut = (settingData.checkOutAlert && settingData.checkOutAlert.is_active) ? settingData.checkOutAlert.is_active : false;
             settings.AlertSettings.confirmation = (settingData.confirmationAlert && settingData.confirmationAlert.is_active) ? settingData.confirmationAlert.is_active : false;
@@ -792,6 +794,22 @@ class SettingPage extends React.Component {
                                                                     name="selectedTimeZone"
                                                                     placeholder="Time Zone"
                                                                 />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-10">
+                                                            <div className="form-group">
+                                                                <label>Schedule Appointment Url</label>
+                                                                <input disabled type="tel" name="scheduleURL" value={settings.ScheduleInformation.scheduleURL} className="form-control" />
+                                                                {/* <button onClick={() =>  navigator.clipboard.writeText(settings.ScheduleInformation.scheduleURL)}>Copy</button> */}
+
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-2">
+                                                            <div className="form-group">
+                                                                <label></label>
+                                                                {/* <input disabled type="tel" name="scheduleURL" value={settings.ScheduleInformation.scheduleURL} className="form-control" /> */}
+                                                                <button className="form-control" onClick={() =>  navigator.clipboard.writeText(settings.ScheduleInformation.scheduleURL)}>Copy</button>
+
                                                             </div>
                                                         </div>
                                                         <div className="col-md-12 submitbtn-holder">
