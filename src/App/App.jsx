@@ -28,7 +28,7 @@ const AdminLoginPage = lazy(()=> import('../_commanPages/AdminLoginPage'));
 const ThankYouPage = lazy(()=> import('../_commanPages/ThankYouPage'));
 const ReviewPage = lazy(()=> import('../_commanPages/Review'));
 const AddAnotherPatientForm = lazy(()=> import('../_commanPages/AddAnotherPatient'));
-
+const Appointment = lazy(()=> import('../_commanPages/appointment'));
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -60,6 +60,9 @@ class App extends React.Component {
                         <Route path="/login">
                           <CommanHeader />
                           <LoginPage/>
+                        </Route>
+                        <Route path="/scheduleappointment/:locationId" >
+                           <Appointment />
                         </Route>
                         <Route path="/register" >
                            <CommanHeader />

@@ -4,6 +4,8 @@ import { commonActions,userActions } from '../_actions';
 import Modal from "react-bootstrap/Modal";
 import Moment from 'react-moment';
 import moment from 'moment';
+import { MdFlag } from 'react-icons/md';
+import { IconContext } from "react-icons";
 import { Link } from 'react-router-dom';
 import {
     capitalize, errorToast,
@@ -858,9 +860,11 @@ class HomePage extends React.Component {
                                                 </div>
                                                 <div className="middlebx">
                                                     <div className="lftbx">
-                                                        <h1 onClick={() => this.backChatDropModal(index, 'waiting')}>{this.getField(index, 'name', 'waiting')}</h1>
+                                                        <h1 onClick={() => this.backChatDropModal(index, 'waiting')}>{this.getField(index, 'name', 'waiting')}{waitingList[index].scheduleByUser?<MdFlag color="red" />:''}</h1>
                                                         {this.calculateDiff(index, value.inQueueAt)}
+                                                        {waitingList[index].scheduleByUser? `Scheduled At : ${moment(waitingList[index].visitDate).format('hh:mm a')}` :''}
                                                         <p className={(value.overFlow) ? 'red' : ''}>
+                                                            
                                                             {this.getMomentTime(1, value.inQueueAt)}
                                                             <span className="left-margin">({this.getMomentTime(2, value.inQueueAt)})</span>
                                                         </p>
@@ -985,7 +989,8 @@ class HomePage extends React.Component {
                                                 </div>
                                                 <div className="middlebx">
                                                     <div className="lftbx">
-                                                        <h1 onClick={() => this.backChatDropModal(index, 'checkInOut')}>{this.getField(index, 'name', 'checkInout')}</h1>
+                                                        <h1 onClick={() => this.backChatDropModal(index, 'checkInOut')}>{this.getField(index, 'name', 'checkInout')}{checkInOutList[index].scheduleByUser?<MdFlag color="red" />:''}</h1>
+                                                        {checkInOutList[index].scheduleByUser? `Scheduled At : ${moment(checkInOutList[index].visitDate).format('hh:mm a')}` :''}
                                                         <p>
                                                             {this.getMomentTime(1, value.checkIn)}
                                                             {/* <span className="left-margin">({this.getMomentTime(2, value.checkIn)})</span> */}
@@ -1053,7 +1058,9 @@ class HomePage extends React.Component {
                                                 </div>
                                                 <div className="middlebx">
                                                     <div className="lftbx">
-                                                        <h1 onClick={() => this.backChatDropModal(index, 'servedSection')}>{this.getField(index, 'name', 'served')}</h1>
+                                                    
+                                                        <h1 onClick={() => this.backChatDropModal(index, 'servedSection')}>{this.getField(index, 'name', 'served')}{servedPatient[index].scheduleByUser?<MdFlag color="red" />:''}</h1>
+                                                        {servedPatient[index].scheduleByUser? `Scheduled At : ${moment(servedPatient[index].visitDate).format('hh:mm a')}` :''}
                                                         <p>
                                                             {this.getMomentTime(1, value.checkOut)}
                                                             {/* <span className="left-margin">({this.getMomentTime(2, value.checkOut)})</span> */}
@@ -1386,6 +1393,7 @@ function mapState(state) {
     const { waitingList, isWaiting,
         isCheckInOUT, checkInOutList,
         isServed, servedPatient, isMoveToCheckIn, isMoveToServed, isNotifyProccess, updatedPatient, addClientProccess } = commons;
+        
     const { user } = authentication;
         return {
         waitingList, isWaiting,

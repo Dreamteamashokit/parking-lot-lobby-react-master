@@ -107,6 +107,7 @@ class ClientList extends React.Component {
       client: this.state.selectedClient,
       password: this.state.password
     })
+    this.setState({ isOpen: false })
   }
 
 
